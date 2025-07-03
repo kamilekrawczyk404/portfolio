@@ -1,0 +1,14 @@
+{
+  "HomePage": {
+    "title": "Cześć"
+  },
+  "Navigation": {
+    "links": {
+      "home": "Strona główna",
+      "projects": "Projekty",
+      "contact": "Kontakt",
+      "blog": "Blog"
+    },
+    "download-cv": "Pobierz CV"
+  }
+}

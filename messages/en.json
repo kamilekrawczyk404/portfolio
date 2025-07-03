@@ -1,0 +1,17 @@
+{
+  "LocaleLayout": {
+    "title": "Locale layout"
+  },
+  "HomePage": {
+    "title": "Hello"
+  },
+  "Navigation": {
+    "links": {
+      "home": "Home",
+      "projects": "Project",
+      "contact": "Contact",
+      "blog": "Blog"
+    },
+    "download-cv": "Download CV"
+  }
+}
