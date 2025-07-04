@@ -4,6 +4,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import StoreProvider from "@/redux/StoreProvider";
 import Navigation from "@/components/navigation/Navigation";
+import { colors } from "@/layout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +30,10 @@ export default async function RootLayout({ children }) {
       <NextIntlClientProvider messages={messages}>
         <StoreProvider>
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen overflow-hidden bg-neutral-900`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen overflow-x-hidden ${colors.dark.background}`}
           >
-            {children}
             <Navigation />
+            {children}
           </body>
         </StoreProvider>
       </NextIntlClientProvider>

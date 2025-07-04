@@ -4,10 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const Backdrop = ({ isActive }) => {
   return (
-    // <AnimatePresence mode={"popLayout"}>
     isActive && (
       <motion.div
-        className={"fixed top-0 left-0 bg-black/50 w-screen h-screen"}
+        className={"fixed top-0 left-0 bg-black/50 w-screen h-screen z-[100]"}
         initial={{
           opacity: 0,
         }}
@@ -23,7 +22,6 @@ const Backdrop = ({ isActive }) => {
         }}
       ></motion.div>
     )
-    // </AnimatePresence>
   );
 };
 

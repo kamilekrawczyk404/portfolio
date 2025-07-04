@@ -8,10 +8,9 @@ import Hero from "@/components/Hero";
 export default function RootPage() {
   const t = useTranslations("HomePage");
   return (
-    <div
-      className={`mt-[4rem] flex h-[calc(100dvh-5rem)] relative bg-transparent ${layoutProperties.margin}`}
-    >
+    <div className={`flex flex-col relative bg-transparent`}>
       <Hero />
+      <div className={"h-screen w-full bg-red-500"} />
     </div>
   );
 }

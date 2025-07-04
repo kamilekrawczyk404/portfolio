@@ -33,6 +33,7 @@ const LanguagesButtons = () => {
     <Button
       key={language}
       square
+      navigation
       filled={locale === language}
       onClick={() => changeLocale(language)}
     >

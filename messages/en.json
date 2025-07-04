@@ -3,7 +3,14 @@
     "title": "Locale layout"
   },
   "HomePage": {
-    "title": "Hello"
+    "Hero": {
+      "Header": {
+        "Before": "I build",
+        "TextCarousel": "performant, efficient, modern, intuitive, beautiful",
+        "After": "web applications"
+      },
+      "Summary": "Driven by curiosity, I'm constantly pushing boundaries in web development to deliver exceptional results."
+    }
   },
   "Navigation": {
     "links": {

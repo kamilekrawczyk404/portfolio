@@ -6,7 +6,7 @@ const ButtonBackdrop = () => {
   return (
     <div
       className={
-        "absolute left-0 top-0 w-0 h-full group-hover:w-full transition-all bg-purple/50 rounded-md"
+        "absolute left-0 top-0 w-0 h-full group-hover:w-full transition-all bg-purple/50 rounded-md -z-10"
       }
     />
   );

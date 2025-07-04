@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Backdrop from "@/components/Backdrop";
 import Button from "@/components/buttons/Button";
@@ -8,24 +8,20 @@ import { Icons } from "@/components/Icons";
 import { useTranslations } from "next-intl";
 import { animationProperties, animationsTypes } from "@/animations";
 import LanguagesButtons from "@/components/navigation/LanguagesButtons";
-import { layoutProperties } from "@/layout";
+import { colors, layoutProperties } from "@/layout";
+import { changeTheme } from "@/redux/reducers/themeSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavigationLoaded, setIsNavigationLoaded] = useState(false);
+  const { theme } = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
 
-  const animationDuration = animationProperties.durations.short;
+  const linksContainerRef = useRef(null);
+  const menuButtonRef = useRef(null);
 
-  useEffect(() => {
-    const timeout = setTimeout(
-      () => {
-        setIsNavigationLoaded(true);
-      },
-      animationDuration * 1000 + 500,
-    );
-
-    return () => clearTimeout(timeout);
-  }, []);
+  const animationDuration = animationProperties.durations.short + 1;
 
   const t = useTranslations("Navigation");
 
@@ -48,69 +44,102 @@ const Navigation = () => {
     },
   ];
 
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => {
+        setIsNavigationLoaded(true);
+        dispatch(changeTheme());
+      },
+      animationDuration * 1000 + 750,
+    );
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    const listener = (e) => {
+      if (
+        isMenuOpen &&
+        linksContainerRef.current &&
+        menuButtonRef.current &&
+        !menuButtonRef.current.contains(e.target) &&
+        !linksContainerRef.current.contains(e.target)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("click", listener);
+
+    return () => window.removeEventListener("click", listener);
+  }, [isMenuOpen, linksContainerRef, menuButtonRef]);
+
   return (
     <motion.nav
       initial={{
+        y: "-100%",
         opacity: 0,
-        y: -100,
       }}
       animate={{
-        opacity: 1,
         y: 0,
+        opacity: 1,
       }}
       transition={{
-        // duration: animationProperties.durations.short,
         opacity: {
-          duration: animationDuration,
-          delay: animationDuration,
+          duration: 0.5,
+          delay: 0.2,
         },
         ...animationsTypes.default,
+        delay: 0.1,
       }}
-      className={`fixed top-0 left-0 w-full flex bg-blur h-[4rem] items-center justify-between gap-4 ${layoutProperties.padding}`}
+      className={`fixed top-0 left-0 w-full flex h-[4rem] items-center justify-between gap-4 z-[1000] backdrop-blur-sm shadow-sm ${layoutProperties.padding} ${theme.foreground}`}
     >
       <AnimatePresence mode={"wait"}>
         {isMenuOpen && (
           <>
             <Backdrop isActive={isMenuOpen} />
             <motion.aside
-              className={
-                "fixed h-full bg-gray-100 w-2/5 top-0 p-4 rounded-r-3xl flex flex-col z-[100] gap-4"
-              }
+              ref={linksContainerRef}
+              className={`fixed h-screen w-2/5 top-0 rounded-r-3xl flex flex-col z-[100] gap-4 ${layoutProperties.padding} ${theme.background} ${theme.foreground}`}
               initial={{ left: "-50%", pointerEvents: "none" }}
               animate={{ left: 0, pointerEvents: "auto" }}
               exit={{ left: "-50%", pointerEvents: "none" }}
               transition={animationsTypes.default}
             >
-              <Button onClick={() => setIsMenuOpen(false)} square>
-                <Icons.Close
-                  className={
-                    "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                  }
-                />
-              </Button>
-              <div className={"flex flex-col flex-1 justify-center"}>
+              <div className={`h-[4rem] flex items-center`}>
+                <Button onClick={() => setIsMenuOpen(false)} square navigation>
+                  <Icons.Close
+                    className={
+                      "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    }
+                  />
+                </Button>
+              </div>
+
+              <div
+                className={`flex flex-col flex-1 gap-y-2 justify-center ${layoutProperties.body.padding}`}
+              >
                 {links.map((link) => (
                   <NavigationLink key={link.name} href={link.href}>
                     {t(`links.${link.name.toLowerCase()}`)}
                   </NavigationLink>
                 ))}
               </div>
-              <div className={"flex gap-2"}>
+              <div className={"flex gap-2 h-[4rem] items-center"}>
                 <LanguagesButtons />
               </div>
             </motion.aside>
           </>
         )}
       </AnimatePresence>
-      <div className={"flex items-center gap-x-1"}>
-        <Button onClick={() => setIsMenuOpen(true)}>Menu</Button>
-        <Button
-          initial={{ opacity: 0 }}
-          animate={isNavigationLoaded ? { opacity: 1 } : {}}
-        >
-          {t("download-cv")}
-        </Button>
-      </div>
+
+      <Button
+        ref={menuButtonRef}
+        navigation
+        onClick={() => setIsMenuOpen(true)}
+      >
+        Menu
+      </Button>
       <div
         className={
           "absolute left-1/2 -translate-x-1/2 flex-1 top-1/2 -translate-y-1/2 flex items-center gap-2 justify-center"
@@ -126,11 +155,11 @@ const Navigation = () => {
                 }
               : {}
           }
-          className={
-            "overflow-hidden relative bg-purple rounded-md text-gray-100 h-8 flex items-center"
-          }
+          className={"overflow-hidden relative"}
         >
-          <span className={"text-nowrap mx-2"}>Web developer</span>
+          <Button navigation className={"text-nowrap"}>
+            {t("download-cv")}
+          </Button>
         </motion.div>
       </div>
       <div className={"flex gap-x-1"}>
