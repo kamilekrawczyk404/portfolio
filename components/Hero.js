@@ -13,12 +13,13 @@ import Button from "@/components/buttons/Button";
 import AnimatedText from "@/components/AnimatedText";
 import TextCarousel from "@/components/TextCarousel";
 import Image from "next/image";
+import PageContainer from "@/components/PageContainer";
 
 const Hero = () => {
   const t = useTranslations("HomePage");
 
   return (
-    <div className={`h-[100dvh] w-full relative`}>
+    <PageContainer includeNavigationHeight>
       <Container as={"background"} text={"Strategic thinker"} />
       <Container text={"Agile adaptor"}>
         <motion.div
@@ -55,7 +56,7 @@ const Hero = () => {
       </motion.div>
 
       <div
-        className={`absolute top-1/2 -translate-y-1/2 flex flex-col mx-auto gap-y-8 w-[calc(50%-1rem)] ${layoutProperties.body.margin}`}
+        className={`absolute top-1/2 -translate-y-1/2 flex flex-col mx-auto gap-y-8 w-[calc(50%-1rem)]`}
       >
         <div className={"flex flex-col gap-y-2"}>
           <div>
@@ -138,7 +139,7 @@ const Hero = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 };
 

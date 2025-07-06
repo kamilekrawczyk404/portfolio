@@ -2,8 +2,8 @@ export const layoutProperties = {
   padding: "md:px-4 px-2",
   margin: "md:mx-4 mx-2",
   body: {
-    padding: "md:px-16 px-8",
-    margin: "md:mx-16 mx-8",
+    padding: "md:p-16 p-8",
+    margin: "md:m-16 m-8",
   },
 };
 

@@ -39,7 +39,7 @@ const AnimatedText = ({
               duration: duration,
               delay: delays[wordIndex][letterIndex],
             }}
-            className={`inline-block  ${className}`}
+            className={`inline-block ${className}`}
           >
             {letter}
           </motion.span>

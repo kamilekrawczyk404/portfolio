@@ -42,7 +42,7 @@ const TextCarousel = ({ words, delay = 0, duration = 3, className = "" }) => {
           currentWordIndex === index && (
             <div key={index} className={"relative overflow-hidden"}>
               <motion.div
-                className={`absolute top-1/2 -translate-y-1/2 h-full origin-right !rounded-md -z-10`}
+                className={`absolute top-1/2 -translate-y-1/2 h-full origin-right !rounded-xl -z-10`}
                 initial={{
                   width: 0,
                   background: backgroundColors[currentColorIndex],
