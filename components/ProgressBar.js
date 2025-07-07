@@ -8,9 +8,6 @@ import { colors } from "@/layout"; // Ensure these paths are correct
 const ProgressBar = ({ percentage, shouldAnimate }) => {
   const { opposite } = useSelector((state) => state.theme);
 
-  const ref = useRef(null);
-  const [barWidth, setBarWidth] = useState(0);
-
   const percentageMotionValue = useMotionValue(0);
   const width = useTransform(
     percentageMotionValue,
@@ -42,12 +39,6 @@ const ProgressBar = ({ percentage, shouldAnimate }) => {
     shouldAnimate,
   ]);
 
-  useEffect(() => {
-    if (ref.current) {
-      setBarWidth(ref.current.getBoundingClientRect.width);
-    }
-  }, [ref.current]);
-
   return (
     <div className={"relative"}>
       <motion.div
@@ -62,7 +53,7 @@ const ProgressBar = ({ percentage, shouldAnimate }) => {
         }}
       >
         <div
-          className={`mb-[.25rem] text-sm bg-blue-500 px-2 py-0 rounded-md border-1 ${colors.dark.border} ${colors.light.foreground} ${colors.light.background}`}
+          className={`mb-[.25rem] text-sm bg-blue-500 px-2 py-0 rounded-xl border-1 ${colors.dark.border} ${colors.light.foreground} ${colors.light.background}`}
         >
           <span>{parseInt(asPercentage)}%</span>
         </div>
@@ -71,7 +62,7 @@ const ProgressBar = ({ percentage, shouldAnimate }) => {
         ></div>
       </motion.div>
 
-      <div className={"relative w-full h-[2rem] rounded-md overflow-hidden"}>
+      <div className={"relative w-full h-[2rem] rounded-lg overflow-hidden"}>
         <motion.div
           className={
             "absolute top-0 left-0 bg-purple h-full z-10 overflow-hidden"
@@ -104,7 +95,6 @@ const ProgressBar = ({ percentage, shouldAnimate }) => {
           }}
         ></motion.div>
         <div
-          ref={ref}
           className={"absolute left-0 top-0 w-full h-full bg-gray-200 z-0"}
         />
       </div>

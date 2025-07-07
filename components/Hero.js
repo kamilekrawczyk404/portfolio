@@ -1,13 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion, useAnimate } from "framer-motion";
-import {
-  animationProperties,
-  animationsTypes as animationTypes,
-  animationsTypes,
-} from "@/animations";
-import { colors, layoutProperties } from "@/layout";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { motion, useAnimate } from "framer-motion";
+import { animationsTypes } from "@/animations";
 import { useTranslations } from "next-intl";
 import Button from "@/components/buttons/Button";
 import AnimatedText from "@/components/AnimatedText";

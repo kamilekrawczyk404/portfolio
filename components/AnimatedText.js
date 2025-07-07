@@ -17,7 +17,7 @@ const AnimatedText = ({
 
   words.forEach((word, index) => {
     delays.push([]);
-    word.split("").forEach((letter) => {
+    word.split("").forEach((_) => {
       delays[index].push((delay += letterDelay));
     });
   });

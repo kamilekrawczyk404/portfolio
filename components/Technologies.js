@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import ProgressBar from "@/components/ProgressBar";
 import Button from "@/components/buttons/Button";
+import SectionTitle from "@/components/SectionTitle";
 
 const Technologies = () => {
   const technologies = [
@@ -85,23 +86,34 @@ const Technologies = () => {
           { name: "Git", knowledge: 85 },
           { name: "GitHub", knowledge: 85 },
           { name: "Docker", knowledge: 60 },
-          { name: "Github Actions", knowledge: 60 },
-          { name: "VM Ware / Virtual Box", knowledge: 70 },
+          { name: "VMware", knowledge: 70 },
+        ],
+      },
+      projectManagement: {
+        title: "Project management",
+        aspects: [
+          { name: "Agile" },
+          { name: "Scrum" },
+          { name: "Github Actions" },
+          { name: "Jira" },
+          { name: "Trello" },
+          { name: "Asana" },
+          { name: "SOLID" },
+          { name: "DRY" },
+          { name: "KISS" },
         ],
       },
       otherAspects: {
         title: "Additional aspects",
         aspects: [
-          { name: "Agile / Scrum" },
           { name: "Linux" },
           { name: "Terminal / CLI" },
           { name: "VS Code" },
           { name: "WebStorm" },
           { name: "Webpack" },
           { name: "NPM / Yarn" },
-          { name: "SOLID" },
-          { name: "DRY" },
-          { name: "KISS" },
+          { name: "Postman" },
+          { name: "Composer" },
         ],
       },
     },
@@ -158,11 +170,8 @@ const Technologies = () => {
   };
 
   return (
-    <PageContainer
-      className={`${colors.light.background} flex flex-col justify-center gap-8`}
-    >
-      <div className={"flex gap-x-8 relative"}>
-        <h2 className={"text-7xl"}>Technologies</h2>
+    <PageContainer section includeNavigationHeight>
+      <SectionTitle title={"Technologies"}>
         <div className={"flex flex-col self-end gap-y-1"}>
           <p className={"text-sm"}>Select a category</p>
           <div className={"flex gap-x-2"}>
@@ -178,7 +187,7 @@ const Technologies = () => {
             ))}
           </div>
         </div>
-      </div>
+      </SectionTitle>
       <AnimatePresence mode={"popLayout"}>
         <motion.div
           key={technologies[selectedTechnologyIndex].type}
@@ -213,7 +222,9 @@ const Technologies = () => {
 
                 <div
                   className={`${
-                    key.toLowerCase() === "otheraspects"
+                    ["otheraspects", "projectmanagement"].includes(
+                      key.toLowerCase(),
+                    )
                       ? "flex flex-wrap gap-2"
                       : "grid grid-cols-4 gap-4"
                   } relative`}
@@ -223,7 +234,9 @@ const Technologies = () => {
                       variants={aspectItemVariants}
                       key={aspect.name}
                       className={`${
-                        key.toLowerCase() === "otheraspects"
+                        ["otheraspects", "projectmanagement"].includes(
+                          key.toLowerCase(),
+                        )
                           ? "border-1 px-2 h-[1.75rem] rounded-full flex justify-center"
                           : ""
                       } flex flex-col gap-y-1 relative`}
