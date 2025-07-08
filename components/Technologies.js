@@ -9,6 +9,10 @@ import { animationProperties, animationsTypes } from "@/animations";
 import ProgressBar from "@/components/ProgressBar";
 import Button from "@/components/buttons/Button";
 import SectionTitle from "@/components/SectionTitle";
+import GroupSection from "@/components/GroupSection";
+import Categories from "@/components/Categories";
+import StaggeredList from "@/components/lists/StaggeredList";
+import Aspect from "@/components/lists/Aspect";
 
 const Technologies = () => {
   const technologies = [
@@ -62,6 +66,7 @@ const Technologies = () => {
       frameworks: {
         title: "Frameworks & Libraries",
         aspects: [
+          { name: "Prisma", knowledge: 50 },
           { name: "Express.js", knowledge: 30 },
           { name: "Symfony", knowledge: 60 },
           { name: "Laravel", knowledge: 65 },
@@ -122,8 +127,8 @@ const Technologies = () => {
   const [selectedTechnologyIndex, setSelectedTechnologyIndex] = useState(0);
   const [animatedProgressBars, setAnimatedProgressBars] = useState({});
 
-  const handleTechnologySelect = useCallback((index) => {
-    setSelectedTechnologyIndex(index);
+  const onCategoryChange = useCallback((categories) => {
+    setSelectedTechnologyIndex(categories.findIndex((c) => c.selected));
     setAnimatedProgressBars({});
   }, []);
 
@@ -172,21 +177,15 @@ const Technologies = () => {
   return (
     <PageContainer section includeNavigationHeight>
       <SectionTitle title={"Technologies"}>
-        <div className={"flex flex-col self-end gap-y-1"}>
-          <p className={"text-sm"}>Select a category</p>
-          <div className={"flex gap-x-2"}>
-            {technologies.map((technology, index) => (
-              <Button
-                key={technology.type}
-                filled={index === selectedTechnologyIndex}
-                navigation
-                onClick={() => handleTechnologySelect(index)}
-              >
-                {technology.type}
-              </Button>
-            ))}
-          </div>
-        </div>
+        <GroupSection title={"Select a category"}>
+          <Categories
+            categories={technologies}
+            render={(technology) => technology.type}
+            callback={onCategoryChange}
+            singleSelection
+            defaultSelectedIndex={0}
+          />
+        </GroupSection>
       </SectionTitle>
       <AnimatePresence mode={"popLayout"}>
         <motion.div
@@ -208,6 +207,7 @@ const Technologies = () => {
                 exit={"exit"}
                 className={"flex flex-col gap-y-2"}
               >
+                {/*Header of each section*/}
                 <div className={"overflow-hidden pb-1"}>
                   <motion.h3
                     initial={{ y: "-100%" }}
@@ -220,47 +220,45 @@ const Technologies = () => {
                   </motion.h3>
                 </div>
 
-                <div
-                  className={`${
-                    ["otheraspects", "projectmanagement"].includes(
-                      key.toLowerCase(),
-                    )
-                      ? "flex flex-wrap gap-2"
-                      : "grid grid-cols-4 gap-4"
-                  } relative`}
-                >
-                  {value.aspects.map((aspect) => (
-                    <motion.div
-                      variants={aspectItemVariants}
-                      key={aspect.name}
-                      className={`${
-                        ["otheraspects", "projectmanagement"].includes(
-                          key.toLowerCase(),
-                        )
-                          ? "border-1 px-2 h-[1.75rem] rounded-full flex justify-center"
-                          : ""
-                      } flex flex-col gap-y-1 relative`}
-                      onAnimationComplete={(definition) => {
-                        if (definition === "animate") {
-                          setAnimatedProgressBars((prev) => ({
-                            ...prev,
-                            [aspect.name]: true,
-                          }));
-                        }
-                      }}
-                    >
-                      <div>{aspect.name}</div>
-                      {aspect?.knowledge && (
-                        <ProgressBar
-                          percentage={aspect.knowledge}
-                          shouldAnimate={
-                            animatedProgressBars[aspect.name] || false
+                {/*Render progress bars or staggered list of aspects*/}
+                {/*If key is one of these, we should render the staggered list*/}
+                {["otheraspects", "projectmanagement"].includes(
+                  key.toLowerCase(),
+                ) ? (
+                  <StaggeredList
+                    items={value.aspects}
+                    render={(aspect) => <Aspect name={aspect.name} />}
+                  />
+                ) : (
+                  <div className={"grid grid-cols-4 gap-4"}>
+                    {value.aspects.map((aspect) => (
+                      <motion.div
+                        variants={aspectItemVariants}
+                        key={aspect.name}
+                        className={"flex flex-col gap-y-1 relative"}
+                        onAnimationComplete={(definition) => {
+                          // When animation is completed start animate the progress bar
+                          if (definition === "animate") {
+                            setAnimatedProgressBars((prev) => ({
+                              ...prev,
+                              [aspect.name]: true,
+                            }));
                           }
-                        />
-                      )}
-                    </motion.div>
-                  ))}
-                </div>
+                        }}
+                      >
+                        <span>{aspect.name}</span>
+                        {aspect?.knowledge && (
+                          <ProgressBar
+                            percentage={aspect.knowledge}
+                            shouldAnimate={
+                              animatedProgressBars[aspect.name] || false
+                            }
+                          />
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             ))}
         </motion.div>

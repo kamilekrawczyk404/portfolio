@@ -5,13 +5,21 @@ import AnimatedCheckbox from "@/components/AnimatedCheckbox";
 import { useSelector } from "react-redux";
 import { animationProperties, animationsTypes } from "@/animations";
 
-const Categories = ({ categories, callback = () => {}, className = "" }) => {
+const Categories = ({
+  categories,
+  callback = () => {},
+  render = () => {},
+  singleSelection = false,
+  defaultSelectedIndex = null,
+  className = "",
+}) => {
   const { theme } = useSelector((state) => state.theme);
 
   const [items, setItems] = useState(
-    [...categories].map((item) => ({
+    [...categories].map((item, index) => ({
       ...item,
-      selected: false,
+      selected:
+        defaultSelectedIndex !== null ? index === defaultSelectedIndex : false,
     })),
   );
 
@@ -21,27 +29,29 @@ const Categories = ({ categories, callback = () => {}, className = "" }) => {
       const updatedItems = prevItems.map((item, i) => ({
         ...item,
         // Toggle 'selected' for the clicked item, keep others as they are
-        selected: i === clickedIndex ? !item.selected : item.selected,
+        // For single selection only one category is selected on current moment
+        // When one is already selected, clicking on another will unselect the previous one and select the new one
+        selected: singleSelection
+          ? i === clickedIndex
+          : i === clickedIndex
+            ? !item.selected
+            : item.selected,
       }));
       return updatedItems;
     });
   }, []);
 
-  // useEffect(() => {
-  // callback(items);
-  // }, [items]);
-
-  console.log("items", items);
+  useEffect(() => {
+    // Return list of updated categories
+    callback(items);
+  }, [items]);
 
   return (
     <div className={"flex gap-x-2 "}>
       {items.map((item, index) => (
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={animationsTypes.default}
+        <div
           key={index}
-          className={`flex items-center relative border-1 rounded-full h-[1.75rem] cursor-pointer transition-colors ${
+          className={`flex items-center relative border-1 rounded-xl h-[1.75rem] cursor-pointer transition-colors overflow-hidden ${
             item.selected
               ? "border-purple text-purple bg-purple/10"
               : `${theme.border}`
@@ -52,7 +62,7 @@ const Categories = ({ categories, callback = () => {}, className = "" }) => {
             {item.selected && (
               <motion.div
                 initial={{ width: 0, marginLeft: 0 }}
-                animate={{ width: "1.75rem", marginLeft: ".25rem" }}
+                animate={{ width: "1.5rem", marginLeft: ".25rem" }}
                 exit={{ width: 0, marginLeft: 0, transition: { delay: 0 } }}
                 transition={{
                   ...animationsTypes.default,
@@ -73,9 +83,9 @@ const Categories = ({ categories, callback = () => {}, className = "" }) => {
             }}
             className={"select-none pr-2"}
           >
-            {item.name}
+            {render(item)}
           </motion.span>
-        </motion.div>
+        </div>
       ))}
     </div>
   );

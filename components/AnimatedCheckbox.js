@@ -23,7 +23,6 @@ const AnimatedCheckbox = ({ className = "", isChecked }) => {
 
   const pathLength = useMotionValue(0);
   const opacity = useTransform(pathLength, [0.1, 0.2], [0, 1]);
-  const scale = useTransform(pathLength, [0, 1], [0.25, 0.5]);
 
   const scaleFactor = 28 / 300; // Target size / Original size
 
@@ -66,7 +65,7 @@ const AnimatedCheckbox = ({ className = "", isChecked }) => {
           strokeLinecap="round"
           strokeLinejoin="round"
           variants={tickVariants}
-          style={{ pathLength, opacity, scale }}
+          style={{ pathLength, opacity, scale: 0.45 }}
           custom={isChecked} // Pass custom prop if needed for variants
         />
       </svg>

@@ -11,6 +11,7 @@ import LanguagesButtons from "@/components/navigation/LanguagesButtons";
 import { colors, layoutProperties } from "@/layout";
 import { changeTheme } from "@/redux/reducers/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
+import CloseButton from "@/components/buttons/CloseButton";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -92,7 +93,7 @@ const Navigation = () => {
         ...animationsTypes.default,
         delay: 0.1,
       }}
-      className={`fixed top-0 left-0 w-full flex h-[4rem] items-center justify-between gap-4 z-[1000] backdrop-blur-sm shadow-sm ${layoutProperties.padding} ${theme.foreground}`}
+      className={`fixed top-0 left-0 w-full flex h-[4rem] items-center justify-between gap-4 z-[1000] border-b-1 backdrop-blur-sm shadow-sm ${layoutProperties.padding} ${theme.foreground}`}
     >
       <AnimatePresence mode={"wait"}>
         {isMenuOpen && (
@@ -107,13 +108,7 @@ const Navigation = () => {
               transition={animationsTypes.default}
             >
               <div className={`h-[4rem] flex items-center`}>
-                <Button onClick={() => setIsMenuOpen(false)} square navigation>
-                  <Icons.Close
-                    className={
-                      "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                    }
-                  />
-                </Button>
+                <CloseButton onClick={() => setIsMenuOpen(false)} />
               </div>
 
               <div

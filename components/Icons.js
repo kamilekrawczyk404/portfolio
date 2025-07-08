@@ -1,6 +1,10 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faClose } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faCaretDown,
+  faClose,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const Icons = {
   Close: ({ className = "" }) => (
@@ -8,5 +12,8 @@ export const Icons = {
   ),
   Arrow: ({ className = "" }) => (
     <FontAwesomeIcon icon={faArrowRight} className={className} />
+  ),
+  CaretDown: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faCaretDown} className={className} />
   ),
 };

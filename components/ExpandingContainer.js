@@ -1,43 +1,18 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useAnimate,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import CloseButton from "@/components/buttons/CloseButton";
+import { useSelector } from "react-redux";
+import GroupSection from "@/components/GroupSection";
+import Aspect from "@/components/lists/Aspect";
+import StaggeredList from "@/components/lists/StaggeredList";
+import UnderlineNav from "@/components/navigation/UnderlineNav";
 
-const useScreenCenterPosition = () => {
-  const [screenCenter, setScreenCenter] = useState({ x: 0, y: 0 });
+const ExpandingContainer = ({ isExpanded, setIsExpanded, project }) => {
+  const { theme, opposite } = useSelector((state) => state.theme);
 
-  useEffect(() => {
-    const handleResize = () => {
-      const x = window.innerWidth / 2;
-      const y = window.innerHeight / 2;
-      setScreenCenter({ x, y });
-    };
-
-    if (typeof window !== "undefined") {
-      handleResize(); // Set initial position
-      window.addEventListener("resize", handleResize);
-    }
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return [screenCenter];
-};
-
-const ExpandingContainer = ({}) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-
-  const expandedContainerBounds = {
-    width: 70,
-    height: 40,
-  };
 
   useEffect(() => {
     setIsCompleted(false);
@@ -51,21 +26,77 @@ const ExpandingContainer = ({}) => {
 
   const animationDuration = 0.7;
 
+  // Render navigation view based on the project's aspect
+  const renderView = (view) => {
+    switch (view.title.toLowerCase()) {
+      case "stack technologiczny":
+        return (
+          <div className={"w-full p-4 flex flex-col gap-4 justify-end h-full"}>
+            {view.categories.map((category, index) => (
+              <GroupSection
+                key={index}
+                title={category.title}
+                className={`${theme.foreground} self-start`}
+              >
+                <StaggeredList
+                  items={category.aspects}
+                  render={(item) => <Aspect name={item} />}
+                />
+              </GroupSection>
+            ))}
+          </div>
+        );
+      case "główne funkcjonalności":
+        return (
+          <div className={"w-full h-full p-4 flex flex-col gap-4 relative"}>
+            {view.categories.map((category, index) => (
+              <div
+                key={index}
+                className={`${theme.foreground} flex flex-col gap-y-4 h-full justify-between`}
+              >
+                <h4 className={"text-xl"}>{category.title}</h4>
+                <StaggeredList
+                  className={"grid grid-cols-2 grid-rows-fit gap-4 self"}
+                  items={category.aspects}
+                  render={(item) => (
+                    <div className={"flex flex-col gap-y-1 items-start"}>
+                      <Aspect name={item.name} />
+                      <div className={"ml-[.125rem]"}>
+                        <div
+                          className={
+                            "relative !w-3 aspect-square border-l-1 border-b-1 float-left mr-2"
+                          }
+                        ></div>
+                        <p className={"text-sm"}>{item.description}</p>
+                      </div>
+                    </div>
+                  )}
+                />
+              </div>
+            ))}
+          </div>
+        );
+      default:
+        return;
+    }
+  };
+
   return (
-    <div className={`relative w-full min-h-[20rem]`}>
+    <AnimatePresence>
       <motion.div
         layout
-        onClick={() => setIsExpanded(!isExpanded)}
-        className={`expanding-container rounded-md flex overflow-hidden flex-col ${
-          isExpanded ? "-translate-x-1/2 -translate-y-1/2" : ""
+        className={`rounded-md flex overflow-hidden flex-col ${
+          isExpanded ? "-translate-x-1/2 -translate-y-[calc(50%-2rem)]" : ""
         }  ${!isExpanded && isCompleted ? "z-0" : "z-100"}`}
         style={{
-          width: isExpanded ? `${expandedContainerBounds.width}em` : "100%",
-          height: isExpanded ? `${expandedContainerBounds.height}em` : "100%",
+          width: isExpanded ? `calc(100vw - 10%)` : "100%",
+          height: isExpanded ? `calc(100dvh - 8rem)` : "20rem",
+          minHeight: "30rem",
           left: isExpanded ? "50%" : "0",
           top: isExpanded ? "50%" : "0",
           position: isExpanded ? "fixed" : "absolute",
           borderRadius: isExpanded ? "1rem" : "0.5rem",
+          opacity: isExpanded ? 1 : 0,
         }}
         transition={{
           duration: animationDuration,
@@ -74,28 +105,23 @@ const ExpandingContainer = ({}) => {
         }}
       >
         <div className={"relative w-full h-full"}>
-          <motion.p
+          <motion.div
             animate={
               isExpanded
                 ? {
                     opacity: 1,
-                    // y: 0,
+                    y: "0%",
                   }
                 : {
                     opacity: 0,
-                    // y: 20,
+                    y: "-100%",
                   }
             }
-            layout
-            style={{
-              padding: isExpanded ? "1rem" : "0.5rem",
-            }}
-            className={
-              "absolute top-0 left-0 h-20 w-full text-2xl font-light text-neutral-100 z-[10]"
-            }
+            className={`absolute top-0 left-0 h-[4rem] w-full text-2xl font-light text-neutral-100 z-[10] flex justify-between items-center p-4 ${theme.background}`}
           >
-            Weather app
-          </motion.p>
+            <h3 className={`${theme.foreground} text-2xl`}>{project.title}</h3>
+            <CloseButton onClick={() => setIsExpanded(false)} />
+          </motion.div>
 
           <div
             className={
@@ -111,8 +137,7 @@ const ExpandingContainer = ({}) => {
               }
               className={"w-full h-full bg-no-repeat lg:bg-cover"}
               style={{
-                backgroundImage: `url('/projects/andwiert/1.png')`,
-                // backgroundPosition: isExpanded ? "center" : "cover",
+                backgroundImage: `url(${project.thumbnail})`,
               }}
               transition={{
                 duration: animationDuration,
@@ -129,32 +154,29 @@ const ExpandingContainer = ({}) => {
           </div>
         </div>
         <motion.div
-          className={
-            "bg-neutral-900 overflow-hidden absolute w-full bottom-0 left-0 h-0"
-          }
+          className={`absolute w-full bottom-0 left-0 ${theme.background}`}
           animate={
             isExpanded
               ? {
-                  height: "33%",
+                  height: "50%",
                   display: "block",
                 }
               : { height: 0, display: "hidden" }
           }
         >
-          <p className={"text-gray-100 text-2xl m-4"}>
-            Site for deep wells company
-          </p>
+          <UnderlineNav
+            items={project.description}
+            renderHeader={(header) => (
+              <span className={"inline-flex px-2 h-[1.75rem] items-center"}>
+                {header}
+              </span>
+            )}
+            renderView={renderView}
+            id={"projectAspectsNavigation"}
+          />
         </motion.div>
       </motion.div>
-
-      <motion.div
-        className={`fixed top-0 left-0 w-screen h-screen z-[10] bg-black/70 pointer-events-none opacity-0`}
-        animate={{
-          transition: animationDuration / 2,
-          ...(isExpanded ? { opacity: 1 } : { opacity: 0 }),
-        }}
-      />
-    </div>
+    </AnimatePresence>
   );
 };
 
