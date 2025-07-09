@@ -1,11 +1,19 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const GroupSection = ({ title, children, className = "" }) => {
+const GroupSection = ({
+  title,
+  children,
+  className = "",
+  headerSize = "text-sm",
+}) => {
+  const { theme } = useSelector((state) => state.theme);
+
   return (
     <div
-      className={`flex flex-col self-center gap-y-1 relative justify-center ${className}`}
+      className={`flex flex-col gap-y-1 relative  ${theme.foreground} ${className}`}
     >
-      <p className={"text-sm"}>{title}</p>
+      <h4 className={`${headerSize} ${theme.foreground}`}>{title}</h4>
       {children}
     </div>
   );

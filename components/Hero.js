@@ -1,85 +1,112 @@
 "use client";
-import React, { useEffect } from "react";
-import { motion, useAnimate } from "framer-motion";
-import { animationsTypes } from "@/animations";
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion, useAnimate } from "framer-motion";
+import { animationProperties, animationsTypes } from "@/animations";
 import { useTranslations } from "next-intl";
 import Button from "@/components/buttons/Button";
-import AnimatedText from "@/components/AnimatedText";
-import TextCarousel from "@/components/TextCarousel";
 import Image from "next/image";
 import PageContainer from "@/components/PageContainer";
+import AnimatedSingleLetterText from "@/components/text/AnimatedSingleLetterText";
+import AnimatedTextWithOverflow from "@/components/text/AnimatedTextWithOverflow";
+import { colors, layoutProperties } from "@/layout";
+import TextCarousel from "@/components/text/TextCarousel";
+import { useSelector } from "react-redux";
 
 const Hero = () => {
   const t = useTranslations("HomePage");
 
+  // based on the device's width we choose the correct animation direction
+  const [animationDirection, setAnimationDirection] = useState("vertical");
+
+  useEffect(() => {
+    setAnimationDirection(window.innerWidth < 1024 ? "horizontal" : "vertical");
+  }, []);
+
   return (
-    <PageContainer includeNavigationHeight>
-      <Container as={"background"} text={"Strategic thinker"} />
-      <Container text={"Agile adaptor"}>
-        <motion.div
-          initial={{
-            opacity: 0,
-            borderRadius: 0,
-          }}
-          className={`w-full h-full relative overflow-hidden`}
-        >
-          <Image
-            src={"/hero/myself_3.webp"}
-            alt={"Myself"}
-            fill
-            style={{
-              objectFit: "cover",
-              backgroundPosition: "center center",
-              filter: "grayscale(1)",
-            }}
-          />
-        </motion.div>
-      </Container>
+    <PageContainer
+      includeNavigationHeight
+      className={"flex items-center justify-center"}
+    >
+      <Container
+        type={"container"}
+        text={"Strategic thinker"}
+        animationDirection={animationDirection}
+      />
+
+      {/*section of loading animated text*/}
       <motion.div
         className={
           "absolute bottom-4 left-4 right-4 flex justify-between -z-10"
         }
       >
-        <AnimatedText text={"Loading"} className={"text-7xl text-gray-100"} />
+        <AnimatedSingleLetterText
+          text={"Loading"}
+          className={`${layoutProperties.text.large} ${colors.dark.foreground}`}
+        />
         <div>
-          <AnimatedText
+          <AnimatedSingleLetterText
             text={"Kamil's portfolio"}
-            className={"text-7xl text-gray-100"}
+            className={`${layoutProperties.text.large} ${colors.dark.foreground}`}
           />
         </div>
       </motion.div>
 
+      {/*actual hero section*/}
       <div
-        className={`absolute top-1/2 -translate-y-1/2 flex flex-col mx-auto gap-y-8 w-[calc(50%-1rem)]`}
+        className={`flex lg:flex-row flex-col-reverse w-full items-center justify-center lg:gap-0 gap-8 lg:h-3/4 h-full lg:pt-0 pt-[calc(4rem)]`}
       >
-        <div className={"flex flex-col gap-y-2"}>
-          <div>
-            <div className={"relative flex items-center h-fit flex-wrap"}>
-              <AnimatedText
-                text={"I build"}
-                animationDelay={2}
-                className={"text-7xl"}
-              ></AnimatedText>
-              <TextCarousel
-                key={"carousel"}
-                className={"text-7xl"}
-                words={t("Hero.Header.TextCarousel").split(",")}
-                delay={2.2}
+        {/*text section*/}
+        <div
+          className={`relative flex flex-col gap-y-4 basis-1/2 lg:w-1/2 w-full`}
+        >
+          <div className={`flex flex-col gap-y-2 relative w-full`}>
+            <div className={""}>
+              <div
+                className={"relative flex items-center h-fit flex-wrap w-full"}
+              >
+                <AnimatedSingleLetterText
+                  text={"I build"}
+                  animationDelay={2.4}
+                  className={`${layoutProperties.text.large}`}
+                />
+                <TextCarousel
+                  key={"carousel"}
+                  className={`${layoutProperties.text.large}`}
+                  words={t("Hero.Header.TextCarousel").split(",")}
+                  delay={2.5}
+                />
+              </div>
+              <AnimatedSingleLetterText
+                text={"web applications"}
+                className={`${layoutProperties.text.large}`}
+                animationDelay={2.6}
               />
             </div>
-            <div>
-              <AnimatedText
-                text={"web applications"}
-                className={"text-7xl"}
-                animationDelay={2.3}
-              />
+            <div className={"overflow-hidden"}>
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: "50%",
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  ...animationsTypes.default,
+                  delay: 2.6,
+                }}
+                className={`w-2/3 ${layoutProperties.text.small}`}
+              >
+                {t("Hero.Summary")}
+              </motion.p>
             </div>
           </div>
-          <div className={"overflow-hidden"}>
-            <motion.p
+          <div className={`flex md:flex-row flex-col gap-4 overflow-hidden`}>
+            <Button
               initial={{
                 opacity: 0,
-                y: "50%",
+                y: "100%",
               }}
               animate={{
                 opacity: 1,
@@ -87,51 +114,58 @@ const Hero = () => {
               }}
               transition={{
                 ...animationsTypes.default,
-                delay: 2.3,
+                delay: 2.7,
               }}
-              className={"text-lg w-2/3"}
+              main
             >
-              {t("Hero.Summary")}
-            </motion.p>
+              Explore my works
+            </Button>
+            <Button
+              filled
+              main
+              initial={{
+                opacity: 0,
+                y: "100%",
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                ...animationsTypes.default,
+                delay: 2.7,
+              }}
+            >
+              Hire me
+            </Button>
           </div>
         </div>
-        <div className={"flex gap-x-4 overflow-hidden"}>
-          <Button
+
+        <Container
+          type={"photoContainer"}
+          text={"Agile adaptor"}
+          animationDirection={animationDirection}
+          className={"basis-1/2"}
+        >
+          <motion.div
             initial={{
               opacity: 0,
-              y: "100%",
+              borderRadius: 0,
             }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              ...animationsTypes.default,
-              delay: 2.4,
-            }}
-            main
+            className={`w-full h-full relative overflow-hidden`}
           >
-            Explore my works
-          </Button>
-          <Button
-            filled
-            main
-            initial={{
-              opacity: 0,
-              y: "100%",
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              ...animationsTypes.default,
-              delay: 2.4,
-            }}
-          >
-            Hire me
-          </Button>
-        </div>
+            <Image
+              src={"/hero/myself_3.webp"}
+              alt={"Myself"}
+              fill
+              style={{
+                objectFit: "cover",
+                backgroundPosition: "center center",
+                filter: "grayscale(1)",
+              }}
+            />
+          </motion.div>
+        </Container>
       </div>
     </PageContainer>
   );
@@ -139,9 +173,20 @@ const Hero = () => {
 
 export default Hero;
 
-const Container = ({ children, text, as = "gallery", className = "" }) => {
+const Container = ({
+  children,
+  text,
+  animationDirection,
+  type = "photoContainer",
+  className = "",
+  ...props
+}) => {
+  const { theme } = useSelector((state) => state.theme);
+
   // if this component is not as a gallery, it would be animated to cover entire screen
   const [scope, animate] = useAnimate();
+
+  const [animationCompleted, setAnimationCompleted] = useState(false);
 
   useEffect(() => {
     const show = async () => {
@@ -156,31 +201,29 @@ const Container = ({ children, text, as = "gallery", className = "" }) => {
         );
 
         await animate(
-          "span",
+          "h3",
           {
             y: 0,
           },
           {
             ...animationsTypes.default,
-
             delay: 0.3,
             duration: 1,
           },
         );
 
         animate(
-          "span",
+          "h3",
           {
-            y: as === "gallery" ? "100%" : "-100%",
+            y: type === "photoContainer" ? "-100%" : "100%",
           },
           {
             ...animationsTypes.default,
             duration: 1,
-            type: "spring",
           },
         );
 
-        if (as !== "gallery") {
+        if (type !== "photoContainer") {
           await animate(
             scope.current,
             {
@@ -209,6 +252,7 @@ const Container = ({ children, text, as = "gallery", className = "" }) => {
               duration: 0,
             },
           );
+
           await animate(
             scope.current,
             {
@@ -218,18 +262,14 @@ const Container = ({ children, text, as = "gallery", className = "" }) => {
             {
               ...animationsTypes.default,
               duration: 1,
-              delay: 0.2,
+              delay: 0.1,
             },
           );
-
-          // document.body.classList.replace(
-          //   colors.dark.background,
-          //   colors.light.background,
-          // );
         } else {
           animate("div", {
             opacity: 1,
           });
+
           animate(
             "div",
             {
@@ -237,57 +277,98 @@ const Container = ({ children, text, as = "gallery", className = "" }) => {
             },
             { delay: 0.3 },
           );
+
           await animate(
             scope.current,
             {
-              width: "calc(50% - 4rem)",
-              height: "60%",
+              padding: ".25rem",
+              width:
+                animationDirection === "vertical"
+                  ? "calc(50% - 4rem)"
+                  : "calc(100% - 2rem)",
+              height:
+                animationDirection === "vertical"
+                  ? "calc(75% - 6rem)"
+                  : "calc(50% - 5rem)",
+              left: animationDirection === "vertical" ? "50%" : "1rem",
+              top: "50%",
               borderRadius: "1rem",
-              zIndex: 100,
+              zIndex: 10,
               boxShadow:
                 "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
             },
-            { ...animationsTypes.default, duration: 1, delay: 0.2 },
+            { ...animationsTypes.default, duration: 1, delay: 0.1 },
           );
+
+          await animate(
+            scope.current,
+            {
+              position: "relative",
+              width: "100%",
+              height: "100%",
+              left: 0,
+              top: 0,
+              translateY: animationDirection === "vertical" ? 0 : "50%",
+              translateX: 0,
+              aspectRatio: "auto",
+              minHeight: "20rem",
+            },
+            { duration: 0 },
+          );
+
+          // for mobile devices, smooth transition to the top section of the hero
+          if (animationDirection === "horizontal") {
+            await animate(
+              scope.current,
+              { translateY: 0 },
+              {
+                ...animationsTypes.default,
+                bounce: 0,
+                duration: animationProperties.durations.medium,
+              },
+            );
+          }
         }
       }
+
+      setAnimationCompleted(true);
     };
 
-    show();
-  }, []);
+    if (animationDirection) show();
+  }, [animationDirection]);
 
   return (
     <motion.div
       initial={{
-        aspectRatio: "1 / 1",
+        aspectRatio: 1 / 1,
         position: "absolute",
-        left: as === "gallery" ? "50%" : null,
-        right: as !== "gallery" ? "50%" : null,
+        left: type === "photoContainer" ? "50%" : null,
+        right: type !== "photoContainer" ? "50%" : null,
         top: "50%",
-        translateY: as === "gallery" ? "-75%" : "-25%",
+        translateY: type === "photoContainer" ? "-75%" : "-25%",
         scale: 0.25,
         borderRadius: 0,
       }}
       ref={scope}
-      className={`overflow-hidden h-1/2 ${
-        as !== "gallery"
-          ? "origin-bottom-right bg-gray-100"
-          : "origin-top-left bg-purple"
+      className={`overflow-hidden md:h-1/3 h-1/5 ${
+        type !== "photoContainer"
+          ? `origin-bottom-right ${theme.background}`
+          : `origin-top-left bg-purple`
       } ${className}`}
+      {...props}
     >
-      <div
-        className={`absolute text-3xl overflow-hidden ${
-          as === "gallery" ? "bottom-2 right-2" : "top-2 left-2"
-        }`}
-      >
-        <motion.span
-          className={"inline-block"}
-          initial={{ y: as === "gallery" ? "-100%" : "100%" }}
-        >
-          {text}
-        </motion.span>
+      <div className={"relative h-full w-full"}>
+        <AnimatedTextWithOverflow
+          text={text}
+          direction={
+            type === "photoContainer" ? "fromBottomToTop" : "fromTopToBottom"
+          }
+          className={`${
+            type === "photoContainer" ? "right-2 bottom-2" : "left-2 top-2"
+          } lg:text-3xl md:text-2xl text-xl absolute`}
+        />
+        {children}
       </div>
-      <div className={"p-1 h-full w-full"}>{children}</div>
     </motion.div>
   );
 };

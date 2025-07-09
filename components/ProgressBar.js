@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { colors } from "@/layout"; // Ensure these paths are correct
 
 const ProgressBar = ({ percentage, shouldAnimate }) => {
-  const { opposite } = useSelector((state) => state.theme);
+  const { theme } = useSelector((state) => state.theme);
 
   const percentageMotionValue = useMotionValue(0);
   const width = useTransform(
@@ -95,7 +95,7 @@ const ProgressBar = ({ percentage, shouldAnimate }) => {
           }}
         ></motion.div>
         <div
-          className={"absolute left-0 top-0 w-full h-full bg-gray-200 z-0"}
+          className={`absolute left-0 top-0 w-full h-full z-0 ${theme.background} brightness-75`}
         />
       </div>
     </div>

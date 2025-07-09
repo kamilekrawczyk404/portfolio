@@ -13,6 +13,8 @@ import GroupSection from "@/components/GroupSection";
 import Categories from "@/components/Categories";
 import StaggeredList from "@/components/lists/StaggeredList";
 import Aspect from "@/components/lists/Aspect";
+import ProgressBarAspect from "@/components/ProgressBarAspect";
+import AnimatedTextWithOverflow from "@/components/text/AnimatedTextWithOverflow";
 
 const Technologies = () => {
   const technologies = [
@@ -175,7 +177,7 @@ const Technologies = () => {
   };
 
   return (
-    <PageContainer section includeNavigationHeight>
+    <PageContainer section>
       <SectionTitle title={"Technologies"}>
         <GroupSection title={"Select a category"}>
           <Categories
@@ -194,7 +196,7 @@ const Technologies = () => {
           initial={"initial"}
           animate={"animate"}
           exit={"exit"}
-          className={"flex flex-col gap-y-8 flex-1"}
+          className={`flex flex-col flex-1 ${layoutProperties.gap.medium}`}
         >
           {Object.entries(technologies[selectedTechnologyIndex])
             .slice(1)
@@ -208,17 +210,10 @@ const Technologies = () => {
                 className={"flex flex-col gap-y-2"}
               >
                 {/*Header of each section*/}
-                <div className={"overflow-hidden pb-1"}>
-                  <motion.h3
-                    initial={{ y: "-100%" }}
-                    animate={{ y: "0%" }}
-                    exit={{ y: "100%" }}
-                    transition={animationsTypes.default}
-                    className={"text-5xl"}
-                  >
-                    {value.title}
-                  </motion.h3>
-                </div>
+                <AnimatedTextWithOverflow
+                  text={value.title}
+                  className={`${layoutProperties.text.medium}`}
+                />
 
                 {/*Render progress bars or staggered list of aspects*/}
                 {/*If key is one of these, we should render the staggered list*/}
@@ -230,12 +225,14 @@ const Technologies = () => {
                     render={(aspect) => <Aspect name={aspect.name} />}
                   />
                 ) : (
-                  <div className={"grid grid-cols-4 gap-4"}>
+                  <div
+                    className={`grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.medium}`}
+                  >
                     {value.aspects.map((aspect) => (
-                      <motion.div
-                        variants={aspectItemVariants}
+                      <ProgressBarAspect
                         key={aspect.name}
-                        className={"flex flex-col gap-y-1 relative"}
+                        aspect={aspect}
+                        variants={aspectItemVariants}
                         onAnimationComplete={(definition) => {
                           // When animation is completed start animate the progress bar
                           if (definition === "animate") {
@@ -245,17 +242,10 @@ const Technologies = () => {
                             }));
                           }
                         }}
-                      >
-                        <span>{aspect.name}</span>
-                        {aspect?.knowledge && (
-                          <ProgressBar
-                            percentage={aspect.knowledge}
-                            shouldAnimate={
-                              animatedProgressBars[aspect.name] || false
-                            }
-                          />
-                        )}
-                      </motion.div>
+                        shouldAnimate={
+                          animatedProgressBars[aspect.name] || false
+                        }
+                      />
                     ))}
                   </div>
                 )}

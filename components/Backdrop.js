@@ -6,7 +6,7 @@ const Backdrop = ({ isActive, blur = false }) => {
   return (
     isActive && (
       <motion.div
-        className={`fixed top-0 left-0 bg-black/50 w-screen h-screen z-[100] ${
+        className={`fixed top-0 left-0 bg-black/50 w-screen h-screen z-[1000] ${
           blur ? "backdrop-blur-sm" : ""
         }`}
         initial={{

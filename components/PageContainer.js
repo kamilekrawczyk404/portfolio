@@ -1,5 +1,6 @@
 import React from "react";
 import { colors, layoutProperties } from "@/layout";
+import { useSelector } from "react-redux";
 
 const PageContainer = ({
   children,
@@ -7,13 +8,17 @@ const PageContainer = ({
   section = false,
   className = "",
 }) => {
+  const { theme } = useSelector((state) => state.theme);
+
   return (
     <div
       className={`min-h-fit w-full relative ${
-        !includeNavigationHeight ? "h-[calc(100dvh-4rem)]" : "h-[100dvh]"
+        includeNavigationHeight
+          ? "!mt-[4rem] h-[calc(100dvh-4rem)]"
+          : "h-[100dvh]"
       } ${
         section
-          ? `${colors.light.background} flex flex-col justify-center gap-8`
+          ? `${theme.background} relative flex flex-col justify-center ${layoutProperties.gap.large}`
           : ""
       } ${layoutProperties.body.padding} ${className}`}
     >

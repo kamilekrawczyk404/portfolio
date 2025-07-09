@@ -14,10 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 import CloseButton from "@/components/buttons/CloseButton";
 
 const Navigation = () => {
+  const { theme, selected } = useSelector((state) => state.theme);
+
+  const dispatch = useDispatch();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavigationLoaded, setIsNavigationLoaded] = useState(false);
-  const { theme } = useSelector((state) => state.theme);
-  const dispatch = useDispatch();
 
   const linksContainerRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -49,7 +51,7 @@ const Navigation = () => {
     const timeout = setTimeout(
       () => {
         setIsNavigationLoaded(true);
-        dispatch(changeTheme());
+        // dispatch(changeTheme());
       },
       animationDuration * 1000 + 750,
     );
@@ -93,7 +95,7 @@ const Navigation = () => {
         ...animationsTypes.default,
         delay: 0.1,
       }}
-      className={`fixed top-0 left-0 w-full flex h-[4rem] items-center justify-between gap-4 z-[1000] border-b-1 backdrop-blur-sm shadow-sm ${layoutProperties.padding} ${theme.foreground}`}
+      className={`fixed top-0 left-0 w-full flex h-[4rem] items-center justify-between gap-4 z-[100] border-b-1 backdrop-blur-sm shadow-sm ${layoutProperties.padding} ${theme.foreground} ${theme.background}`}
     >
       <AnimatePresence mode={"wait"}>
         {isMenuOpen && (
@@ -101,11 +103,14 @@ const Navigation = () => {
             <Backdrop isActive={isMenuOpen} />
             <motion.aside
               ref={linksContainerRef}
-              className={`fixed h-screen w-2/5 top-0 rounded-r-3xl flex flex-col z-[100] gap-4 ${layoutProperties.padding} ${theme.background} ${theme.foreground}`}
-              initial={{ left: "-50%", pointerEvents: "none" }}
+              className={`fixed h-screen lg:w-2/5 w-4/5 top-0 rounded-r-3xl flex flex-col z-[1000] gap-4 ${layoutProperties.padding} ${theme.background} ${theme.foreground}`}
+              initial={{ left: "-100%", pointerEvents: "none" }}
               animate={{ left: 0, pointerEvents: "auto" }}
-              exit={{ left: "-50%", pointerEvents: "none" }}
-              transition={animationsTypes.default}
+              exit={{ left: "-100%", pointerEvents: "none" }}
+              transition={{
+                ...animationsTypes.default,
+                duration: animationProperties.durations.long,
+              }}
             >
               <div className={`h-[4rem] flex items-center`}>
                 <CloseButton onClick={() => setIsMenuOpen(false)} />
@@ -137,7 +142,7 @@ const Navigation = () => {
       </Button>
       <div
         className={
-          "absolute left-1/2 -translate-x-1/2 flex-1 top-1/2 -translate-y-1/2 flex items-center gap-2 justify-center"
+          "absolute left-1/2 -translate-x-1/2 flex-1 top-1/2 -translate-y-1/2 flex items-center gap-2 justify-center lg:flex-row flex-col"
         }
       >
         <span>Kamil Krawczyk</span>
@@ -157,8 +162,28 @@ const Navigation = () => {
           </Button>
         </motion.div>
       </div>
-      <div className={"flex gap-x-1"}>
-        <LanguagesButtons />
+      <div className={"flex items-center gap-x-4"}>
+        <div className={"text-lg flex gap-x-2 items-center"}>
+          <Icons.Sun />
+          <div
+            className={
+              "flex relative w-[3rem] border-1 rounded-xl h-[1.5rem] p-[.125rem] cursor-pointer"
+            }
+            style={{
+              justifyContent: selected === "dark" ? "flex-end" : "flex-start",
+            }}
+            onClick={() => dispatch(changeTheme())}
+          >
+            <motion.div
+              layout
+              className={"h-full aspect-square rounded-full bg-purple"}
+            />
+          </div>
+          <Icons.Moon />
+        </div>
+        <div className={"flex items-center gap-x-1"}>
+          <LanguagesButtons />
+        </div>
       </div>
     </motion.nav>
   );

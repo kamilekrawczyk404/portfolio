@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import AnimatedCheckbox from "@/components/AnimatedCheckbox";
 import { useSelector } from "react-redux";
 import { animationProperties, animationsTypes } from "@/animations";
+import { layoutProperties } from "@/layout";
 
 const Categories = ({
   categories,
@@ -47,7 +48,7 @@ const Categories = ({
   }, [items]);
 
   return (
-    <div className={"flex gap-x-2 "}>
+    <div className={`flex flex-wrap gap-2`}>
       {items.map((item, index) => (
         <div
           key={index}
@@ -81,7 +82,7 @@ const Categories = ({
               ...animationsTypes.default,
               duration: animationProperties.durations.short,
             }}
-            className={"select-none pr-2"}
+            className={"select-none pr-2 text-nowrap"}
           >
             {render(item)}
           </motion.span>

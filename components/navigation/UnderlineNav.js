@@ -10,7 +10,7 @@ const UnderlineNav = ({
   renderHeader = () => {},
   renderView = () => {},
   initialActiveIndex = 0,
-  collapsedIndexes = [],
+  canRender = true,
 }) => {
   const { theme } = useSelector((state) => state.theme);
 
@@ -75,7 +75,7 @@ const UnderlineNav = ({
       </div>
       <div className={"relative w-full h-full overflow-hidden"}>
         <AnimatePresence mode={"sync"} custom={carouselDirection}>
-          {items[activeIndex] && (
+          {canRender && items[activeIndex] && (
             <motion.div
               key={activeIndex}
               variants={carouselVariants}
@@ -83,7 +83,7 @@ const UnderlineNav = ({
               animate="animate"
               exit="exit"
               custom={carouselDirection}
-              className={"absolute left-0 top-0 w-full h-full"}
+              className={"absolute left-0 top-0 w-full h-full flex"}
             >
               {renderView(items[activeIndex])}
             </motion.div>
