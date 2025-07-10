@@ -10,6 +10,7 @@ import GroupSection from "@/components/GroupSection";
 import StaggeredList from "@/components/lists/StaggeredList";
 import Gallery from "@/components/gallery/Gallery";
 import Aspect from "@/components/lists/Aspect";
+import { layoutProperties } from "@/layout";
 
 const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
   const { theme } = useSelector((state) => state.theme);
@@ -22,15 +23,22 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
     switch (view.title.toLowerCase()) {
       case "użyte technologie":
         return (
-          <ChildContainer className={"flex flex-col justify-between"}>
-            <p className={""}>{view.description}</p>
-            <div className={"grid grid-cols-2 gap-4"}>
+          <ChildContainer
+            className={`flex md:flex-row flex-col ${layoutProperties.gap.large}`}
+          >
+            <StaggeredList
+              className={`basis-1/2 ${theme.foreground}`}
+              items={view.description}
+              render={(item) => item}
+            />
+
+            <div className={"relative basis-1/2 flex flex-col gap-4"}>
               {view.categories.map((category, index) => (
                 <GroupSection
                   key={index}
                   title={category.title}
                   headerSize={"text-lg"}
-                  className={`${theme.foreground} basis-1/2 self-start`}
+                  className={`${theme.foreground} self-start`}
                 >
                   <StaggeredList
                     items={category.aspects}
@@ -51,7 +59,7 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
               >
                 <StaggeredList
                   className={
-                    "grid grid-cols-2 grid-rows-fit gap-4 overflow-y-scroll"
+                    "grid md:grid-cols-2 grid-cols-1 grid-rows-fit gap-4 overflow-y-scroll"
                   }
                   items={category.aspects}
                   render={(item) => (
@@ -88,52 +96,28 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
     <div className={"relative w-full h-full flex flex-col"}>
       {/*top bar - header*/}
       <motion.div
-        initial={{ y: "-100%" }}
-        animate={
-          shouldBeShown
-            ? {
-                y: "0%",
-              }
-            : {
-                y: "-100%",
-              }
-        }
+        initial={{ opacity: 0 }}
+        animate={{ opacity: shouldBeShown ? 1 : 0 }}
         transition={{
           ...animationsTypes.default,
           duration: animationProperties.durations.long,
           delay: shouldBeShown ? delay : 0,
         }}
-        className={`basis-[4rem] right-0 z-[10] p-4 ${theme.background}`}
+        className={`z-[10] p-4 flex justify-between items-center ${theme.background}`}
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={shouldBeShown ? { opacity: 1 } : { opacity: 0 }}
-          transition={{
-            ...animationsTypes.default,
-            delay: shouldBeShown ? delay + 0.5 : 0,
-          }}
-          className={"flex justify-between items-center"}
-        >
-          <h3 className={`${theme.foreground} text-2xl`}>{project.title}</h3>
-          <CloseButton onClick={onClose} />
-        </motion.div>
+        <h3 className={`${theme.foreground} text-2xl`}>{project.title}</h3>
+        <CloseButton onClick={onClose} />
       </motion.div>
 
       {/*bottom section - navigation*/}
       <motion.div
-        className={`basis-full -translate-y-[1px] w-full ${theme.background}`}
-        initial={{ y: "100%" }}
-        animate={
-          shouldBeShown
-            ? {
-                y: "0",
-              }
-            : { y: "100%" }
-        }
+        className={`relative h-full w-full ${theme.background}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: shouldBeShown ? 1 : 0 }}
         transition={{
           ...animationsTypes.default,
           duration: animationProperties.durations.long,
-          delay,
+          delay: shouldBeShown ? delay : 0,
         }}
       >
         <UnderlineNav
@@ -155,5 +139,7 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
 export default Project;
 
 const ChildContainer = ({ className = "", children }) => (
-  <div className={`p-4 w-full relative ${className}`}>{children}</div>
+  <div className={`p-4 w-full relative overflow-y-scroll ${className}`}>
+    {children}
+  </div>
 );

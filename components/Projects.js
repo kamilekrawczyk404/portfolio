@@ -36,6 +36,11 @@ const Projects = () => {
 
   const projects = [
     {
+      title: "Portfolio",
+      description: [],
+      thumbnail: "/project/portfolio/site-1.png",
+    },
+    {
       title: "Strona dla firmy And-Wiert",
       description: [
         {
@@ -93,8 +98,10 @@ const Projects = () => {
         },
         {
           title: "Użyte technologie",
-          description:
-            "W ramach tego projektu byłem odpowiedzialny za całościowy rozwój frontendu i backendu, w tym implementację modułu AI i integrację z API Google Gemini, oraz projektowanie interfejsu użytkownika i implementację responsywności. Moje kluczowe zadania obejmowały budowę komponentów React i Next.js, zarządzanie stanem aplikacji za pomocą Redux i React Query, opracowanie logiki dla modułu AI, optymalizację wydajności strony (np. ładowanie obrazów z Pexels API i ich przetwarzanie za pomocą Sharp), implementację uwierzytelniania z NextAuth, zarządzanie bazą danych MySQL za pomocą Prisma oraz przygotowanie aplikacji do wdrożenia za pomocą Docker i OVH.",
+          description: [
+            "W ramach tego projektu byłem odpowiedzialny za całościowy rozwój frontendu i backendu, w tym implementację modułu AI i integrację z API Google Gemini, oraz projektowanie interfejsu użytkownika i implementację responsywności.",
+            "Moje kluczowe zadania obejmowały budowę komponentów React i Next.js, zarządzanie stanem aplikacji za pomocą Redux i React Query, opracowanie logiki dla modułu AI, optymalizację wydajności strony (np. ładowanie obrazów z Pexels API i ich przetwarzanie za pomocą Sharp), implementację uwierzytelniania z NextAuth, zarządzanie bazą danych MySQL za pomocą Prisma oraz przygotowanie aplikacji do wdrożenia za pomocą Docker i OVH.",
+          ],
           categories: [
             {
               title: "Frontend",
@@ -309,16 +316,16 @@ const ProjectPreview = ({ project, mousePosition }) => {
             style={{
               left: isExpanded ? "50%" : 0,
               top: isExpanded ? "50%" : 0,
-              width: isExpanded ? `calc(100vw - 20%)` : "32rem",
-              height: isExpanded ? `calc(100dvh - 20%)` : "20rem",
-              minHeight: isExpanded ? "30rem" : "fit-content",
+              width: isExpanded ? `calc(100vw - 10%)` : "30vw",
+              height: isExpanded ? `calc(100dvh - 10%)` : "30vh",
+              minHeight: "12rem",
               position: isExpanded ? "fixed" : "absolute",
             }}
             exit={{
               opacity: 0,
               scale: 0.9,
             }}
-            className={`absolute !z-[1000] rounded-xl border-1 -translate-x-1/2 -translate-y-1/2 overflow-hidden`}
+            className={`absolute !z-[1000] rounded-xl border-1 -translate-x-1/2 -translate-y-1/2 overflow-hidden sm:max-h-fit min-h-[30rem] max-h-[75vh] min-w-[20rem]`}
             transition={{
               ...animationsTypes.default,
               duration: animationProperties.durations.long,

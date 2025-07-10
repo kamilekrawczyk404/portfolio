@@ -4,8 +4,12 @@ import Image from "next/image";
 import Button from "@/components/buttons/Button";
 import { Icons } from "@/components/Icons";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { animationsTypes } from "@/animations";
 
 const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
+  const { theme } = useSelector((state) => state.theme);
+
   const containerRef = useRef(null);
 
   const [draggingDirection, setDraggingDirection] = useState(null);
@@ -29,10 +33,14 @@ const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ ...animationsTypes.default }}
       className={`relative flex flex-col gap-4 overflow-hidden ${className}`}
     >
-      <motion.div
+      <div
         ref={containerRef}
         className={`relative rounded-xl h-full w-full flex`}
       >
@@ -60,26 +68,28 @@ const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
           >
             <Image
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "contain" }}
               src={photo.src}
               alt={photo.alt}
               className={"pointer-events-none rounded-xl"}
             />
           </motion.div>
         ))}
-      </motion.div>
+      </div>
       <div className={"flex items-center justify-center gap-x-2"}>
         <Button square navigation onClick={() => selectPhoto(-1)}>
           <Icons.AngleLeft />
         </Button>
-        <span className={"inline-block text-center w-[4rem]"}>
+        <span
+          className={`inline-block text-center w-[4rem] ${theme.foreground}`}
+        >
           {currentPhotoIndex + 1} / {photos.length}
         </span>
         <Button square navigation onClick={() => selectPhoto(1)}>
           <Icons.AngleRight />
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { animationsTypes } from "@/animations";
+import { animationProperties, animationsTypes } from "@/animations";
 import { colors } from "@/layout";
 
 const MouseAttachedProjectPreview = ({ project, shouldBeShown, ...props }) => {
@@ -20,6 +20,7 @@ const MouseAttachedProjectPreview = ({ project, shouldBeShown, ...props }) => {
         transition={{
           ...animationsTypes.default,
           delay: !shouldBeShown ? 0.5 : 0,
+          duration: animationProperties.durations.long,
         }}
       />
       <motion.div

@@ -2,6 +2,9 @@
 import React, { useEffect, useRef } from "react"; // Import useRef
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { colors } from "@/layout";
+import StaggeredList from "@/components/lists/StaggeredList";
 
 const PhotosCarousel = ({
   photos,
@@ -25,26 +28,26 @@ const PhotosCarousel = ({
         selectedPhotoElement.scrollIntoView({
           behavior: "smooth",
           block: "center",
+          inline: "center",
         });
       }
     }
   }, [selected, photos]);
 
   return (
-    <div
+    <StaggeredList
       ref={scrollContainerRef}
-      className={`grid grid-cols-2 gap-2 overflow-y-scroll p-2 ${className}`}
-    >
-      {photos.map((photo, index) => (
+      className={`relative h-full flex lg:flex-col flex-row gap-2 lg:overflow-y-scroll lg:overflow-x-visible overflow-y-unset overflow-x-scroll p-2 ${className}`}
+      items={photos}
+      render={(photo, index) => (
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          key={index}
           ref={(el) => (itemRefs.current[index] = el)}
-          className={`relative rounded-lg pointer aspect-square w-full cursor-pointer transition-[outline]  ${
+          className={`relative rounded-lg pointer lg:w-full lg:min-w-fit min-w-[33vw] lg:min-h-[6rem] h-full w-full cursor-pointer transition-[outline] overflow-hidden ${
             photo.src === selected?.src
               ? "outline-2 outline-purple"
-              : "outline-1"
+              : "outline-1 outline-neutral-900"
           }`}
           onClick={() => onPhotoChange(photos[index])}
         >
@@ -56,9 +59,14 @@ const PhotosCarousel = ({
             quality={25}
             className={"rounded-lg pointer-events-none"}
           />
+          <div
+            className={`absolute rounded-br-md left-0 top-0 text-md bg-purple pl-1 pr-[.3rem] text-center z-10 ${colors.dark.foreground}`}
+          >
+            {index + 1}
+          </div>
         </motion.div>
-      ))}
-    </div>
+      )}
+    />
   );
 };
 

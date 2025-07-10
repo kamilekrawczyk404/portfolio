@@ -19,6 +19,8 @@ const UnderlineNav = ({
   // -1: Right to Left (new item comes from left, old item exits right)
   const [carouselDirection, setCarouselDirection] = useState(1);
 
+  const navigationItemsRefs = useRef([]);
+
   // Variants for carousel content animation
   const carouselVariants = {
     // Initial state depends on direction: comes from right (100%) or left (-100%)
@@ -43,11 +45,24 @@ const UnderlineNav = ({
     }),
   };
 
+  useEffect(() => {
+    if (activeIndex !== -1) {
+      navigationItemsRefs.current[activeIndex].scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "center",
+      });
+    }
+  }, [activeIndex]);
+
   return (
     <div className={"relative w-full h-full flex flex-col"}>
-      <div className={"flex h-fit border-b-1 gap-x-2"}>
+      <div
+        className={`flex overflow-x-scroll h-fit border-b-1 gap-x-2 ${theme.border}`}
+      >
         {items.map((item, index) => (
           <motion.div
+            ref={(el) => (navigationItemsRefs.current[index] = el)}
             className={`relative px-2 py-1 flex items-center cursor-pointer`}
             onClick={() => {
               // Determine direction based on current and new active index
@@ -59,7 +74,7 @@ const UnderlineNav = ({
             <span
               className={`${
                 index === activeIndex ? `text-purple` : `${theme.foreground}`
-              } transition-colors`}
+              } transition-colors text-nowrap`}
             >
               {renderHeader(item.title)}
             </span>
