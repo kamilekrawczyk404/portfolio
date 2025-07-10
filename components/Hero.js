@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 const Hero = () => {
   const t = useTranslations("HomePage");
 
+  const { theme, opposite } = useSelector((state) => state.theme);
+
   // based on the device's width we choose the correct animation direction
   const [animationDirection, setAnimationDirection] = useState("vertical");
 
@@ -25,7 +27,7 @@ const Hero = () => {
   return (
     <PageContainer
       includeNavigationHeight
-      className={"flex items-center justify-center"}
+      className={`flex items-center justify-center ${opposite.background}`}
     >
       <Container
         type={"container"}
@@ -36,17 +38,23 @@ const Hero = () => {
       {/*section of loading animated text*/}
       <motion.div
         className={
-          "absolute bottom-4 left-4 right-4 flex justify-between -z-10"
+          "absolute w-full md:bottom-4 md:left-4 md:right-4 md:inset-none inset-2 flex md:flex-row flex-col justify-between md:items-end z-0"
         }
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
+        transition={{
+          ...animationsTypes.default,
+          delay: 1.5,
+        }}
       >
         <AnimatedSingleLetterText
           text={"Loading"}
-          className={`${layoutProperties.text.large} ${colors.dark.foreground}`}
+          className={`${layoutProperties.text.large} ${opposite.foreground} select-none`}
         />
-        <div>
+        <div className={"mr-4"}>
           <AnimatedSingleLetterText
             text={"Kamil's portfolio"}
-            className={`${layoutProperties.text.large} ${colors.dark.foreground}`}
+            className={`${layoutProperties.text.large} ${opposite.foreground} select-none`}
           />
         </div>
       </motion.div>
@@ -57,10 +65,10 @@ const Hero = () => {
       >
         {/*text section*/}
         <div
-          className={`relative flex flex-col gap-y-4 basis-1/2 lg:w-1/2 w-full`}
+          className={`relative flex flex-col gap-y-4 basis-1/2 lg:w-1/2 w-full ${theme.foreground}`}
         >
           <div className={`flex flex-col gap-y-2 relative w-full`}>
-            <div className={""}>
+            <div>
               <div
                 className={"relative flex items-center h-fit flex-wrap w-full"}
               >
@@ -181,7 +189,7 @@ const Container = ({
   className = "",
   ...props
 }) => {
-  const { theme } = useSelector((state) => state.theme);
+  const { theme, opposite } = useSelector((state) => state.theme);
 
   // if this component is not as a gallery, it would be animated to cover entire screen
   const [scope, animate] = useAnimate();
@@ -311,7 +319,7 @@ const Container = ({
               translateY: animationDirection === "vertical" ? 0 : "50%",
               translateX: 0,
               aspectRatio: "auto",
-              minHeight: "20rem",
+              minHeight: "10rem",
             },
             { duration: 0 },
           );

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setCookie } from "cookies-next";
 
 const themes = {
   light: {
@@ -30,11 +31,17 @@ const themeSlice = createSlice({
     theme: themes.dark,
     opposite: themes.light,
   },
+
   reducers: {
-    changeTheme: (state) => {
-      state.theme = state.selected === "dark" ? themes.light : themes.dark;
-      state.opposite = state.selected === "dark" ? themes.dark : themes.light;
-      state.selected = state.selected === "dark" ? "light" : "dark";
+    changeTheme: (state, action) => {
+      // whether there is parameter or not
+      const theme = action.payload;
+
+      setCookie("theme-mode", theme);
+
+      state.theme = theme === "dark" ? themes.dark : themes.light;
+      state.opposite = theme === "dark" ? themes.light : themes.dark;
+      state.selected = theme;
     },
   },
 });

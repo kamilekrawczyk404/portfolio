@@ -4,19 +4,23 @@ import { AnimatePresence, motion } from "framer-motion";
 import Backdrop from "@/components/Backdrop";
 import Button from "@/components/buttons/Button";
 import NavigationLink from "@/components/buttons/NavigationLink";
-import { Icons } from "@/components/Icons";
 import { useTranslations } from "next-intl";
 import { animationProperties, animationsTypes } from "@/animations";
 import LanguagesButtons from "@/components/navigation/LanguagesButtons";
-import { colors, layoutProperties } from "@/layout";
+import { layoutProperties } from "@/layout";
 import { changeTheme } from "@/redux/reducers/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CloseButton from "@/components/buttons/CloseButton";
+import { Icons } from "@/components/Icons";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { getCookie, hasCookie, setCookie } from "cookies-next";
 
 const Navigation = () => {
   const { theme, selected } = useSelector((state) => state.theme);
 
   const dispatch = useDispatch();
+
+  const t = useTranslations("Navigation");
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavigationLoaded, setIsNavigationLoaded] = useState(false);
@@ -25,8 +29,6 @@ const Navigation = () => {
   const menuButtonRef = useRef(null);
 
   const animationDuration = animationProperties.durations.short + 1;
-
-  const t = useTranslations("Navigation");
 
   const links = [
     {
@@ -48,6 +50,8 @@ const Navigation = () => {
   ];
 
   useEffect(() => {
+    // if (selected === 'dark')
+
     const timeout = setTimeout(
       () => {
         setIsNavigationLoaded(true);
@@ -76,6 +80,24 @@ const Navigation = () => {
 
     return () => window.removeEventListener("click", listener);
   }, [isMenuOpen, linksContainerRef, menuButtonRef]);
+
+  useEffect(() => {
+    if (!hasCookie("theme-mode")) {
+      console.log("brak");
+      if (window) {
+        const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
+          .matches
+          ? "dark"
+          : "light";
+
+        setCookie("theme-mode", preferredTheme);
+        dispatch(changeTheme(preferredTheme));
+      }
+    } else {
+      console.log("jest", getCookie("theme-mode"));
+      dispatch(changeTheme(getCookie("theme-mode")));
+    }
+  }, []);
 
   return (
     <motion.nav
@@ -112,8 +134,11 @@ const Navigation = () => {
                 duration: animationProperties.durations.long,
               }}
             >
-              <div className={`h-[4rem] flex items-center`}>
+              <div
+                className={`h-[4rem] flex items-center justify-between w-full`}
+              >
                 <CloseButton onClick={() => setIsMenuOpen(false)} />
+                <ThemeSwitcher />
               </div>
 
               <div
@@ -125,27 +150,36 @@ const Navigation = () => {
                   </NavigationLink>
                 ))}
               </div>
-              <div className={"flex gap-2 h-[4rem] items-center"}>
-                <LanguagesButtons />
+              <div
+                className={
+                  "relative flex h-[4rem] items-center w-full justify-between"
+                }
+              >
+                <div className={"flex gap-2 items-center"}>
+                  <LanguagesButtons />
+                </div>
+                <DownloadCvButton t={t} className={"md:hidden block"} />
               </div>
             </motion.aside>
           </>
         )}
       </AnimatePresence>
 
-      <Button
-        ref={menuButtonRef}
-        navigation
-        onClick={() => setIsMenuOpen(true)}
-      >
-        Menu
-      </Button>
+      <div className={"flex justify-between items-center sm:w-fit w-full"}>
+        <Button
+          ref={menuButtonRef}
+          navigation
+          onClick={() => setIsMenuOpen(true)}
+        >
+          Menu
+        </Button>
+      </div>
+
       <div
         className={
-          "absolute left-1/2 -translate-x-1/2 flex-1 top-1/2 -translate-y-1/2 flex items-center gap-2 justify-center lg:flex-row flex-col"
+          "absolute left-1/2 -translate-x-1/2 flex-1 top-1/2 -translate-y-1/2  flex items-center gap-2 sm:justify-center justify-end flex-row"
         }
       >
-        <span>Kamil Krawczyk</span>
         <motion.div
           initial={{ width: 0 }}
           animate={
@@ -155,38 +189,23 @@ const Navigation = () => {
                 }
               : {}
           }
-          className={"overflow-hidden relative"}
+          className={"overflow-hidden relative flex gap-x-2 items-center"}
         >
-          <Button navigation className={"text-nowrap"}>
-            {t("download-cv")}
-          </Button>
+          <p>Kamil Krawczyk</p>
+          <DownloadCvButton t={t} className={"md:block hidden"} />
         </motion.div>
       </div>
-      <div className={"flex items-center gap-x-4"}>
-        <div className={"text-lg flex gap-x-2 items-center"}>
-          <Icons.Sun />
-          <div
-            className={
-              "flex relative w-[3rem] border-1 rounded-xl h-[1.5rem] p-[.125rem] cursor-pointer"
-            }
-            style={{
-              justifyContent: selected === "dark" ? "flex-end" : "flex-start",
-            }}
-            onClick={() => dispatch(changeTheme())}
-          >
-            <motion.div
-              layout
-              className={"h-full aspect-square rounded-full bg-purple"}
-            />
-          </div>
-          <Icons.Moon />
-        </div>
-        <div className={"flex items-center gap-x-1"}>
-          <LanguagesButtons />
-        </div>
+      <div className={`flex items-center gap-x-1`}>
+        <LanguagesButtons />
       </div>
     </motion.nav>
   );
 };
 
 export default Navigation;
+
+const DownloadCvButton = ({ t, className = "" }) => (
+  <Button navigation className={`text-nowrap ${className}`}>
+    {t("download-cv")}
+  </Button>
+);

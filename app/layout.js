@@ -30,7 +30,7 @@ export default async function RootLayout({ children }) {
       <NextIntlClientProvider messages={messages}>
         <StoreProvider>
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen overflow-x-hidden ${colors.dark.background}`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen overflow-x-hidden`}
           >
             <Navigation />
             {children}
