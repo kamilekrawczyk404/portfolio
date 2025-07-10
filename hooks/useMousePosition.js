@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useMousePosition = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -14,7 +14,7 @@ const useMousePosition = () => {
     return () => window.removeEventListener("mousemove", listener);
   }, []);
 
-  return [mousePosition];
+  return mousePosition;
 };
 
 export default useMousePosition;

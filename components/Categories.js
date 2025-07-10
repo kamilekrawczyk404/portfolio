@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import AnimatedCheckbox from "@/components/AnimatedCheckbox";
 import { useSelector } from "react-redux";
 import { animationProperties, animationsTypes } from "@/animations";
-import { layoutProperties } from "@/layout";
 
 const Categories = ({
   categories,
@@ -44,7 +43,7 @@ const Categories = ({
 
   useEffect(() => {
     // Return list of updated categories
-    callback(items);
+    callback(items.filter((item) => item.selected));
   }, [items]);
 
   return (

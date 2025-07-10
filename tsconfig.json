@@ -6,6 +6,7 @@
       "@/redux/*": ["redux/*"],
       "@/i18n/*": ["i18n/*"],
       "@/animations": ["animations"],
+      "@/projectsList": ["projectsList"],
       "@/layout": ["layout"],
       "@/hooks/*": ["hooks/*"],
     },

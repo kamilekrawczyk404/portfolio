@@ -46,7 +46,7 @@ const UnderlineNav = ({
   };
 
   useEffect(() => {
-    if (activeIndex !== -1) {
+    if (canRender && activeIndex !== -1) {
       navigationItemsRefs.current[activeIndex].scrollIntoView({
         behavior: "smooth",
         inline: "center",

@@ -166,6 +166,7 @@ const Hero = () => {
               src={"/hero/myself_3.webp"}
               alt={"Myself"}
               fill
+              priority={true}
               style={{
                 objectFit: "cover",
                 backgroundPosition: "center center",

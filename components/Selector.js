@@ -1,12 +1,18 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Icons } from "@/components/Icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
+import { changeSelectorState } from "@/redux/reducers/selectorSlice";
 
 const Selector = ({ items, render = () => {}, callback = () => {} }) => {
-  const { theme } = useSelector((state) => state.theme);
+  const {
+    theme: { theme },
+    selector: { isSelectorOpen },
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
 
   const selectorRef = useRef(null);
   const dropdownRef = useRef(null);
@@ -58,6 +64,7 @@ const Selector = ({ items, render = () => {}, callback = () => {} }) => {
         !dropdownRef.current.contains(e.target)
       ) {
         setIsOpen(false);
+        dispatch(changeSelectorState(false));
       }
     };
 
@@ -66,10 +73,17 @@ const Selector = ({ items, render = () => {}, callback = () => {} }) => {
     return () => window.removeEventListener("click", listener);
   }, [isOpen, selectorRef, dropdownRef]);
 
+  useEffect(() => {
+    callback(items[selectedIndex]);
+  }, [selectedIndex]);
+
   return (
     <div
       ref={selectorRef}
-      onClick={() => setIsOpen(!isOpen)}
+      onClick={() => {
+        dispatch(changeSelectorState(!isOpen));
+        setIsOpen(!isOpen);
+      }}
       className={`relative z-[10] flex items-center justify-between border-1 px-2 h-[1.75rem] min-w-[6rem] rounded-xl cursor-pointer ${theme.border}`}
     >
       <span className={"select-none"}>
