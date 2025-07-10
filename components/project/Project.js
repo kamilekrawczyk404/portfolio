@@ -81,7 +81,7 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
           </ChildContainer>
         );
 
-      case "galerry":
+      case "galeria zdjęć":
         return (
           <ChildContainer className={"h-full"}>
             <Gallery photos={view.photos} />

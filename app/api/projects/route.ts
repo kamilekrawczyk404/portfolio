@@ -15,14 +15,19 @@ export async function GET() {
         const photos = [];
 
         for (const photo of await fs.readdir(path.join(directoryPath, item))) {
-          photos.push(photo);
+          photos.push({
+            src: `/projects/${item}/${photo}`,
+            alt: `project photo - ${item}`,
+          });
         }
 
         directories.push([item, photos]);
       }
     }
 
-    return NextResponse.json(Object.fromEntries(directories), { status: 200 });
+    return NextResponse.json(Object.fromEntries(directories), {
+      status: 200,
+    });
   } catch (error) {
     console.error(`Error reading directory: ${error}`);
     return NextResponse.json(

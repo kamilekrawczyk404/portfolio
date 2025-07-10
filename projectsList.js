@@ -106,7 +106,7 @@ export const projectsList = [
     ],
   },
   {
-    name: "andwiert",
+    name: "and-wiert",
     githubRepoName: "and-wiert",
     title: "Website for deep wells drilling company",
     link: "https://and-wiert.pl",

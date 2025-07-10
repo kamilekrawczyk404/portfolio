@@ -50,7 +50,7 @@ async function getProjectsPhotos() {
     };
   }
 
-  return [await response.json()];
+  return await response.json();
 }
 
 export default async function RootPage() {
@@ -59,7 +59,8 @@ export default async function RootPage() {
   const repos = await getGitHubRepos();
   const projectPhotos = await getProjectsPhotos();
 
-  console.log("repp", repos);
+  console.log("photos", projectPhotos);
+  // console.log("repp", repos);
 
   return (
     <div className={`flex flex-col relative bg-transparent`}>

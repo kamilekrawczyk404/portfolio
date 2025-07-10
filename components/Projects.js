@@ -12,6 +12,8 @@ import { projectsList } from "@/projectsList";
 const getFormattedInfo = (projects, projectsPhotos, githubRepos) => {
   const languages = [];
 
+  console.log("photos", projectsPhotos);
+
   const formattedProjects = projects.map((project) => {
     // get information about current project from GitHub
     // const { html_url, created_at, updated_at, visibility, default_branch } =
@@ -30,7 +32,7 @@ const getFormattedInfo = (projects, projectsPhotos, githubRepos) => {
       ...project,
       // add gallery navigation item and correspondent photos
       description: [
-        { title: "gallery", photos: projectsPhotos[project.name] },
+        { title: "Galeria zdjęć", photos: projectsPhotos[project.name] },
         ...project.description,
       ],
       thumbnail: `/projects/${project.name}/view-1.png`,
