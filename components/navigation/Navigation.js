@@ -178,6 +178,8 @@ const Navigation = () => {
           "absolute left-1/2 -translate-x-1/2 flex-1 top-1/2 -translate-y-1/2  flex items-center gap-2 sm:justify-center justify-end flex-row"
         }
       >
+        <p className={"text-nowrap"}>Kamil Krawczyk</p>
+
         <motion.div
           initial={{ width: 0 }}
           animate={
@@ -189,7 +191,6 @@ const Navigation = () => {
           }
           className={"overflow-hidden relative flex gap-x-2 items-center"}
         >
-          <p>Kamil Krawczyk</p>
           <DownloadCvButton t={t} className={"md:block hidden"} />
         </motion.div>
       </div>

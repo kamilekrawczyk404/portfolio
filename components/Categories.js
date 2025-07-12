@@ -8,35 +8,50 @@ import {
   animationsTypes,
   variantsPresets,
 } from "@/animations";
+import FiltersRemover from "@/components/buttons/FiltersRemover";
 
 const Categories = ({
   categories,
   callback = () => {},
   render = () => {},
   singleSelection = false,
+  defaultSelectedIndex = -1,
   className = "",
 }) => {
   const { theme } = useSelector((state) => state.theme);
 
   const [selectedIds, setSelectedIds] = useState(
-    [...categories].map((_) => false),
+    [...categories].map((_, index) => index === defaultSelectedIndex),
   );
 
-  const onCategoryClicked = useCallback((clickedIndex) => {
-    if (singleSelection) {
-      setSelectedIds((prev) => prev.map((_, index) => index === clickedIndex));
-    } else {
-      setSelectedIds((prev) =>
-        prev.toSpliced(clickedIndex, 1, !prev[clickedIndex]),
-      );
-    }
-  }, []);
+  const [isRemoverVisible, setIsRemoverVisible] = useState(false);
+
+  const onCategoryClicked = useCallback(
+    (clickedIndex) => {
+      if (singleSelection) {
+        if (clickedIndex === selectedIds.indexOf(true)) return;
+        setSelectedIds((prev) =>
+          prev.map((_, index) => index === clickedIndex),
+        );
+      } else {
+        setSelectedIds((prev) =>
+          prev.toSpliced(clickedIndex, 1, !prev[clickedIndex]),
+        );
+      }
+    },
+    [selectedIds],
+  );
 
   const { parent, children } = variantsPresets.staggered;
 
   useEffect(() => {
+    const selected = categories.filter((item, index) => selectedIds[index]);
+
     // Return list of updated categories
-    callback(categories.filter((item, index) => selectedIds[index]));
+    callback(selected);
+
+    // Handle remover visibility
+    setIsRemoverVisible(selected.length > 1);
   }, [selectedIds]);
 
   return (
@@ -87,6 +102,13 @@ const Categories = ({
           </motion.span>
         </motion.div>
       ))}
+      <AnimatePresence mode={"wait"}>
+        {isRemoverVisible && (
+          <FiltersRemover
+            callback={() => setSelectedIds((prev) => prev.map((i) => false))}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

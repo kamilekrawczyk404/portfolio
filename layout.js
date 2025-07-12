@@ -29,7 +29,7 @@ export const colors = {
     JavaScript: "#F7DF1E",
     TypeScript: "#3178C6",
     CSS: "#264DE4",
-    DockerFile: "#0DB7ED",
+    Dockerfile: "#0DB7ED",
     "C++": "#9C003B",
     C: "#A8B9CC",
     CMake: "#6B8E23",

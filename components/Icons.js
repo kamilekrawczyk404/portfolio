@@ -13,6 +13,7 @@ import {
   faGlobe,
   faMoon,
   faSun,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
@@ -55,5 +56,8 @@ export const Icons = {
   ),
   Add: ({ className = "" }) => (
     <FontAwesomeIcon icon={faAdd} className={className} />
+  ),
+  Trash: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faTrash} className={className} />
   ),
 };

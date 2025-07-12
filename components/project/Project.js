@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import CloseButton from "@/components/buttons/CloseButton";
 import { useSelector } from "react-redux";
-import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import UnderlineNav from "@/components/navigation/UnderlineNav";
 import GroupSection from "@/components/GroupSection";
 import StaggeredList from "@/components/lists/StaggeredList";
@@ -12,7 +11,6 @@ import Gallery from "@/components/gallery/Gallery";
 import Aspect from "@/components/lists/Aspect";
 import { layoutProperties } from "@/layout";
 import IndentAspect from "@/components/lists/IndentAspect";
-import SectionTitle from "@/components/SectionTitle";
 import { Icons } from "@/components/Icons";
 
 function formatDateToDayMonthYear(dateInput) {
@@ -109,7 +107,9 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
                 {section.title === "Repository" ? (
                   <StaggeredList
                     items={section.items}
-                    className={"grid grid-cols-2 gap-2 items-center"}
+                    className={
+                      "grid md:grid-cols-2 grid-cols-1 gap-2 items-center"
+                    }
                     render={(item) => <IndentAspect {...item} />}
                   />
                 ) : (
@@ -130,7 +130,7 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
             <GroupSection
               title={"Description"}
               headerSize={layoutProperties.text.medium}
-              className={"col-span-2"}
+              className={"md:col-span-2"}
             >
               <div>
                 {project.description.map((textSection, index) => (

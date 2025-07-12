@@ -18,7 +18,7 @@ const LanguageUsageStats = ({ languages }) => {
   return (
     <div className={`flex flex-col gap-4 ${theme.foreground} `}>
       <div
-        className={`md:w-1/3 w-2/3 rounded-md overflow-hidden flex border-1 ${theme.border}`}
+        className={`md:w-1/3 w-2/3 rounded-lg overflow-hidden flex border-1 ${theme.border}`}
       >
         {Object.entries(languages).map(([key, value]) => (
           <div
