@@ -47,7 +47,7 @@ const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
         {photos.map((photo, index) => (
           <motion.div
             key={index}
-            className={"absolute top-0 h-full w-full"}
+            className={`absolute top-0 h-full w-full rounded-xl border-1 overflow-hidden ${theme.border}`}
             animate={{
               left: `${(index - currentPhotoIndex) * 100}%`,
             }}
@@ -68,10 +68,12 @@ const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
           >
             <Image
               fill
+              sizes={"max-width: 100vw"}
               style={{ objectFit: "contain" }}
               src={photo.src}
               alt={photo.alt}
-              className={"pointer-events-none rounded-xl"}
+              quality={100}
+              className={"pointer-events-none "}
             />
           </motion.div>
         ))}

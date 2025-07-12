@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setCookie } from "cookies-next";
+import { colors } from "@/layout";
 
 const themes = {
   light: {
-    background: "bg-gray-100",
-    foreground: "text-neutral-900",
-    border: "border-neutral-900",
+    ...colors.light,
     hover: {
       background: "hover:bg-neutral-900",
       foreground: "hover:text-gray-100",
@@ -13,9 +12,7 @@ const themes = {
     },
   },
   dark: {
-    background: "bg-neutral-900",
-    foreground: "text-gray-100",
-    border: "border-gray-100",
+    ...colors.dark,
     hover: {
       background: "hover:bg-gray-100",
       foreground: "hover:text-neutral-900",

@@ -7,10 +7,7 @@ import { animationProperties, animationsTypes } from "@/animations";
 import { changeSelectorState } from "@/redux/reducers/selectorSlice";
 
 const Selector = ({ items, render = () => {}, callback = () => {} }) => {
-  const {
-    theme: { theme },
-    selector: { isSelectorOpen },
-  } = useSelector((state) => state);
+  const { theme } = useSelector((state) => state.theme);
 
   const dispatch = useDispatch();
 

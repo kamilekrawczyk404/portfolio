@@ -1,16 +1,47 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import { motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import CloseButton from "@/components/buttons/CloseButton";
 import { useSelector } from "react-redux";
-import AnimatedTextWithOverflow from "@/components/text/AnimatedTextWithOverflow";
+import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import UnderlineNav from "@/components/navigation/UnderlineNav";
 import GroupSection from "@/components/GroupSection";
 import StaggeredList from "@/components/lists/StaggeredList";
 import Gallery from "@/components/gallery/Gallery";
 import Aspect from "@/components/lists/Aspect";
 import { layoutProperties } from "@/layout";
+import IndentAspect from "@/components/lists/IndentAspect";
+import SectionTitle from "@/components/SectionTitle";
+import { Icons } from "@/components/Icons";
+
+function formatDateToDayMonthYear(dateInput) {
+  let date;
+
+  if (dateInput instanceof Date) {
+    date = dateInput;
+  } else if (typeof dateInput === "string") {
+    date = new Date(dateInput);
+  } else {
+    console.error(
+      "Invalid date input. Please provide a Date object or a valid date string.",
+    );
+    return "";
+  }
+
+  if (isNaN(date.getTime())) {
+    console.error("Invalid date value. Could not parse the date.");
+    return "";
+  }
+
+  const options = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+}
 
 const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
   const { theme } = useSelector((state) => state.theme);
@@ -19,78 +50,123 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
   const delay = 0.5;
 
   // Render navigation view based on the project's aspect
-  const renderView = (view) => {
+  const renderView = useCallback((view) => {
     switch (view.title.toLowerCase()) {
-      case "użyte technologie":
-        return (
-          <ChildContainer
-            className={`flex md:flex-row flex-col ${layoutProperties.gap.large}`}
-          >
-            <StaggeredList
-              className={`basis-1/2 ${theme.foreground}`}
-              items={view.description}
-              render={(item) => item}
-            />
-
-            <div className={"relative basis-1/2 flex flex-col gap-4"}>
-              {view.categories.map((category, index) => (
-                <GroupSection
-                  key={index}
-                  title={category.title}
-                  headerSize={"text-lg"}
-                  className={`${theme.foreground} self-start`}
-                >
-                  <StaggeredList
-                    items={category.aspects}
-                    render={(item) => <Aspect name={item} />}
-                  />
-                </GroupSection>
-              ))}
-            </div>
-          </ChildContainer>
-        );
-      case "funkcjonalności":
-        return (
-          <ChildContainer className={"flex flex-col gap-4"}>
-            {view.categories.map((category, index) => (
-              <div
-                key={index}
-                className={`${theme.foreground} flex flex-col gap-y-4 h-full justify-between`}
-              >
-                <StaggeredList
-                  className={
-                    "grid md:grid-cols-2 grid-cols-1 grid-rows-fit gap-4 overflow-y-scroll"
-                  }
-                  items={category.aspects}
-                  render={(item) => (
-                    <div className={"flex flex-col gap-y-1 items-start"}>
-                      <Aspect name={item.title} />
-                      <div className={"ml-[.75rem]"}>
-                        <div
-                          className={
-                            "relative !w-3 aspect-square border-l-1 border-b-1 float-left mr-2"
-                          }
-                        ></div>
-                        <p className={"text-sm"}>{item.description}</p>
-                      </div>
-                    </div>
-                  )}
-                />
-              </div>
-            ))}
-          </ChildContainer>
-        );
-
-      case "galeria zdjęć":
+      case "galeria":
         return (
           <ChildContainer className={"h-full"}>
             <Gallery photos={view.photos} />
           </ChildContainer>
         );
+      case "informacje ogólne":
+        const repositoryItems = [
+          {
+            title: "Created",
+            description: formatDateToDayMonthYear(project.repository.createdAt),
+            icon: <Icons.Add />,
+          },
+          {
+            title: "Updated",
+            description: formatDateToDayMonthYear(project.repository.updatedAt),
+            icon: <Icons.Update />,
+          },
+          {
+            title: "Default branch",
+            description: project.repository.defaultBranch,
+            icon: <Icons.CodeBranch />,
+          },
+          {
+            title: "GitHub",
+            description: project.repository.url,
+            icon: <Icons.GitHub />,
+          },
+        ];
+
+        if (project?.link) {
+          repositoryItems.push({
+            title: "Website",
+            description: project.link,
+            icon: <Icons.Globe />,
+          });
+        }
+
+        const sections = [
+          { title: "Repository", items: repositoryItems },
+          { title: "Technologies", items: project.technologies },
+        ];
+
+        return (
+          <ChildContainer
+            className={`grid md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.large}`}
+          >
+            {sections.map((section) => (
+              <GroupSection
+                key={section.title}
+                title={section.title}
+                className={"gap-4"}
+                headerSize={layoutProperties.text.medium}
+              >
+                {section.title === "Repository" ? (
+                  <StaggeredList
+                    items={section.items}
+                    className={"grid grid-cols-2 gap-2 items-center"}
+                    render={(item) => <IndentAspect {...item} />}
+                  />
+                ) : (
+                  section.items.map((technology) => (
+                    <GroupSection
+                      key={technology.title}
+                      title={technology.title}
+                    >
+                      <StaggeredList
+                        items={technology.values}
+                        render={(item) => <Aspect name={item} />}
+                      />
+                    </GroupSection>
+                  ))
+                )}
+              </GroupSection>
+            ))}
+            <GroupSection
+              title={"Description"}
+              headerSize={layoutProperties.text.medium}
+              className={"col-span-2"}
+            >
+              <div>
+                {project.description.map((textSection, index) => (
+                  <p key={index}>{textSection}</p>
+                ))}
+              </div>
+            </GroupSection>
+          </ChildContainer>
+        );
+      case "kluczowe cechy":
+        return (
+          <ChildContainer className={"flex flex-col gap-4"}>
+            <GroupSection
+              title={view.title}
+              headerSize={layoutProperties.text.medium}
+              className={"gap-4"}
+            >
+              <StaggeredList
+                className={
+                  "grid md:grid-cols-2 grid-cols-1 grid-rows-fit gap-4 overflow-y-scroll"
+                }
+                items={project.mainAspects}
+                render={(item) => (
+                  <IndentAspect
+                    title={item.title}
+                    description={item.description}
+                  />
+                )}
+              />
+            </GroupSection>
+          </ChildContainer>
+        );
       default:
         return;
     }
-  };
+  }, []);
 
   return (
     <div className={"relative w-full h-full flex flex-col"}>
@@ -105,7 +181,9 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
         }}
         className={`z-[10] p-4 flex justify-between items-center ${theme.background}`}
       >
-        <h3 className={`${theme.foreground} text-2xl`}>{project.title}</h3>
+        <h3 className={`${theme.foreground} ${layoutProperties.text.medium}`}>
+          {project.title}
+        </h3>
         <CloseButton onClick={onClose} />
       </motion.div>
 
@@ -121,7 +199,7 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
         }}
       >
         <UnderlineNav
-          items={project.description}
+          items={project.views}
           renderHeader={(header) => (
             <span className={"inline-flex px-2 h-[1.75rem] items-center"}>
               {header}

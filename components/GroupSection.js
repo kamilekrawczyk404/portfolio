@@ -11,7 +11,7 @@ const GroupSection = ({
 
   return (
     <div
-      className={`flex flex-col gap-y-1 relative  ${theme.foreground} ${className}`}
+      className={`flex flex-col gap-1 relative ${theme.foreground} ${className}`}
     >
       <h4 className={`${headerSize} ${theme.foreground}`}>{title}</h4>
       {children}

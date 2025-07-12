@@ -9,6 +9,7 @@
       "@/projectsList": ["projectsList"],
       "@/layout": ["layout"],
       "@/hooks/*": ["hooks/*"],
+      "@/types/*": ["types/*"],
     },
     "target": "ES2017",
     "lib": [

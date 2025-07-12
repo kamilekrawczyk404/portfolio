@@ -83,7 +83,6 @@ const Navigation = () => {
 
   useEffect(() => {
     if (!hasCookie("theme-mode")) {
-      console.log("brak");
       if (window) {
         const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
           .matches
@@ -94,7 +93,6 @@ const Navigation = () => {
         dispatch(changeTheme(preferredTheme));
       }
     } else {
-      console.log("jest", getCookie("theme-mode"));
       dispatch(changeTheme(getCookie("theme-mode")));
     }
   }, []);

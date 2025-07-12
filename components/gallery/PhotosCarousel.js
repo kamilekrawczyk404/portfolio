@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react"; // Import useRef
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import { colors } from "@/layout";
+import { colors, layoutProperties } from "@/layout";
 import StaggeredList from "@/components/lists/StaggeredList";
 
 const PhotosCarousel = ({
@@ -12,6 +12,8 @@ const PhotosCarousel = ({
   selected,
   className = "",
 }) => {
+  const { theme } = useSelector((state) => state.theme);
+
   const scrollContainerRef = useRef(null);
   const itemRefs = useRef([]);
 
@@ -47,13 +49,14 @@ const PhotosCarousel = ({
           className={`relative rounded-lg pointer lg:w-full lg:min-w-fit min-w-[33vw] lg:min-h-[6rem] h-full w-full cursor-pointer transition-[outline] overflow-hidden ${
             photo.src === selected?.src
               ? "outline-2 outline-purple"
-              : "outline-1 outline-neutral-900"
+              : `outline-1 ${theme.outline}`
           }`}
           onClick={() => onPhotoChange(photos[index])}
         >
           <Image
             {...photo}
             fill
+            sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
             style={{ objectFit: "contain" }}
             loading={"lazy"}
             quality={25}

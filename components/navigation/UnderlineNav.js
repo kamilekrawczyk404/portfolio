@@ -69,7 +69,7 @@ const UnderlineNav = ({
               setCarouselDirection(index > activeIndex ? 1 : -1);
               setActiveIndex(index);
             }}
-            key={item.id || index} // Use item.id if available, otherwise index
+            key={index}
           >
             <span
               className={`${

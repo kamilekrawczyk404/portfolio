@@ -1,14 +1,25 @@
 "use client";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Backdrop from "@/components/Backdrop";
 import { animationProperties, animationsTypes } from "@/animations";
 import MouseAttachedProjectPreview from "@/components/project/MouseAttachedProjectPreview";
 import Project from "@/components/project/Project";
+import useMousePosition from "@/hooks/useMousePosition";
+import { setIsPreviewOpen } from "@/redux/reducers/projectPreviewSlice";
+import StaggeredList from "@/components/lists/StaggeredList";
+import LanguageUsageStats from "@/components/project/LanguageUsageStats";
+import { layoutProperties } from "@/layout";
 
-const ProjectPreview = ({ project, mousePosition }) => {
+const ProjectPreview = ({ project }) => {
   const { isSelectorOpen } = useSelector((state) => state.selector);
+  const { theme } = useSelector((state) => state.theme);
+  const { isPreviewOpen } = useSelector((state) => state.projectPreview);
+
+  const dispatch = useDispatch();
+
+  const mousePosition = useMousePosition();
 
   const containerRef = useRef(null);
   const previewRef = useRef(null);
@@ -29,6 +40,7 @@ const ProjectPreview = ({ project, mousePosition }) => {
       containerRef.current.getBoundingClientRect();
 
     if (
+      !isPreviewOpen &&
       !isSelectorOpen &&
       !isExpanded &&
       mousePosition.x >= left &&
@@ -45,7 +57,7 @@ const ProjectPreview = ({ project, mousePosition }) => {
   return (
     <motion.div
       ref={containerRef}
-      className={"border-t-1 min-h-[20rem] flex items-center relative"}
+      className={`relative border-t-1 h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border}`}
     >
       <Backdrop isActive={isExpanded} blur />
 
@@ -91,26 +103,32 @@ const ProjectPreview = ({ project, mousePosition }) => {
             <Project
               project={project}
               shouldBeShown={isExpanded}
-              onClose={() => setIsExpanded(false)}
+              onClose={() => {
+                setIsExpanded(false);
+                dispatch(setIsPreviewOpen(false));
+              }}
             />
 
             {/*Preview that follows user mouse position*/}
             <MouseAttachedProjectPreview
               shouldBeShown={!isExpanded}
               project={project}
-              onClick={() => setIsExpanded(true)}
+              onClick={() => {
+                setIsExpanded(true);
+                dispatch(setIsPreviewOpen(true));
+              }}
             />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/*<ExpandingContainer*/}
-      {/*  isExpanded={isExpanded}*/}
-      {/*  setIsExpanded={setIsExpanded}*/}
-      {/*  project={project}*/}
-      {/*/>*/}
-
-      <h3 className={"text-4xl select-none"}>{project.title}</h3>
+      {/*List item body*/}
+      <h3
+        className={`select-none ${theme.foreground} ${layoutProperties.text.medium}`}
+      >
+        {project.title}
+      </h3>
+      <LanguageUsageStats languages={project.repository.languages || []} />
     </motion.div>
   );
 };

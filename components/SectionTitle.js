@@ -7,7 +7,7 @@ const SectionTitle = ({ title, children }) => {
 
   return (
     <div
-      className={`relative flex lg:flex-row flex-col ${layoutProperties.gap.medium} ${theme.foreground}`}
+      className={`relative flex lg:flex-row flex-col lg:items-end ${layoutProperties.gap.medium} ${theme.foreground}`}
     >
       <h2 className={`${layoutProperties.text.large}`}>{title}</h2>
       {children}

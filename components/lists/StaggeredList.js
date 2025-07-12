@@ -1,6 +1,7 @@
 "use client";
 import React, { forwardRef } from "react";
 import { motion } from "framer-motion";
+import { variantsPresets } from "@/animations";
 
 const StaggeredList = forwardRef(
   (
@@ -13,44 +14,19 @@ const StaggeredList = forwardRef(
     },
     ref,
   ) => {
-    const variants = {
-      initial: {
-        opacity: 0,
-      },
-      animate: {
-        opacity: 1,
-        transition: {
-          staggerChildren: 0.05,
-          when: "beforeChildren",
-        },
-      },
-      exit: {
-        opacity: 0,
-      },
-    };
+    const { parent, children } = variantsPresets.staggered;
 
-    const itemVariants = {
-      initial: {
-        opacity: 0,
-      },
-      animate: {
-        opacity: 1,
-      },
-      exit: {
-        opacity: 0,
-      },
-    };
     return (
       <motion.ul
         ref={ref}
         className={className === "" ? "flex flex-wrap gap-2" : className}
-        variants={variants}
+        variants={parent}
         initial={"initial"}
         animate={"animate"}
         exit={"exit"}
       >
         {items.map((item, index) => (
-          <motion.li key={index} variants={itemVariants}>
+          <motion.li key={index} variants={children}>
             {render(item, index)}
           </motion.li>
         ))}

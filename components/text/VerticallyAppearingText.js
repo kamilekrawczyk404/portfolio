@@ -1,16 +1,19 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { animationsTypes } from "@/animations";
+import { animationsTypes, variantsPresets } from "@/animations";
 import { useSelector } from "react-redux";
 
-const AnimatedTextWithOverflow = ({
+const VerticallyAppearingText = ({
   text,
-  direction = "fromTopToBottom",
+  direction = "fromTop",
   className = "",
   delay = 0,
 }) => {
   const { theme } = useSelector((state) => state.theme);
+
+  const { initial, animate, exit } =
+    variantsPresets.verticalAppearing(direction);
 
   return (
     <div
@@ -18,7 +21,7 @@ const AnimatedTextWithOverflow = ({
     >
       <motion.h3
         initial={{
-          y: direction === "fromTopToBottom" ? "-100%" : "100%",
+          y: direction === "fromTop" ? "-100%" : "100%",
         }}
         animate={{
           y: 0,
@@ -28,7 +31,7 @@ const AnimatedTextWithOverflow = ({
           },
         }}
         exit={{
-          y: direction === "fromTopToBottom" ? "100%" : "-100%",
+          y: direction === "fromTop" ? "100%" : "-100%",
         }}
         transition={animationsTypes.default}
       >
@@ -38,4 +41,4 @@ const AnimatedTextWithOverflow = ({
   );
 };
 
-export default AnimatedTextWithOverflow;
+export default VerticallyAppearingText;

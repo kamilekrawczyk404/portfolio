@@ -7,7 +7,7 @@ import Button from "@/components/buttons/Button";
 import Image from "next/image";
 import PageContainer from "@/components/PageContainer";
 import AnimatedSingleLetterText from "@/components/text/AnimatedSingleLetterText";
-import AnimatedTextWithOverflow from "@/components/text/AnimatedTextWithOverflow";
+import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { colors, layoutProperties } from "@/layout";
 import TextCarousel from "@/components/text/TextCarousel";
 import { useSelector } from "react-redux";
@@ -367,11 +367,9 @@ const Container = ({
       {...props}
     >
       <div className={"relative h-full w-full"}>
-        <AnimatedTextWithOverflow
+        <VerticallyAppearingText
           text={text}
-          direction={
-            type === "photoContainer" ? "fromBottomToTop" : "fromTopToBottom"
-          }
+          direction={type === "photoContainer" ? "fromBottom" : "fromTop"}
           className={`${
             type === "photoContainer" ? "right-2 bottom-2" : "left-2 top-2"
           } lg:text-3xl md:text-2xl text-xl absolute`}

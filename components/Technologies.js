@@ -14,7 +14,8 @@ import Categories from "@/components/Categories";
 import StaggeredList from "@/components/lists/StaggeredList";
 import Aspect from "@/components/lists/Aspect";
 import ProgressBarAspect from "@/components/ProgressBarAspect";
-import AnimatedTextWithOverflow from "@/components/text/AnimatedTextWithOverflow";
+import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
+import categories from "@/components/Categories";
 
 const Technologies = () => {
   const technologies = [
@@ -23,7 +24,7 @@ const Technologies = () => {
       languages: {
         title: "Languages",
         aspects: [
-          { name: "Javascript", knowledge: 90 },
+          { name: "JavaScript", knowledge: 90 },
           { name: "HTML", knowledge: 90 },
           { name: "CSS", knowledge: 85 },
         ],
@@ -129,8 +130,12 @@ const Technologies = () => {
   const [selectedTechnologyIndex, setSelectedTechnologyIndex] = useState(0);
   const [animatedProgressBars, setAnimatedProgressBars] = useState({});
 
-  const onCategoryChange = useCallback((categories) => {
-    setSelectedTechnologyIndex(categories.findIndex((c) => c.selected));
+  const onCategoryChange = useCallback((selectedCategories) => {
+    if (!selectedCategories.length) return;
+
+    setSelectedTechnologyIndex(
+      technologies.findIndex((t) => t.type === selectedCategories[0].type),
+    );
     setAnimatedProgressBars({});
   }, []);
 
@@ -210,7 +215,7 @@ const Technologies = () => {
                 className={"flex flex-col gap-y-2"}
               >
                 {/*Header of each section*/}
-                <AnimatedTextWithOverflow
+                <VerticallyAppearingText
                   text={value.title}
                   className={`${layoutProperties.text.medium}`}
                 />

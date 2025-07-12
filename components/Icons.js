@@ -1,14 +1,20 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAdd,
   faAngleLeft,
   faAngleRight,
   faArrowRight,
+  faArrowUpRightFromSquare,
   faCaretDown,
+  faClockRotateLeft,
   faClose,
+  faCodeBranch,
+  faGlobe,
   faMoon,
   faSun,
 } from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 export const Icons = {
   Close: ({ className = "" }) => (
@@ -31,5 +37,23 @@ export const Icons = {
   ),
   Moon: ({ className = "" }) => (
     <FontAwesomeIcon icon={faMoon} className={className} />
+  ),
+  Link: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faArrowUpRightFromSquare} className={className} />
+  ),
+  CodeBranch: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faCodeBranch} className={className} />
+  ),
+  GitHub: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faGithub} className={className} />
+  ),
+  Globe: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faGlobe} className={className} />
+  ),
+  Update: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faClockRotateLeft} className={className} />
+  ),
+  Add: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faAdd} className={className} />
   ),
 };

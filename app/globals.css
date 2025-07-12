@@ -4,7 +4,7 @@
   --white: oklch(96.7% 0.003 264.542);
   --dark: oklch(20.5% 0 0);
   --orange: #ff9e00;
-  --purple: #6a00f4
+  --purple: #6a00f4;
 }
 
 @theme {
