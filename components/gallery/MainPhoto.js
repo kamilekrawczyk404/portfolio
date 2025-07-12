@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Button from "@/components/buttons/Button";
 import { Icons } from "@/components/Icons";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { animationsTypes } from "@/animations";
 
@@ -40,21 +40,18 @@ const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
       transition={{ ...animationsTypes.default }}
       className={`relative flex flex-col gap-4 overflow-hidden ${className}`}
     >
-      <div
-        ref={containerRef}
-        className={`relative rounded-xl h-full w-full flex`}
-      >
-        {photos.map((photo, index) => (
+      <AnimatePresence mode={"sync"}>
+        <div
+          ref={containerRef}
+          className={`relative rounded-xl h-full w-full rounded-xl border-1 overflow-hidden ${theme.border}`}
+        >
           <motion.div
-            key={index}
-            className={`absolute top-0 h-full w-full rounded-xl border-1 overflow-hidden ${theme.border}`}
-            animate={{
-              left: `${(index - currentPhotoIndex) * 100}%`,
-            }}
+            key={photos[currentPhotoIndex].src}
+            className={`relative h-full w-full `}
             whileTap={{
               cursor: "grabbing",
             }}
-            initial={{ cursor: "grab" }}
+            initial={{ cursor: "grab", opacity: 0 }}
             dragConstraints={containerRef}
             dragElastic={0.5}
             onDragEnd={(e) => {
@@ -64,20 +61,22 @@ const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
             onDrag={(e) => {
               setDraggingDirection(e.movementX > 0 ? "left" : "right");
             }}
+            exit={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             drag={"x"}
           >
             <Image
               fill
               sizes={"max-width: 100vw"}
               style={{ objectFit: "contain" }}
-              src={photo.src}
-              alt={photo.alt}
+              src={photos[currentPhotoIndex].src}
+              alt={photos[currentPhotoIndex].alt}
               quality={100}
               className={"pointer-events-none "}
             />
           </motion.div>
-        ))}
-      </div>
+        </div>
+      </AnimatePresence>
       <div className={"flex items-center justify-center gap-x-2"}>
         <Button square navigation onClick={() => selectPhoto(-1)}>
           <Icons.AngleLeft />
