@@ -166,6 +166,7 @@ const Hero = () => {
               src={"/hero/myself_3.webp"}
               alt={"Myself"}
               fill
+              sizes={"max-width: 100vw"}
               priority={true}
               style={{
                 objectFit: "cover",
@@ -190,12 +191,10 @@ const Container = ({
   className = "",
   ...props
 }) => {
-  const { theme, opposite } = useSelector((state) => state.theme);
+  const { theme } = useSelector((state) => state.theme);
 
   // if this component is not as a gallery, it would be animated to cover entire screen
   const [scope, animate] = useAnimate();
-
-  const [animationCompleted, setAnimationCompleted] = useState(false);
 
   useEffect(() => {
     const show = async () => {
@@ -317,9 +316,10 @@ const Container = ({
               height: "100%",
               left: 0,
               top: 0,
+              aspectRatio: "16 / 9",
+
               translateY: animationDirection === "vertical" ? 0 : "50%",
               translateX: 0,
-              aspectRatio: "auto",
               minHeight: "10rem",
             },
             { duration: 0 },
@@ -339,8 +339,6 @@ const Container = ({
           }
         }
       }
-
-      setAnimationCompleted(true);
     };
 
     if (animationDirection) show();
@@ -350,6 +348,7 @@ const Container = ({
     <motion.div
       initial={{
         aspectRatio: 1 / 1,
+        origin: type !== "photoContainer" ? "bottom left" : "top left",
         position: "absolute",
         left: type === "photoContainer" ? "50%" : null,
         right: type !== "photoContainer" ? "50%" : null,
@@ -360,9 +359,7 @@ const Container = ({
       }}
       ref={scope}
       className={`overflow-hidden md:h-1/3 h-1/5 ${
-        type !== "photoContainer"
-          ? `origin-bottom-right ${theme.background}`
-          : `origin-top-left bg-purple`
+        type !== "photoContainer" ? `${theme.background}` : `bg-purple`
       } ${className}`}
       {...props}
     >
@@ -370,9 +367,11 @@ const Container = ({
         <VerticallyAppearingText
           text={text}
           direction={type === "photoContainer" ? "fromBottom" : "fromTop"}
-          className={`${
-            type === "photoContainer" ? "right-2 bottom-2" : "left-2 top-2"
-          } lg:text-3xl md:text-2xl text-xl absolute`}
+          className={`absolute ${
+            type === "photoContainer"
+              ? "lg:right-2 lg:bottom-2 right-1 bottom-1 text-right"
+              : "lg:left-2 lg:top-2 left-1 top-1 text-left"
+          } lg:text-3xl md:text-2xl text-xl`}
         />
         {children}
       </div>

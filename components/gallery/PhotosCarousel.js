@@ -56,7 +56,7 @@ const PhotosCarousel = ({
           <Image
             {...photo}
             fill
-            sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
+            sizes={"max-width: 100vw"}
             style={{ objectFit: "contain" }}
             loading={"lazy"}
             quality={25}

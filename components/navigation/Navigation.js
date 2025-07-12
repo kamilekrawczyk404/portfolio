@@ -34,27 +34,24 @@ const Navigation = () => {
       name: "Home",
       href: "/",
     },
-    {
-      name: "Projects",
-      href: "/projects",
-    },
-    {
-      name: "Blog",
-      href: "/blog",
-    },
-    {
-      name: "Contact",
-      href: "/contact",
-    },
+    // {
+    //   name: "Projects",
+    //   href: "/projects",
+    // },
+    // {
+    //   name: "Blog",
+    //   href: "/blog",
+    // },
+    // {
+    //   name: "Contact",
+    //   href: "/contact",
+    // },
   ];
 
   useEffect(() => {
-    // if (selected === 'dark')
-
     const timeout = setTimeout(
       () => {
         setIsNavigationLoaded(true);
-        // dispatch(changeTheme());
       },
       animationDuration * 1000 + 750,
     );

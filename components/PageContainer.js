@@ -13,10 +13,11 @@ const PageContainer = ({
 
   return (
     <div
-      className={`min-h-fit w-full relative ${
+      // style={{ minHeight: "fit-content" }}
+      className={`w-full relative min-h-fit ${
         includeNavigationHeight
-          ? "!mt-[4rem] h-[calc(100dvh-4rem)]"
-          : "h-[100dvh]"
+          ? "!mt-[4rem] lg:h-[calc(100vh-4rem)]"
+          : "lg:h-[100vh]"
       } ${
         section
           ? `${theme.background} relative flex flex-col justify-center ${layoutProperties.gap.large}`
