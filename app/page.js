@@ -6,9 +6,9 @@ import Projects from "@/components/Projects";
 const fetcher = (url, params = {}) =>
   fetch(
     `${
-      process.env.NEXT_PUBLIC_VERCEL_URL
-        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-        : "http://localhost:3000"
+      process.env.NODE_ENV === "production"
+        ? `https://portfolio-ruby-theta-21.vercel.app`
+        : `http://localhost:${process.env.PORT || 3000}`
     }${url}`,
     params,
   );
