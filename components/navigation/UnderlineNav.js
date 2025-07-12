@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react"; // Import useRef for the underline
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
-import { animationsTypes } from "@/animations"; // Ensure this path is correct
+import { animationsTypes } from "@/animations";
 
 const UnderlineNav = ({
   items,

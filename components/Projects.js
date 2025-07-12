@@ -119,8 +119,6 @@ const Projects = ({ projectsPhotos, apiKey }) => {
     setSelectedSortingType(item.type);
   }, []);
 
-  console.log("error", error);
-
   return (
     <PageContainer section>
       <SectionTitle title={"Projects"}>

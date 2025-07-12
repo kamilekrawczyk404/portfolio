@@ -13,32 +13,6 @@ const fetcher = (url, params = {}) =>
     params,
   );
 
-async function getGitHubRepos() {
-  try {
-    const response = await fetcher(`/api/repos`, {
-      headers: {
-        "X-Internal-Api-Secret": process.env.INTERNAL_API_SECRET || "",
-      },
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Cannot get repositories from the API", errorData);
-      return {
-        error:
-          errorData.error || "Failed to fetch repositories from internal API.",
-      };
-    }
-
-    const repos = await response.json();
-    return { repositories: repos };
-  } catch (error) {
-    console.error("Error fetching GitHub repos:", error);
-    return { error: "Internal server error during repository fetch." };
-  }
-}
-
 async function getProjectsPhotos() {
   const response = await fetcher("/api/projects");
 

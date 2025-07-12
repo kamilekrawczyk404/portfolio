@@ -1,13 +1,9 @@
-// Technologies.jsx
 "use client";
 import React, { useState, useCallback } from "react";
 import PageContainer from "@/components/PageContainer";
-import { colors, layoutProperties } from "@/layout";
-import { useSelector } from "react-redux";
+import { layoutProperties } from "@/layout";
 import { AnimatePresence, motion } from "framer-motion";
-import { animationProperties, animationsTypes } from "@/animations";
-import ProgressBar from "@/components/ProgressBar";
-import Button from "@/components/buttons/Button";
+import { animationsTypes } from "@/animations";
 import SectionTitle from "@/components/SectionTitle";
 import GroupSection from "@/components/GroupSection";
 import Categories from "@/components/Categories";
@@ -15,7 +11,6 @@ import StaggeredList from "@/components/lists/StaggeredList";
 import Aspect from "@/components/lists/Aspect";
 import ProgressBarAspect from "@/components/ProgressBarAspect";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
-import categories from "@/components/Categories";
 
 const Technologies = () => {
   const technologies = [

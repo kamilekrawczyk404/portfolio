@@ -1,19 +1,9 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import CloseButton from "@/components/buttons/CloseButton";
-import { useSelector } from "react-redux";
-import GroupSection from "@/components/GroupSection";
-import Aspect from "@/components/lists/Aspect";
-import StaggeredList from "@/components/lists/StaggeredList";
-import UnderlineNav from "@/components/navigation/UnderlineNav";
-import { animationProperties, animationsTypes } from "@/animations";
-import Gallery from "@/components/gallery/Gallery";
 
-const ExpandingContainer = ({ isExpanded, setIsExpanded, project }) => {
-  const { theme, opposite } = useSelector((state) => state.theme);
-
+const ExpandingContainer = ({ isExpanded }) => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {

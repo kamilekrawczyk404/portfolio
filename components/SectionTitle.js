@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { layoutProperties } from "@/layout";
 import { useSelector } from "react-redux";

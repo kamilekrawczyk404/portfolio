@@ -1,7 +1,7 @@
+"use client";
 import { motion } from "framer-motion";
 import React from "react";
 import { useSelector } from "react-redux";
-import { colors } from "@/layout";
 
 const Button = ({
   children,

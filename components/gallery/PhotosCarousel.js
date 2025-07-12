@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useRef } from "react"; // Import useRef
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import { colors, layoutProperties } from "@/layout";
+import { colors } from "@/layout";
 import StaggeredList from "@/components/lists/StaggeredList";
 
 const PhotosCarousel = ({

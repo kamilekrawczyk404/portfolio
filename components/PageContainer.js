@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
-import { colors, layoutProperties } from "@/layout";
+import { layoutProperties } from "@/layout";
 import { useSelector } from "react-redux";
 
 const PageContainer = ({

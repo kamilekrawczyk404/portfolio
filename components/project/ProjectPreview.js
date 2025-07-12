@@ -8,7 +8,6 @@ import MouseAttachedProjectPreview from "@/components/project/MouseAttachedProje
 import Project from "@/components/project/Project";
 import useMousePosition from "@/hooks/useMousePosition";
 import { setIsPreviewOpen } from "@/redux/reducers/projectPreviewSlice";
-import StaggeredList from "@/components/lists/StaggeredList";
 import LanguageUsageStats from "@/components/project/LanguageUsageStats";
 import { layoutProperties } from "@/layout";
 
