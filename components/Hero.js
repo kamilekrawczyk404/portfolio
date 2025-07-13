@@ -11,6 +11,7 @@ import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { colors, layoutProperties } from "@/layout";
 import TextCarousel from "@/components/text/TextCarousel";
 import { useSelector } from "react-redux";
+import { clearTimeout } from "node:timers";
 
 const Hero = () => {
   const t = useTranslations("HomePage");
@@ -19,9 +20,18 @@ const Hero = () => {
 
   // based on the device's width we choose the correct animation direction
   const [animationDirection, setAnimationDirection] = useState("vertical");
+  const [shouldRenderText, setShouldRenderText] = useState(false);
 
   useEffect(() => {
     setAnimationDirection(window.innerWidth < 1024 ? "horizontal" : "vertical");
+
+    const timeout = setTimeout(() => {
+      setShouldRenderText(true);
+    }, 2400);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (
@@ -48,12 +58,12 @@ const Hero = () => {
         }}
       >
         <AnimatedSingleLetterText
-          text={"Loading"}
+          text={t("Hero.LoadingHeaders.Loading")}
           className={`${layoutProperties.text.large} ${opposite.foreground} select-none`}
         />
         <div className={"mr-4"}>
           <AnimatedSingleLetterText
-            text={"Kamil's portfolio"}
+            text={t("Hero.LoadingHeaders.Rest")}
             className={`${layoutProperties.text.large} ${opposite.foreground} select-none`}
           />
         </div>
@@ -73,21 +83,23 @@ const Hero = () => {
                 className={"relative flex items-center h-fit flex-wrap w-full"}
               >
                 <AnimatedSingleLetterText
-                  text={"I build"}
-                  animationDelay={2.4}
+                  text={t("Hero.Header.Before")}
                   className={`${layoutProperties.text.large}`}
+                  shouldRender={shouldRenderText}
                 />
                 <TextCarousel
                   key={"carousel"}
                   className={`${layoutProperties.text.large}`}
                   words={t("Hero.Header.TextCarousel").split(",")}
-                  delay={2.5}
+                  delay={0.1}
+                  shouldRender={shouldRenderText}
                 />
               </div>
               <AnimatedSingleLetterText
-                text={"web applications"}
+                text={t("Hero.Header.After")}
                 className={`${layoutProperties.text.large}`}
-                animationDelay={2.6}
+                animationDelay={0.2}
+                shouldRender={shouldRenderText}
               />
             </div>
             <div className={"overflow-hidden"}>
@@ -126,7 +138,7 @@ const Hero = () => {
               }}
               main
             >
-              Explore my works
+              {t("Hero.ActionButtons.ExploreMyWorks")}
             </Button>
             <Button
               filled
@@ -144,7 +156,7 @@ const Hero = () => {
                 delay: 2.7,
               }}
             >
-              Hire me
+              {t("Hero.ActionButtons.HireMe")}
             </Button>
           </div>
         </div>

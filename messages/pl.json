@@ -1,6 +1,61 @@
 {
   "HomePage": {
-    "title": "Cześć"
+    "Hero": {
+      "LoadingHeaders": {
+        "Loading": "Ładowanie",
+        "Rest": "Portfolio Kamila"
+      },
+      "Header": {
+        "Before": "Tworzę",
+        "TextCarousel": "eleganckie, czyste, nowoczesne, żywe, modne",
+        "After": "aplikacje webowe"
+      },
+      "ActionButtons": {
+        "HireMe": "Zatrudnij mnie",
+        "ExploreMyWorks": "Moje projekty"
+      },
+      "Summary": "Zmotywowany ciekawością, nieustannie poszerzam granice w tworzeniu stron internetowych, aby dostarczyć oczekiwane rezultaty"
+    },
+    "Technologies": {
+      "Title": "Technologie",
+      "SelectorTitle": "Wybierz kategorię",
+      "Frontend": {
+        "Sections": {
+          "Languages": "Języki",
+          "Frameworks & Libraries": "Framework'i i biblioteki",
+          "Additional aspects": "Dodatkowe aspekty"
+        }
+      },
+      "Backend": {
+        "Sections": {
+          "Languages": "Języki",
+          "Frameworks & Libraries": "Framework'i i biblioteki",
+          "Additional aspects": "Dodatkowe aspekty"
+        }
+      },
+      "DevTools": {
+        "Sections": {
+          "Tools": "Narzędzia",
+          "Project management": "Zarządzanie projektem",
+          "Additional aspects": "Dodatkowe aspekty"
+        }
+      }
+    },
+    "Projects": {
+      "Title": "Projekty",
+      "Filter": {
+        "Title": "Filtruj po języku"
+      },
+      "Selector": {
+        "Title": "Sortuj po",
+        "Values": {
+          "CreatedDesc":  "Data utworzenia",
+          "CreatedAsc": "Data utworzenia",
+          "UpdatedDesc":  "Data aktualizacji",
+          "UpdatedAsc":  "Data aktualizacji"
+        }
+      }
+    }
   },
   "Navigation": {
     "links": {

@@ -11,8 +11,11 @@ import StaggeredList from "@/components/lists/StaggeredList";
 import Aspect from "@/components/lists/Aspect";
 import ProgressBarAspect from "@/components/ProgressBarAspect";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
+import { useTranslations } from "next-intl";
 
 const Technologies = () => {
+  const t = useTranslations("HomePage");
+
   const technologies = [
     {
       type: "Frontend",
@@ -72,7 +75,7 @@ const Technologies = () => {
         ],
       },
       otherAspects: {
-        title: "Additional aspects", // These don't have knowledge, so no progress bar
+        title: "Additional aspects",
         aspects: [
           { name: "PHPUnit" },
           { name: "Authorization & Authentication" },
@@ -82,7 +85,7 @@ const Technologies = () => {
       },
     },
     {
-      type: "DevTools & DevOps", // Example structure
+      type: "DevTools",
       tools: {
         title: "Tools",
         aspects: [
@@ -178,8 +181,8 @@ const Technologies = () => {
 
   return (
     <PageContainer section>
-      <SectionTitle title={"Technologies"}>
-        <GroupSection title={"Select a category"}>
+      <SectionTitle title={t("Technologies.Title")}>
+        <GroupSection title={t("Technologies.SelectorTitle")}>
           <Categories
             categories={technologies}
             render={(technology) => technology.type}
@@ -211,7 +214,9 @@ const Technologies = () => {
               >
                 {/*Header of each section*/}
                 <VerticallyAppearingText
-                  text={value.title}
+                  text={t(
+                    `Technologies.${technologies[selectedTechnologyIndex].type}.Sections.${value.title}`,
+                  )}
                   className={`${layoutProperties.text.medium}`}
                 />
 

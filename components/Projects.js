@@ -10,12 +10,13 @@ import { projectsList } from "@/projectsList";
 import useCachedGithubRepos from "@/hooks/useCachedGithubRepos";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { layoutProperties } from "@/layout";
+import { useTranslations } from "next-intl";
 
 const sortingTypes = [
-  { name: "Created: Newest First", type: "created-desc" },
-  { name: "Created: Oldest First", type: "created-asc" },
-  { name: "Updated: Most Recent", type: "updated-desc" },
-  { name: "Updated: Least Recent", type: "updated-asc" },
+  { type: "CreatedDesc" },
+  { type: "CreatedAsc" },
+  { type: "UpdatedDesc" },
+  { type: "UpdatedAsc" },
 ];
 
 // Join all necessary information about project (its photos, repository information, etc.)
@@ -41,6 +42,8 @@ const getFormattedProjects = (
   };
 };
 const Projects = ({ projectsPhotos, apiKey }) => {
+  const t = useTranslations("HomePage.Projects");
+
   const { cached, error, isLoading, setForceRefresh } =
     useCachedGithubRepos(apiKey);
 
@@ -78,22 +81,22 @@ const Projects = ({ projectsPhotos, apiKey }) => {
 
     const sortedItems = [...items];
     switch (sortingType) {
-      case "updated-asc":
+      case "UpdatedAsc":
         return sortedItems.sort(
           (a, b) =>
             new Date(a.repository.updatedAt) - new Date(b.repository.updatedAt),
         );
-      case "updated-desc":
+      case "UpdatedDesc":
         return sortedItems.sort(
           (a, b) =>
             new Date(b.repository.updatedAt) - new Date(a.repository.updatedAt),
         );
-      case "created-asc":
+      case "CreatedAsc":
         return sortedItems.sort(
           (a, b) =>
             new Date(a.repository.createdAt) - new Date(b.repository.createdAt),
         );
-      case "created-desc":
+      case "CreatedDesc":
         return sortedItems.sort(
           (a, b) =>
             new Date(b.repository.createdAt) - new Date(a.repository.createdAt),
@@ -121,9 +124,9 @@ const Projects = ({ projectsPhotos, apiKey }) => {
 
   return (
     <PageContainer section>
-      <SectionTitle title={"Projects"}>
+      <SectionTitle title={t("Title")}>
         <div className={"flex flex-col gap-2"}>
-          <GroupSection title={"Filter by languages"}>
+          <GroupSection title={t("Filter.Title")}>
             {!isLoading ? (
               <Categories
                 categories={cached.projectsLanguages}
@@ -137,10 +140,10 @@ const Projects = ({ projectsPhotos, apiKey }) => {
               />
             )}
           </GroupSection>
-          <GroupSection title={"Sort by"} className={"w-fit"}>
+          <GroupSection title={t("Selector.Title")} className={"w-fit"}>
             <Selector
               items={sortingTypes}
-              render={(item) => item.name}
+              render={(item) => t(`Selector.Values.${item.type}`)}
               callback={handleSortingChange}
             />
           </GroupSection>

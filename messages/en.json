@@ -4,12 +4,60 @@
   },
   "HomePage": {
     "Hero": {
+      "LoadingHeaders": {
+        "Loading": "Loading",
+        "Rest": "Kamil's portfolio"
+      },
       "Header": {
         "Before": "I build",
         "TextCarousel": "sleek, clean, modern, vivid, trendy",
         "After": "web applications"
       },
+      "ActionButtons": {
+        "HireMe": "Hire me",
+        "ExploreMyWorks": "My projects"
+      },
       "Summary": "Driven by curiosity, I'm constantly pushing boundaries in web development to deliver exceptional results."
+    },
+    "Technologies": {
+      "Title": "Technologies",
+      "SelectorTitle": "Select a category",
+      "Frontend": {
+        "Sections": {
+          "Languages": "Languages",
+          "Frameworks & Libraries": "Frameworks & libraries",
+          "Additional aspects": "Additional aspects"
+        }
+      },
+      "Backend": {
+        "Sections": {
+          "Languages": "Languages",
+          "Frameworks & Libraries": "Frameworks & libraries",
+          "Additional aspects": "Additional aspects"
+        }
+      },
+      "DevTools": {
+        "Sections": {
+          "Tools": "Tools",
+          "Project management": "Project management",
+          "Additional aspects": "Additional aspects"
+        }
+      }
+    },
+    "Projects": {
+      "Title": "Projects",
+      "Filter": {
+        "Title": "Filter by languages"
+      },
+      "Selector": {
+        "Title": "Sort by",
+        "Values": {
+          "CreatedDesc":  "Creation date",
+          "CreatedAsc": "Creation date",
+          "UpdatedDesc":  "Modification date",
+          "UpdatedAsc":  "Modification date"
+        }
+      }
     }
   },
   "Navigation": {
