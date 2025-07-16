@@ -5,7 +5,7 @@ import Button from "@/components/buttons/Button";
 import { Icons } from "@/components/Icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import { animationsTypes } from "@/animations";
+import { animationProperties, animationsTypes } from "@/animations";
 
 const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
   const { theme } = useSelector((state) => state.theme);
@@ -64,6 +64,10 @@ const MainPhoto = ({ className = "", photos, currentPhoto, onPhotoChange }) => {
             exit={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             drag={"x"}
+            transition={{
+              ...animationsTypes.default,
+              duration: animationProperties.durations.long,
+            }}
           >
             <Image
               fill

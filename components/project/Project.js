@@ -12,6 +12,7 @@ import Aspect from "@/components/lists/Aspect";
 import { layoutProperties } from "@/layout";
 import IndentAspect from "@/components/lists/IndentAspect";
 import { Icons } from "@/components/Icons";
+import { useTranslations } from "next-intl";
 
 function formatDateToDayMonthYear(dateInput) {
   let date;
@@ -42,6 +43,8 @@ function formatDateToDayMonthYear(dateInput) {
 }
 
 const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
+  const t = useTranslations("HomePage.ProjectsSection");
+
   const { theme } = useSelector((state) => state.theme);
 
   // Start animate sections after some delay
@@ -49,32 +52,32 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
 
   // Render navigation view based on the project's aspect
   const renderView = useCallback((view) => {
-    switch (view.title.toLowerCase()) {
-      case "galeria":
+    switch (view.type) {
+      case "gallery":
         return (
           <ChildContainer className={"h-full"}>
             <Gallery photos={view.photos} />
           </ChildContainer>
         );
-      case "informacje ogólne":
+      case "description":
         const repositoryItems = [
           {
-            title: "Created",
+            type: "creationDate",
             description: formatDateToDayMonthYear(project.repository.createdAt),
             icon: <Icons.Add />,
           },
           {
-            title: "Updated",
+            type: "updateDate",
             description: formatDateToDayMonthYear(project.repository.updatedAt),
             icon: <Icons.Update />,
           },
           {
-            title: "Default branch",
+            type: "defaultBranch",
             description: project.repository.defaultBranch,
             icon: <Icons.CodeBranch />,
           },
           {
-            title: "GitHub",
+            type: "gitHub",
             description: project.repository.url,
             icon: <Icons.GitHub />,
           },
@@ -82,15 +85,15 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
 
         if (project?.link) {
           repositoryItems.push({
-            title: "Website",
+            type: "website",
             description: project.link,
             icon: <Icons.Globe />,
           });
         }
 
         const sections = [
-          { title: "Repository", items: repositoryItems },
-          { title: "Technologies", items: project.technologies },
+          { type: "Repository", items: repositoryItems },
+          { type: "Technologies", items: project.technologies },
         ];
 
         return (
@@ -99,24 +102,30 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
           >
             {sections.map((section) => (
               <GroupSection
-                key={section.title}
-                title={section.title}
+                key={section.type}
+                title={t(`Sections.${section.type}.Title`)}
                 className={"gap-4"}
                 headerSize={layoutProperties.text.medium}
               >
-                {section.title === "Repository" ? (
+                {section.type === "Repository" ? (
                   <StaggeredList
                     items={section.items}
                     className={
                       "grid md:grid-cols-2 grid-cols-1 gap-2 items-center"
                     }
-                    render={(item) => <IndentAspect {...item} />}
+                    render={(item) => (
+                      <IndentAspect
+                        icon={item.icon}
+                        description={item.description}
+                        title={t(`Sections.${section.type}.${item.type}`)}
+                      />
+                    )}
                   />
                 ) : (
                   section.items.map((technology) => (
                     <GroupSection
                       key={technology.title}
-                      title={technology.title}
+                      title={t(`Sections.${section.type}.${technology.title}`)}
                     >
                       <StaggeredList
                         items={technology.values}
@@ -130,21 +139,20 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
             <GroupSection
               title={"Description"}
               headerSize={layoutProperties.text.medium}
-              className={"md:col-span-2"}
+              className={"md:col-span-2 gap-2"}
             >
-              <div>
-                {project.description.map((textSection, index) => (
-                  <p key={index}>{textSection}</p>
-                ))}
-              </div>
+              {t(`Projects.${project.githubRepoName}.Description`)}
             </GroupSection>
           </ChildContainer>
         );
-      case "kluczowe cechy":
+      case "keyFeatures":
+        // values that are represented in the i18n project object (those cannot be cast to an object)
+        const featureKeys = project.keyFeaturesTitles;
+
         return (
           <ChildContainer className={"flex flex-col gap-4"}>
             <GroupSection
-              title={view.title}
+              title={t(`NavigationViewsHeaders.${view.type}`)}
               headerSize={layoutProperties.text.medium}
               className={"gap-4"}
             >
@@ -152,11 +160,15 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
                 className={
                   "grid md:grid-cols-2 grid-cols-1 grid-rows-fit gap-4 overflow-y-scroll"
                 }
-                items={project.mainAspects}
-                render={(item) => (
+                items={featureKeys}
+                render={(feature) => (
                   <IndentAspect
-                    title={item.title}
-                    description={item.description}
+                    title={t(
+                      `Projects.${project.githubRepoName}.KeyFeatures.title_${feature}`,
+                    )}
+                    description={t(
+                      `Projects.${project.githubRepoName}.KeyFeatures.desc_${feature}`,
+                    )}
                   />
                 )}
               />
@@ -182,7 +194,7 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
         className={`z-[10] p-4 flex justify-between items-center ${theme.background}`}
       >
         <h3 className={`${theme.foreground} ${layoutProperties.text.medium}`}>
-          {project.title}
+          {t(`Projects.${project.githubRepoName}.Title`)}
         </h3>
         <CloseButton onClick={onClose} />
       </motion.div>
@@ -200,9 +212,9 @@ const Project = ({ project, shouldBeShown, onClose = () => {} }) => {
       >
         <UnderlineNav
           items={project.views}
-          renderHeader={(header) => (
+          renderNavigationHeader={(header) => (
             <span className={"inline-flex px-2 h-[1.75rem] items-center"}>
-              {header}
+              {t(`NavigationViewsHeaders.${header}`)}
             </span>
           )}
           renderView={renderView}

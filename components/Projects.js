@@ -11,6 +11,7 @@ import useCachedGithubRepos from "@/hooks/useCachedGithubRepos";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { layoutProperties } from "@/layout";
 import { useTranslations } from "next-intl";
+import { Icons } from "@/components/Icons";
 
 const sortingTypes = [
   { type: "CreatedDesc" },
@@ -35,14 +36,15 @@ const getFormattedProjects = (
     thumbnail: `/projects/${projectDescription.githubRepoName}/view-1.png`,
     views: [
       // Add gallery view
-      { title: "Galeria", photos: projectPhotos },
-      ...projectDescription.views,
+      { type: "gallery", photos: projectPhotos },
+      { type: "description" },
+      { type: "keyFeatures" },
     ],
     repository: repository,
   };
 };
 const Projects = ({ projectsPhotos, apiKey }) => {
-  const t = useTranslations("HomePage.Projects");
+  const t = useTranslations("HomePage.ProjectsSection");
 
   const { cached, error, isLoading, setForceRefresh } =
     useCachedGithubRepos(apiKey);
@@ -143,7 +145,23 @@ const Projects = ({ projectsPhotos, apiKey }) => {
           <GroupSection title={t("Selector.Title")} className={"w-fit"}>
             <Selector
               items={sortingTypes}
-              render={(item) => t(`Selector.Values.${item.type}`)}
+              render={(item) => {
+                if (["CreatedDesc", "UpdatedDesc"].includes(item.type)) {
+                  return (
+                    <span>
+                      {t(`Selector.Values.${item.type}`)}
+                      <Icons.Arrow className={"rotate-90 ml-2 text-sm"} />
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span>
+                      {t(`Selector.Values.${item.type}`)}
+                      <Icons.Arrow className={"-rotate-90 ml-2 text-sm"} />
+                    </span>
+                  );
+                }
+              }}
               callback={handleSortingChange}
             />
           </GroupSection>

@@ -44,7 +44,7 @@
         }
       }
     },
-    "Projects": {
+    "ProjectsSection": {
       "Title": "Projects",
       "Filter": {
         "Title": "Filter by languages"
@@ -56,6 +56,166 @@
           "CreatedAsc": "Creation date",
           "UpdatedDesc":  "Modification date",
           "UpdatedAsc":  "Modification date"
+        }
+      },
+      "Projects": {
+        "and-wiert": {
+          "Title": "Website for deep wells drilling company",
+          "Description": "Within this project, I was responsible for the comprehensive development of both the frontend and backend. It was my first project where I utilized AI tools to generate website content. My client wanted a simple blog management system where they wouldn't have to manually search for and rewrite content for posts. Therefore, I integrated the external Google Gemini API, which, based on keywords, title, and existing post content, can generate additional sections and content, speeding up the work. If we don't have an interesting photo on the server, we can search for it using the included photo search engine pulling from the Pexels platform. These additional aspects significantly contribute to generating content of interest to us in unprecedented time. The application's state is managed by Redux, I used React Query for creating queries, and Prisma for integrating the database with the application. The application was containerized using Docker and is hosted on an OVH server.",
+          "KeyFeatures": {
+            "title_CleanModernInterface": "Clean and Modern Interface",
+            "desc_CleanModernInterface": "A minimalist design with intuitive navigation that guides the user through offers and information.",
+            "title_IntuitiveNavigation": "Intuitive Navigation",
+            "desc_IntuitiveNavigation": "Users can easily find the information they need thanks to a logical menu and section layout.",
+            "title_AnimationsInteractions": "Animations and Interactions",
+            "desc_AnimationsInteractions": "The use of the Framer Motion library for smooth animations, such as dynamic progress bars in the technology section or animated carousel transitions, significantly improves the aesthetic experience and website interactivity.",
+            "title_ServicePresentation": "Service Presentation",
+            "desc_ServicePresentation": "A detailed description of offered services, such as well drilling, pipe installation, pump selection, cleaning and maintenance, and water connection execution. Each service is clearly presented so that a potential client can quickly understand the company's scope of work.",
+            "title_ContactSection": "Contact Section",
+            "desc_ContactSection": "An intuitive contact form and visible contact details, facilitating quick communication and inquiry about the offer.",
+            "title_DynamicBlogArticles": "Dynamic Blog/Articles",
+            "desc_DynamicBlogArticles": "A section with expert articles on deep wells, location selection, legal, and environmental aspects. This part serves an educational function and builds the company's authority in the industry.",
+            "title_ResponsiveDesign": "Responsive Design",
+            "desc_ResponsiveDesign": "The website is fully responsive, ensuring optimal display and usability on various devices – from desktop computers to tablets and smartphones.",
+            "title_AIPostGenerator": "AI Post Generator",
+            "desc_AIPostGenerator": "Based on provided keywords or short outlines, the AI module can generate full blog articles, saving time and resources needed for content creation.",
+            "title_SEOSupport": "SEO Support",
+            "desc_SEOSupport": "AI can help create content optimized for search engines, increasing website visibility in search results.",
+            "title_PostPersonalization": "Post Personalization",
+            "desc_PostPersonalization": "Generated content can then be edited and adapted by the administrator, which allows maintaining the company's unique tone and communication style."
+          }
+        },
+        "cpp-weather-app": {
+          "Title": "Desktop Weather Application",
+          "Description": "This project is a desktop weather application, written in C++, that provides users with current information about atmospheric conditions. The application connects to an external weather API to dynamically fetch data for a selected location. It is an example of an API client implementation in C++, demonstrating skills in network communication, data parsing (e.g., JSON), and creating a user interface in a desktop environment. The project focuses on efficient data processing and presenting it in a readable manner. The goal was to create a reliable tool that quickly and accurately provides weather forecasts, while highlighting my C++ programming skills.",
+          "KeyFeatures": {
+            "title_WeatherDataFetchingAPI": "Weather Data Fetching from API",
+            "desc_WeatherDataFetchingAPI": "The application integrates with the external OpenWeatherMap API to fetch current weather data, including temperature, humidity, wind speed, and atmospheric conditions.",
+            "title_JSONXMLParsing": "JSON/XML Data Parsing",
+            "desc_JSONXMLParsing": "Utilization of libraries for JSON data management to extract and display relevant weather information.",
+            "title_LocationSearch": "Location Search",
+            "desc_LocationSearch": "Ability to search for weather in various cities or locations, which increases the application's usability for the user. After typing a certain number of characters, the user receives a list of suggested cities that can speed up the search.",
+            "title_IntuitiveUserInterface": "Intuitive User Interface",
+            "desc_IntuitiveUserInterface": "Graphical interface design providing a clear and understandable presentation of weather data.",
+            "title_ErrorExceptionHandling": "Error and Exception Handling",
+            "desc_ErrorExceptionHandling": "Management of potential errors, such as lack of internet connection, incorrect API data, or parsing errors, to ensure application stability.",
+            "title_DynamicCharts": "Dynamically Generated Charts",
+            "desc_DynamicCharts": "For even better data presentation, a module for creating dynamic charts for temperature and precipitation amounts has been implemented. With increasing temperature, we can observe a change in colors to warmer tones.",
+            "title_MultilingualSupport": "Multilingual Support",
+            "desc_MultilingualSupport": "To make the application accessible to a wider audience, translations based on the DeepL API have been added."
+          }
+        },
+        "flashcards": {
+          "Title": "Language learning app",
+          "Description": "A full-stack web application designed to help users learn and memorize information through interactive flashcards. Users can create, manage, and study custom sets of flashcards, making it an ideal tool for students, language learners, or anyone looking to master new concepts. The application supports various learning modes, allowing users to flip cards, mark them as known or unknown, and track their progress. It leverages modern web technologies to provide a smooth and engaging user experience, with a focus on ease of use and efficient knowledge retention. Key features include user authentication, deck management, and a responsive design that works across different devices.",
+          "KeyFeatures": {
+            "title_CardCreationManagement": "Card Creation and Management",
+            "desc_CardCreationManagement": "Users can easily create new flashcards by adding questions and answers. The application allows organizing flashcards into sets (decks) for better structure and material categorization.",
+            "title_LearningReviewModes": "Learning and Review Modes",
+            "desc_LearningReviewModes": "Various learning modes have been implemented, including the ability to flip cards, mark them as 'known' or 'to review', which supports effective learning and knowledge retention.",
+            "title_ProgressTracking": "Progress Tracking",
+            "desc_ProgressTracking": "The application monitors user progress, allowing them to track how many flashcards have been mastered and how many require further study. This may include statistics and progress visualizations.",
+            "title_UserAuthentication": "User Authorization and Authentication",
+            "desc_UserAuthentication": "The user authentication system provides secure access to personalized flashcard sets, enabling each user to manage their own data.",
+            "title_ResponsiveInterface": "Responsive Interface",
+            "desc_ResponsiveInterface": "The website design is fully responsive, ensuring optimal display and functionality on various devices, from desktop computers to smartphones.",
+            "title_IntuitiveDesign": "Intuitive Design",
+            "desc_IntuitiveDesign": "A clean and intuitive user interface that facilitates navigation and makes learning with flashcards pleasant and effective."
+          }
+        },
+        "pogodynka-frontend": {
+          "Title": "Weather Web Application",
+          "Description": "This project was created as part of an academic course. The weather application is split into two sections: frontend and backend. I was responsible for the frontend part of the team, so this portion is included in my portfolio. The interface view was designed to provide an intuitive and aesthetic experience for Browse weather forecasts. It focuses on presenting weather data fetched from an external API in an accessible and visually appealing way. The frontend application is responsible for user interaction, sending queries to the backend API, and dynamically rendering the received information. It ensures responsiveness and smooth operation across various devices. The goal was to create a fast and reliable interface that clearly presents key weather data such as temperature, atmospheric conditions, wind speed, and humidity.",
+          "KeyFeatures": {
+            "title_DynamicWeatherDisplay": "Dynamic Weather Data Display",
+            "desc_DynamicWeatherDisplay": "Presentation of current and forecasted weather data for a selected location, including temperature, weather icons, humidity, pressure, and wind speed.",
+            "title_LocationSearchManagement": "Location Search and Management",
+            "desc_LocationSearchManagement": "Ability to search for cities and add them to a list of observed locations, with easy switching between them.",
+            "title_ResponsiveAdaptiveDesign": "Responsive and Adaptive Design",
+            "desc_ResponsiveAdaptiveDesign": "A user interface that adapts to various screen sizes and devices, ensuring an optimal experience on both desktop computers and mobile devices.",
+            "title_IntuitiveNavigation": "Intuitive Navigation",
+            "desc_IntuitiveNavigation": "A simple and clear layout that allows users to easily find the weather information they need.",
+            "title_ErrorLoadingHandling": "Error and Loading State Handling",
+            "desc_ErrorLoadingHandling": "Visual loading indicators and elegant error handling, e.g., in case of no API connection or an invalid city name.",
+            "title_AnimationsVisualEffects": "Animations and Visual Effects",
+            "desc_AnimationsVisualEffects": "Utilization of animations and transitions to improve the aesthetic and fluidity of the user interface, e.g., when changing location or updating data."
+          }
+        },
+        "portfolio": {
+          "Title": "Personal portfolio website",
+          "Description": "As a programmer, I created this website as a central place to present my skills, projects, and experience. It is a dynamic website that allows me to continuously update my work. The site is designed to highlight key aspects of my projects, provide easy navigation, and ensure readability. I use the latest front-end technologies to provide a smooth and interactive user experience. The goal of this project is to create a professional and aesthetic online business card that will allow potential employers or clients to quickly familiarize themselves with my achievements and work style.",
+          "KeyFeatures": {
+            "title_ProjectPresentation": "Project Presentation",
+            "desc_ProjectPresentation": "Detailed descriptions of my projects, with links to GitHub repositories and live demos, allowing for in-depth familiarity with my work.",
+            "title_SkillsSection": "Skills Section",
+            "desc_SkillsSection": "A clear list of technologies and tools I use, categorized, making it easy to quickly grasp my competencies.",
+            "title_ResponsiveDesign": "Responsive Design",
+            "desc_ResponsiveDesign": "The website is fully responsive, ensuring optimal display and usability on all devices – from desktop computers to tablets and smartphones.",
+            "title_IntuitiveNavigation": "Intuitive Navigation",
+            "desc_IntuitiveNavigation": "A logical layout of menus and sections allows users to easily find the information they are looking for.",
+            "title_ContactForm": "Contact Form",
+            "desc_ContactForm": "A simple and effective contact form, enabling quick contact with me regarding cooperation or questions.",
+            "title_AboutMe": "About Me",
+            "desc_AboutMe": "A section presenting my experience, interests, and career path, providing a fuller picture of my person."
+          }
+        },
+        "vet-clinic": {
+          "Title": "Vet Clinic Management System",
+          "Description": "A veterinary clinic management system aimed at streamlining daily operations and managing patient data, appointments, and medications. I was responsible for key aspects of the backend and business logic, as well as a part of the user interface. My main tasks included designing and implementing the database schema, integrating it with Entity Framework, configuring dependency injection, developing the application's navigation concept, building views and business logic for veterinarians, and managing the medication list.",
+          "KeyFeatures": {
+            "title_DBSchemaDesignIntegration": "Database Schema Design and Integration (MySQL)",
+            "desc_DBSchemaDesignIntegration": "I created the MySQL database schema, covering relationships between patients, appointments, doctors, and medications. I then integrated it with the application using Entity Framework, ensuring efficient data persistence.",
+            "title_DependencyInjectionSetup": "Dependency Injection (DI) Configuration",
+            "desc_DependencyInjectionSetup": "I implemented dependency injection, which significantly improved code modularity, testability, and flexibility, facilitating further development and maintenance of the application.",
+            "title_DoctorViewsBusinessLogic": "Development of Doctor's Views and Business Logic",
+            "desc_DoctorViewsBusinessLogic": "I was responsible for creating user interface views and implementing business logic dedicated to veterinarians, which streamlined their work with the system.",
+            "title_MedicationListManagement": "Medication List Management",
+            "desc_MedicationListManagement": "I developed functionality to manage the list of available medications, allowing for adding, editing, and viewing entries.",
+            "title_AppNavigationConcept": "Application Navigation Concept",
+            "desc_AppNavigationConcept": "I designed and implemented the application's navigation concept, ensuring a consistent and intuitive user flow between different sections of the system.",
+            "title_AuthorizationAuthentication": "Authorization and Authentication",
+            "desc_AuthorizationAuthentication": "I implemented user authentication logic – the application provides for three different user types (administrator, doctor, client) with varying permissions."
+          }
+        },
+        "wpf-advanced-calculator": {
+          "Title": "Advanced Desktop Calculator",
+          "Description": "This project is a desktop calculator application built using WPF (Windows Presentation Foundation) technology. It offers extended functionality compared to standard calculators, allowing for complex mathematical operations. The application demonstrates skills in creating user interfaces for the Windows platform, managing business logic, and handling user input in a desktop environment.",
+          "KeyFeatures": {
+            "title_ExtendedCalculationFunctionality": "Extended Calculation Functionality",
+            "desc_ExtendedCalculationFunctionality": "The calculator supports advanced mathematical operations beyond basic ones, such as trigonometric functions, logarithms, powers, roots, and memory operations.",
+            "title_IntuitiveUserInterfaceGUI": "Intuitive User Interface (GUI)",
+            "desc_IntuitiveUserInterfaceGUI": "An aesthetic and functional graphical interface created in WPF, ensuring easy navigation and data input.",
+            "title_MathematicalExpressionHandling": "Mathematical Expression Handling",
+            "desc_MathematicalExpressionHandling": "Ability to correctly interpret and calculate complex mathematical expressions, considering the order of operations."
+          }
+        }
+      },
+      "NavigationViewsHeaders": {
+        "gallery": "Gallery",
+        "description": "Description",
+        "keyFeatures": "Key Features"
+      },
+      "Sections": {
+        "Repository": {
+          "Title": "Repository",
+          "creationDate": "Created",
+          "updateDate": "Updated",
+          "defaultBranch": "Default Branch",
+          "gitHub": "GitHub",
+          "website": "Website"
+        },
+        "Technologies": {
+          "Title": "Technologies",
+          "Frontend": "Frontend",
+          "Backend": "Backend",
+          "Deployment": "Deployment",
+          "Core language": "Core language",
+          "Networking/API Integration": "Networking/API Integration",
+          "User Interface": "User Interface",
+          "Build System": "Build System",
+          "Database": "Database",
+          "Libraries": "Libraries",
+          "Development Environment": "Development Environment"
         }
       }
     }

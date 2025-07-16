@@ -10,8 +10,11 @@ import useMousePosition from "@/hooks/useMousePosition";
 import { setIsPreviewOpen } from "@/redux/reducers/projectPreviewSlice";
 import LanguageUsageStats from "@/components/project/LanguageUsageStats";
 import { layoutProperties } from "@/layout";
+import { useTranslations } from "next-intl";
 
 const ProjectPreview = ({ project }) => {
+  const t = useTranslations("HomePage.ProjectsSection.Projects");
+
   const { isSelectorOpen } = useSelector((state) => state.selector);
   const { theme } = useSelector((state) => state.theme);
   const { isPreviewOpen } = useSelector((state) => state.projectPreview);
@@ -125,7 +128,7 @@ const ProjectPreview = ({ project }) => {
       <h3
         className={`select-none ${theme.foreground} ${layoutProperties.text.medium}`}
       >
-        {project.title}
+        {t(`${project.githubRepoName}.Title`)}
       </h3>
       <LanguageUsageStats languages={project.repository.languages || []} />
     </motion.div>

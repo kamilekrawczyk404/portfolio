@@ -7,7 +7,7 @@ import { animationsTypes } from "@/animations";
 const UnderlineNav = ({
   items,
   id,
-  renderHeader = () => {},
+  renderNavigationHeader = () => {},
   renderView = () => {},
   initialActiveIndex = 0,
   canRender = true,
@@ -76,7 +76,7 @@ const UnderlineNav = ({
                 index === activeIndex ? `text-purple` : `${theme.foreground}`
               } transition-colors text-nowrap`}
             >
-              {renderHeader(item.title)}
+              {renderNavigationHeader(item.type)}
             </span>
             {index === activeIndex && (
               <motion.div
