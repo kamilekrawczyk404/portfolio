@@ -6,15 +6,15 @@
         "Rest": "Portfolio Kamila"
       },
       "Header": {
-        "Before": "Tworzę",
-        "TextCarousel": "eleganckie, czyste, nowoczesne, żywe, modne",
+        "Before": "Buduję",
+        "TextCarousel": "eleganckie, przejrzyste, nowoczesne, żywe, modne",
         "After": "aplikacje webowe"
       },
       "ActionButtons": {
         "HireMe": "Zatrudnij mnie",
         "ExploreMyWorks": "Moje projekty"
       },
-      "Summary": "Zmotywowany ciekawością, nieustannie poszerzam granice w tworzeniu stron internetowych, aby dostarczyć oczekiwane rezultaty"
+      "Summary": "Kierując się ciekawością, stale przekraczam granice w tworzeniu stron internetowych, aby dostarczać wyjątkowe rezultaty."
     },
     "Technologies": {
       "Title": "Technologie",
@@ -22,47 +22,204 @@
       "Frontend": {
         "Sections": {
           "Languages": "Języki",
-          "Frameworks & Libraries": "Framework'i i biblioteki",
+          "Frameworks & Libraries": "Frameworki i biblioteki",
           "Additional aspects": "Dodatkowe aspekty"
         }
       },
       "Backend": {
         "Sections": {
           "Languages": "Języki",
-          "Frameworks & Libraries": "Framework'i i biblioteki",
+          "Frameworks & Libraries": "Frameworki i biblioteki",
           "Additional aspects": "Dodatkowe aspekty"
         }
       },
       "DevTools": {
         "Sections": {
           "Tools": "Narzędzia",
-          "Project management": "Zarządzanie projektem",
+          "Project management": "Zarządzanie projektami",
           "Additional aspects": "Dodatkowe aspekty"
         }
       }
     },
-    "Projects": {
+    "ProjectsSection": {
       "Title": "Projekty",
       "Filter": {
-        "Title": "Filtruj po języku"
+        "Title": "Filtruj wg języków"
       },
       "Selector": {
-        "Title": "Sortuj po",
+        "Title": "Sortuj wg",
         "Values": {
-          "CreatedDesc":  "Data utworzenia",
-          "CreatedAsc": "Data utworzenia",
-          "UpdatedDesc":  "Data aktualizacji",
-          "UpdatedAsc":  "Data aktualizacji"
+          "CreatedDesc":  "Daty utworzenia",
+          "CreatedAsc": "Daty utworzenia",
+          "UpdatedDesc":  "Daty modyfikacji",
+          "UpdatedAsc":  "Daty modyfikacji"
+        }
+      },
+      "Projects": {
+        "and-wiert": {
+          "Title": "Strona internetowa dla firmy wiertniczej",
+          "Description": "W ramach tego projektu byłem odpowiedzialny za kompleksowe stworzenie zarówno frontendu, jak i backendu. Był to mój pierwszy projekt, w którym wykorzystałem narzędzia AI do generowania treści na stronę. Klient chciał prosty system zarządzania blogiem, gdzie nie musiałby ręcznie szukać i przepisywać treści do postów. W związku z tym zintegrowałem zewnętrzny interfejs API Google Gemini, który na podstawie słów kluczowych, tytułu i istniejącej treści posta, potrafi wygenerować dodatkowe sekcje i zawartość, przyspieszając pracę. Jeśli nie posiadamy na serwerze interesującego zdjęcia, możemy go wyszukać za pomocą dołączonej wyszukiwarki zdjęć pobierającej z platformy Pexels. Te dodatkowe aspekty znacząco przyczyniają się do generowania interesujących nas treści w niespotykanym czasie. Stan aplikacji jest zarządzany przez Redux, do tworzenia zapytań użyłem React Query, a do integracji bazy danych z aplikacją – Prisma. Aplikacja została skonteneryzowana za pomocą Dockera i hostowana jest na serwerze OVH.",
+          "KeyFeatures": {
+            "title_CleanModernInterface": "Czysty i nowoczesny interfejs",
+            "desc_CleanModernInterface": "Minimalistyczny design z intuicyjną nawigacją, która prowadzi użytkownika przez oferty i informacje.",
+            "title_IntuitiveNavigation": "Intuicyjna nawigacja",
+            "desc_IntuitiveNavigation": "Użytkownicy mogą łatwo znaleźć potrzebne informacje dzięki logicznemu menu i układowi sekcji.",
+            "title_AnimationsInteractions": "Animacje i interakcje",
+            "desc_AnimationsInteractions": "Wykorzystanie biblioteki Framer Motion do płynnych animacji, takich jak dynamiczne paski postępu w sekcji technologii czy animowane przejścia karuzeli, znacząco poprawia wrażenia estetyczne i interaktywność strony.",
+            "title_ServicePresentation": "Prezentacja usług",
+            "desc_ServicePresentation": "Szczegółowy opis oferowanych usług, takich jak wiercenie studni, instalacja rur, dobór pomp, czyszczenie i konserwacja oraz wykonanie przyłącza wodnego. Każda usługa jest jasno przedstawiona, aby potencjalny klient mógł szybko zrozumieć zakres działalności firmy.",
+            "title_ContactSection": "Sekcja kontaktowa",
+            "desc_ContactSection": "Intuicyjny formularz kontaktowy i widoczne dane kontaktowe, ułatwiające szybką komunikację i zapytanie o ofertę.",
+            "title_DynamicBlogArticles": "Dynamiczny blog/artykuły",
+            "desc_DynamicBlogArticles": "Sekcja z artykułami eksperckimi dotyczącymi głębokich studni, doboru lokalizacji, aspektów prawnych i środowiskowych. Ta część pełni funkcję edukacyjną i buduje autorytet firmy w branży.",
+            "title_ResponsiveDesign": "Responsywny design",
+            "desc_ResponsiveDesign": "Strona jest w pełni responsywna, gwarantując optymalne wyświetlanie i użyteczność na wszystkich urządzeniach – od komputerów stacjonarnych po tablety i smartfony.",
+            "title_AIPostGenerator": "Generator postów AI",
+            "desc_AIPostGenerator": "Na podstawie dostarczonych słów kluczowych lub krótkich zarysów, moduł AI może generować pełne artykuły blogowe, oszczędzając czas i zasoby potrzebne na tworzenie treści.",
+            "title_SEOSupport": "Wsparcie SEO",
+            "desc_SEOSupport": "AI może pomóc w tworzeniu treści zoptymalizowanych pod kątem wyszukiwarek, zwiększając widoczność strony w wynikach wyszukiwania.",
+            "title_PostPersonalization": "Personalizacja postów",
+            "desc_PostPersonalization": "Wygenerowane treści mogą być następnie edytowane i dostosowywane przez administratora, co pozwala na zachowanie unikalnego tonu i stylu komunikacji firmy."
+          }
+        },
+        "cpp-weather-app": {
+          "Title": "Desktopowa aplikacja pogodowa",
+          "Description": "Ten projekt to desktopowa aplikacja pogodowa, napisana w C++, która dostarcza użytkownikom aktualne informacje o warunkach atmosferycznych. Aplikacja łączy się z zewnętrznym API pogodowym, aby dynamicznie pobierać dane dla wybranej lokalizacji. Jest to przykład implementacji klienta API w języku C++, demonstrujący umiejętności w zakresie komunikacji sieciowej, parsowania danych (np. JSON) oraz tworzenia interfejsu użytkownika w środowisku desktopowym. Projekt skupia się na efektywnym przetwarzaniu danych i prezentacji ich w czytelny sposób. Celem było stworzenie niezawodnego narzędzia, które szybko i precyzyjnie dostarcza prognozę pogody, jednocześnie podkreślając moje umiejętności programowania w C++.",
+          "KeyFeatures": {
+            "title_WeatherDataFetchingAPI": "Pobieranie danych pogodowych z API",
+            "desc_WeatherDataFetchingAPI": "Aplikacja integruje się z zewnętrznym API pogodowym OpenWeatherMap, aby pobierać aktualne dane pogodowe, w tym temperaturę, wilgotność, prędkość wiatru i warunki atmosferyczne.",
+            "title_JSONXMLParsing": "Parsowanie danych JSON/XML",
+            "desc_JSONXMLParsing": "Wykorzystanie bibliotek do zarządzania danymi JSON, aby wyodrębnić i wyświetlić istotne informacje pogodowe.",
+            "title_LocationSearch": "Wyszukiwanie lokalizacji",
+            "desc_LocationSearch": "Możliwość wyszukiwania pogody dla różnych miast lub lokalizacji, co zwiększa użyteczność aplikacji dla użytkownika. Po wpisaniu pewnej ilości znaków użytkownik otrzymuje listę proponowanych miast, które mogą przyspieszyć wyszukiwanie.",
+            "title_IntuitiveUserInterface": "Intuicyjny interfejs użytkownika",
+            "desc_IntuitiveUserInterface": "Projekt interfejsu graficznego zapewniający czytelną i zrozumiałą prezentację danych pogodowych.",
+            "title_ErrorExceptionHandling": "Obsługa błędów i wyjątków",
+            "desc_ErrorExceptionHandling": "Zarządzanie potencjalnymi błędami, takimi jak brak połączenia z internetem, nieprawidłowe dane z API czy błędy parsowania, dla zapewnienia stabilności aplikacji.",
+            "title_DynamicCharts": "Dynamicznie tworzone wykresy",
+            "desc_DynamicCharts": "Dla jeszcze lepszej prezentacji danych zaimplementowany został moduł tworzenia dynamicznych wykresów dla temperatury oraz ilości opadów. Wraz ze wzrostem temperatury możemy obserwować zmianę kolorów na cieplejsze.",
+            "title_MultilingualSupport": "Wsparcie wielojęzyczne",
+            "desc_MultilingualSupport": "By aplikacja była obsługiwana przez szersze grono odbiorców dodane zostały tłumaczenia na bazie DeepL API."
+          }
+        },
+        "flashcards": {
+          "Title": "Aplikacja do nauki języków",
+          "Description": "Pełnozakresowa aplikacja webowa zaprojektowana, aby pomagać użytkownikom w nauce i zapamiętywaniu informacji poprzez interaktywne fiszki. Użytkownicy mogą tworzyć, zarządzać i uczyć się z własnych zestawów fiszek, co czyni ją idealnym narzędziem dla studentów, osób uczących się języków lub każdego, kto chce opanować nowe koncepcje. Aplikacja wspiera różne tryby nauki, pozwalając użytkownikom na odwracanie kart, oznaczanie ich jako znane lub nieznane oraz śledzenie postępów. Wykorzystuje nowoczesne technologie webowe, aby zapewnić płynne i angażujące doświadczenie użytkownika, z naciskiem na łatwość użycia i efektywne utrwalanie wiedzy. Kluczowe funkcje obejmują uwierzytelnianie użytkowników, zarządzanie taliami i responsywny design, który działa na różnych urządzeniach.",
+          "KeyFeatures": {
+            "title_CardCreationManagement": "Tworzenie i zarządzanie fiszkami",
+            "desc_CardCreationManagement": "Użytkownicy mogą łatwo tworzyć nowe fiszki, dodając pytania i odpowiedzi. Aplikacja pozwala na organizowanie fiszek w zestawy (talie) dla lepszej struktury i kategoryzacji materiału.",
+            "title_LearningReviewModes": "Tryby nauki i powtórek",
+            "desc_LearningReviewModes": "Zaimplementowano różne tryby nauki, w tym możliwość odwracania kart, oznaczania ich jako „znane” lub „do powtórki”, co wspiera efektywną naukę i utrwalanie wiedzy.",
+            "title_ProgressTracking": "Śledzenie postępów",
+            "desc_ProgressTracking": "Aplikacja monitoruje postępy użytkowników, pozwalając im śledzić, ile fiszek zostało opanowanych i ile wymaga dalszej nauki. Może to obejmować statystyki i wizualizacje postępów.",
+            "title_UserAuthentication": "Autoryzacja i uwierzytelnianie użytkowników",
+            "desc_UserAuthentication": "System uwierzytelniania użytkowników zapewnia bezpieczny dostęp do spersonalizowanych zestawów fiszek, umożliwiając każdemu użytkownikowi zarządzanie własnymi danymi.",
+            "title_ResponsiveInterface": "Responsywny interfejs",
+            "desc_ResponsiveInterface": "Projekt strony jest w pełni responsywny, zapewniając optymalne wyświetlanie i funkcjonalność na różnych urządzeniach, od komputerów stacjonarnych po smartfony.",
+            "title_IntuitiveDesign": "Intuicyjny design",
+            "desc_IntuitiveDesign": "Czysty i intuicyjny interfejs użytkownika, który ułatwia nawigację i sprawia, że nauka z fiszek jest przyjemna i efektywna."
+          }
+        },
+        "pogodynka-frontend": {
+          "Title": "Webowa aplikacja pogodowa",
+          "Description": "Projekt ten powstał w ramach kursu akademickiego. Aplikacja pogodowa jest podzielona na dwie sekcje: frontend i backend. Byłem odpowiedzialny za część frontendową zespołu, dlatego ta część jest uwzględniona w moim portfolio. Widok interfejsu został zaprojektowany tak, aby zapewnić intuicyjne i estetyczne doświadczenie przeglądania prognoz pogody. Skupia się na prezentowaniu danych pogodowych pobieranych z zewnętrznego API w przystępny i atrakcyjny wizualnie sposób. Aplikacja frontendowa odpowiada za interakcję z użytkownikiem, wysyłanie zapytań do backendowego API i dynamiczne renderowanie otrzymanych informacji. Zapewnia responsywność i płynne działanie na różnych urządzeniach. Celem było stworzenie szybkiego i niezawodnego interfejsu, który jasno prezentuje kluczowe dane pogodowe, takie jak temperatura, warunki atmosferyczne, prędkość wiatru i wilgotność.",
+          "KeyFeatures": {
+            "title_DynamicWeatherDisplay": "Dynamiczne wyświetlanie danych pogodowych",
+            "desc_DynamicWeatherDisplay": "Prezentacja aktualnych i prognozowanych danych pogodowych dla wybranej lokalizacji, w tym temperatury, ikon pogodowych, wilgotności, ciśnienia i prędkości wiatru.",
+            "title_LocationSearchManagement": "Wyszukiwanie i zarządzanie lokalizacjami",
+            "desc_LocationSearchManagement": "Możliwość wyszukiwania miast i dodawania ich do listy obserwowanych lokalizacji, z łatwym przełączaniem między nimi.",
+            "title_ResponsiveAdaptiveDesign": "Responsywny i adaptacyjny design",
+            "desc_ResponsiveAdaptiveDesign": "Interfejs użytkownika, który dostosowuje się do różnych rozmiarów ekranów i urządzeń, zapewniając optymalne wrażenia zarówno na komputerach stacjonarnych, jak i urządzeniach mobilnych.",
+            "title_IntuitiveNavigation": "Intuicyjna nawigacja",
+            "desc_IntuitiveNavigation": "Prosty i przejrzysty układ, który pozwala użytkownikom łatwo znaleźć potrzebne informacje pogodowe.",
+            "title_ErrorLoadingHandling": "Obsługa błędów i stanów ładowania",
+            "desc_ErrorLoadingHandling": "Wizualne wskaźniki ładowania i elegancka obsługa błędów, np. w przypadku braku połączenia z API lub nieprawidłowej nazwy miasta.",
+            "title_AnimationsVisualEffects": "Animacje i efekty wizualne",
+            "desc_AnimationsVisualEffects": "Wykorzystanie animacji i przejść w celu poprawy estetyki i płynności interfejsu użytkownika, np. podczas zmiany lokalizacji lub aktualizacji danych."
+          }
+        },
+        "portfolio": {
+          "Title": "Osobista strona portfolio",
+          "Description": "Jako programista, stworzyłem tę stronę jako centralne miejsce do prezentacji moich umiejętności, projektów i doświadczenia. Jest to dynamiczna witryna, która pozwala mi na bieżąco aktualizować moją twórczość. Strona jest zaprojektowana tak, aby wyróżnić kluczowe aspekty moich projektów, zapewnić łatwą nawigację i czytelność. Wykorzystuję najnowsze technologie front-endowe, aby zapewnić płynne i interaktywne doświadczenie użytkownika. Celem tego projektu jest stworzenie profesjonalnej i estetycznej wizytówki online, która pozwoli potencjalnym pracodawcom lub klientom szybko zapoznać się z moim dorobkiem i stylem pracy.",
+          "KeyFeatures": {
+            "title_ProjectPresentation": "Prezentacja projektów",
+            "desc_ProjectPresentation": "Szczegółowe opisy moich projektów, z linkami do repozytoriów GitHub oraz live demo, pozwalające na dogłębne zapoznanie się z moim dorobkiem.",
+            "title_SkillsSection": "Sekcja umiejętności",
+            "desc_SkillsSection": "Przejrzysta lista technologii i narzędzi, którymi się posługuję, podzielona na kategorie, co ułatwia szybkie zorientowanie się w moich kompetencjach.",
+            "title_ResponsiveDesign": "Responsywny design",
+            "desc_ResponsiveDesign": "Strona jest w pełni responsywna, gwarantując optymalne wyświetlanie i użyteczność na wszystkich urządzeniach – od komputerów stacjonarnych po tablety i smartfony.",
+            "title_IntuitiveNavigation": "Intuicyjna nawigacja",
+            "desc_IntuitiveNavigation": "Logiczny układ menu i sekcji umożliwia użytkownikom łatwe odnalezienie poszukiwanych informacji.",
+            "title_ContactForm": "Formularz kontaktowy",
+            "desc_ContactForm": "Prosty i efektywny formularz kontaktowy, umożliwiający szybkie nawiązanie kontaktu ze mną w sprawie współpracy lub pytań.",
+            "title_AboutMe": "O mnie",
+            "desc_AboutMe": "Sekcja przedstawiająca moje doświadczenie, zainteresowania i ścieżkę kariery, dając pełniejszy obraz mojej osoby."
+          }
+        },
+        "vet-clinic": {
+          "Title": "System zarządzania kliniką weterynaryjną",
+          "Description": "System zarządzania kliniką weterynaryjną, mający na celu usprawnienie codziennych operacji i zarządzania danymi pacjentów, wizyt oraz leków. Byłem odpowiedzialny za kluczowe aspekty backendu i logiki biznesowej, a także za część interfejsu użytkownika. Moje główne zadania obejmowały projektowanie i implementację schematu bazy danych, integrację z Entity Framework, konfigurację wstrzykiwania zależności, koncepcją nawigacji w aplikacji, rozwój widoków i logiki biznesowej dla lekarzy weterynarii oraz zarządzanie listą leków.",
+          "KeyFeatures": {
+            "title_DBSchemaDesignIntegration": "Projektowanie i integracja schematu bazy danych (MySQL)",
+            "desc_DBSchemaDesignIntegration": "Stworzyłem schemat bazy danych MySQL, obejmujący relacje między pacjentami, wizytami, lekarzami i lekami. Następnie zintegrowałem go z aplikacją za pomocą Entity Framework, zapewniając efektywną persystencję danych.",
+            "title_DependencyInjectionSetup": "Konfiguracja wstrzykiwania zależności (DI)",
+            "desc_DependencyInjectionSetup": "Zaimplementowałem wstrzykiwanie zależności, co znacząco poprawiło modularność, testowalność i elastyczność kodu, ułatwiając dalszy rozwój i utrzymanie aplikacji.",
+            "title_DoctorViewsBusinessLogic": "Rozwój widoków i logiki biznesowej dla lekarzy",
+            "desc_DoctorViewsBusinessLogic": "Byłem odpowiedzialny za tworzenie widoków interfejsu użytkownika oraz implementację logiki biznesowej dedykowanej dla lekarzy weterynarii, co usprawniło ich pracę z systemem.",
+            "title_MedicationListManagement": "Zarządzanie listą leków",
+            "desc_MedicationListManagement": "Opracowałem funkcjonalność do zarządzania listą dostępnych leków, umożliwiającą dodawanie, edytowanie i przeglądanie pozycji.",
+            "title_AppNavigationConcept": "Koncepcja nawigacji w aplikacji",
+            "desc_AppNavigationConcept": "Zaprojektowałem i zaimplementowałem koncepcję nawigacji w aplikacji, zapewniając spójny i intuicyjny przepływ użytkownika między różnymi sekcjami systemu.",
+            "title_AuthorizationAuthentication": "Autoryzacja i autentykacja",
+            "desc_AuthorizationAuthentication": "Zaimplementowałem logikę uwierzytelniania użytkowników - aplikacje przewiduje trzy różne typy użytkowników (administrator, doktor, klient) z różnymi uprawnieniami."
+          }
+        },
+        "wpf-advanced-calculator": {
+          "Title": "Zaawansowany kalkulator desktopowy",
+          "Description": "Ten projekt to desktopowa aplikacja kalkulatora, zbudowana z wykorzystaniem technologii WPF (Windows Presentation Foundation). Oferuje rozszerzoną funkcjonalność w porównaniu do standardowych kalkulatorów, umożliwiając wykonywanie złożonych operacji matematycznych. Aplikacja demonstruje umiejętności w zakresie tworzenia interfejsów użytkownika dla platformy Windows, zarządzania logiką biznesową oraz obsługi wejścia użytkownika w środowisku desktopowym.",
+          "KeyFeatures": {
+            "title_ExtendedCalculationFunctionality": "Rozszerzona funkcjonalność obliczeniowa",
+            "desc_ExtendedCalculationFunctionality": "Kalkulator wspiera zaawansowane operacje matematyczne poza podstawowymi, takie jak funkcje trygonometryczne, logarytmy, potęgi, pierwiastki, czy operacje na pamięci.",
+            "title_IntuitiveUserInterfaceGUI": "Intuicyjny interfejs użytkownika (GUI)",
+            "desc_IntuitiveUserInterfaceGUI": "Estetyczny i funkcjonalny interfejs graficzny stworzony w WPF, zapewniający łatwą nawigację i wprowadzanie danych.",
+            "title_MathematicalExpressionHandling": "Obsługa wyrażeń matematycznych",
+            "desc_MathematicalExpressionHandling": "Zdolność do prawidłowej interpretacji i obliczania złożonych wyrażeń matematycznych z uwzględnieniem kolejności operacji."
+          }
+        }
+      },
+      "NavigationViewsHeaders": {
+        "gallery": "Galeria",
+        "description": "Opis",
+        "keyFeatures": "Kluczowe funkcje"
+      },
+      "Sections": {
+        "Repository": {
+          "Title": "Repozytorium",
+          "creationDate": "Utworzono",
+          "updateDate": "Zaktualizowano",
+          "defaultBranch": "Główna gałąź",
+          "gitHub": "GitHub",
+          "website": "Strona internetowa"
+        },
+        "Technologies": {
+          "Title": "Technologie",
+          "Frontend": "Frontend",
+          "Backend": "Backend",
+          "Deployment": "Wdrożenie",
+          "Core language": "Język podstawowy",
+          "Networking/API Integration": "Integracja sieci/API",
+          "User Interface": "Interfejs użytkownika",
+          "Build System": "System kompilacji",
+          "Database": "Baza danych",
+          "Libraries": "Biblioteki",
+          "Development Environment": "Środowisko programistyczne"
         }
       }
     }
   },
   "Navigation": {
     "links": {
-      "home": "Strona główna",
-      "projects": "Projekty",
-      "contact": "Kontakt",
-      "blog": "Blog"
+      "home": "Start"
     },
     "download-cv": "Pobierz CV"
   }

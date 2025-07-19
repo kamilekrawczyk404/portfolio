@@ -1,8 +1,5 @@
 "use client";
 import React, { useCallback, useMemo, useState } from "react";
-import PageContainer from "@/components/PageContainer";
-import SectionTitle from "@/components/SectionTitle";
-import GroupSection from "@/components/GroupSection";
 import Categories from "@/components/Categories";
 import Selector from "@/components/Selector";
 import ProjectPreview from "@/components/project/ProjectPreview";
@@ -12,6 +9,9 @@ import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { layoutProperties } from "@/layout";
 import { useTranslations } from "next-intl";
 import { Icons } from "@/components/Icons";
+import GroupSection from "@/components/containers/GroupSection";
+import SectionTitle from "@/components/containers/SectionTitle";
+import PageContainer from "@/components/containers/PageContainer";
 
 const sortingTypes = [
   { type: "CreatedDesc" },

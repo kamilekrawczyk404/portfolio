@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Backdrop from "@/components/Backdrop";
 import Button from "@/components/buttons/Button";
 import NavigationLink from "@/components/buttons/NavigationLink";
 import { useTranslations } from "next-intl";
@@ -13,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CloseButton from "@/components/buttons/CloseButton";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { getCookie, hasCookie, setCookie } from "cookies-next";
+import Backdrop from "@/components/containers/Backdrop";
 
 const Navigation = () => {
   const { theme } = useSelector((state) => state.theme);
@@ -34,18 +34,6 @@ const Navigation = () => {
       name: "Home",
       href: "/",
     },
-    // {
-    //   name: "Projects",
-    //   href: "/projects",
-    // },
-    // {
-    //   name: "Blog",
-    //   href: "/blog",
-    // },
-    // {
-    //   name: "Contact",
-    //   href: "/contact",
-    // },
   ];
 
   useEffect(() => {
@@ -152,7 +140,7 @@ const Navigation = () => {
                 <div className={"flex gap-2 items-center"}>
                   <LanguagesButtons />
                 </div>
-                <DownloadCvButton t={t} className={"md:hidden block"} />
+                <DownloadCvButton t={t} className={"md:hidden flex"} />
               </div>
             </motion.aside>
           </>
@@ -187,7 +175,7 @@ const Navigation = () => {
           }
           className={"overflow-hidden relative flex gap-x-2 items-center"}
         >
-          <DownloadCvButton t={t} className={"md:block hidden"} />
+          <DownloadCvButton t={t} className={"md:flex hidden"} />
         </motion.div>
       </div>
       <div className={`flex items-center gap-x-1`}>
@@ -200,7 +188,12 @@ const Navigation = () => {
 export default Navigation;
 
 const DownloadCvButton = ({ t, className = "" }) => (
-  <Button navigation className={`text-nowrap ${className}`}>
+  <a
+    href={"/cv/cv-file-kamil-krawczyk.pdf"}
+    download={"kamil-krawczyk-cv"}
+    // navigation
+    className={`h-[1.75rem] text-sm border-1 rounded-xl px-2 w-fit text-nowrap items-center ${className}`}
+  >
     {t("download-cv")}
-  </Button>
+  </a>
 );

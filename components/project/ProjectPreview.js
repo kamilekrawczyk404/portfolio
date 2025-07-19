@@ -2,7 +2,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Backdrop from "@/components/Backdrop";
 import { animationProperties, animationsTypes } from "@/animations";
 import MouseAttachedProjectPreview from "@/components/project/MouseAttachedProjectPreview";
 import Project from "@/components/project/Project";
@@ -11,6 +10,7 @@ import { setIsPreviewOpen } from "@/redux/reducers/projectPreviewSlice";
 import LanguageUsageStats from "@/components/project/LanguageUsageStats";
 import { layoutProperties } from "@/layout";
 import { useTranslations } from "next-intl";
+import Backdrop from "@/components/containers/Backdrop";
 
 const ProjectPreview = ({ project }) => {
   const t = useTranslations("HomePage.ProjectsSection.Projects");

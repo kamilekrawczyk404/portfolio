@@ -5,7 +5,6 @@ import { animationProperties, animationsTypes } from "@/animations";
 import CloseButton from "@/components/buttons/CloseButton";
 import { useSelector } from "react-redux";
 import UnderlineNav from "@/components/navigation/UnderlineNav";
-import GroupSection from "@/components/GroupSection";
 import StaggeredList from "@/components/lists/StaggeredList";
 import Gallery from "@/components/gallery/Gallery";
 import Aspect from "@/components/lists/Aspect";
@@ -13,6 +12,7 @@ import { layoutProperties } from "@/layout";
 import IndentAspect from "@/components/lists/IndentAspect";
 import { Icons } from "@/components/Icons";
 import { useTranslations } from "next-intl";
+import GroupSection from "@/components/containers/GroupSection";
 
 function formatDateToDayMonthYear(dateInput) {
   let date;

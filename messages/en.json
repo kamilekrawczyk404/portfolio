@@ -1,7 +1,4 @@
 {
-  "LocaleLayout": {
-    "title": "Locale layout"
-  },
   "HomePage": {
     "Hero": {
       "LoadingHeaders": {
@@ -222,10 +219,7 @@
   },
   "Navigation": {
     "links": {
-      "home": "Home",
-      "projects": "Project",
-      "contact": "Contact",
-      "blog": "Blog"
+      "home": "Home"
     },
     "download-cv": "Download CV"
   }

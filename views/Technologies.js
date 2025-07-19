@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useCallback } from "react";
-import PageContainer from "@/components/PageContainer";
+import PageContainer from "@/components/containers/PageContainer";
 import { layoutProperties } from "@/layout";
 import { AnimatePresence, motion } from "framer-motion";
 import { animationsTypes } from "@/animations";
-import SectionTitle from "@/components/SectionTitle";
-import GroupSection from "@/components/GroupSection";
+import SectionTitle from "@/components/containers/SectionTitle";
+import GroupSection from "@/components/containers/GroupSection";
 import Categories from "@/components/Categories";
 import StaggeredList from "@/components/lists/StaggeredList";
 import Aspect from "@/components/lists/Aspect";
