@@ -23,7 +23,7 @@ const Button = ({
       } border-1 cursor-pointer relative transition-colors ${
         square ? "aspect-square rounded-full" : "rounded-xl"
       } ${navigation ? "px-2 h-[1.75rem] w-fit text-sm " : ""} ${
-        main ? "text-2xl px-4 py-2" : ""
+        main ? "text-xl px-4 min-h-[2.75rem]" : ""
       } ${className}`}
       {...props}
     >

@@ -1,6 +1,7 @@
 import Hero from "@/views/Hero";
 import Technologies from "@/views/Technologies";
 import Projects from "@/views/Projects";
+import Contact from "@/views/Contact";
 
 const fetcher = (url, params = {}) =>
   fetch(
@@ -36,6 +37,7 @@ export default async function RootPage() {
       <Hero />
       <Technologies />
       <Projects apiKey={apiKey} projectsPhotos={projectPhotos} />
+      <Contact />
     </div>
   );
 }
