@@ -5,11 +5,13 @@ import { Icons } from "@/components/Icons";
 import { motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 
-const SubmitButton = ({ isLoading }) => {
+const SubmitButton = ({ isLoading, wasSuccessful = false }) => {
   return (
     <Button
       main
-      className={"w-fit inline-flex items-center gap-x-2 group"}
+      className={`w-fit inline-flex items-center gap-x-2 group transition-all ${
+        wasSuccessful ? "bg-purple" : ""
+      }`}
       layout
       disabled={isLoading}
     >
@@ -36,10 +38,22 @@ const SubmitButton = ({ isLoading }) => {
         </span>
       ) : (
         <>
-          Submit
-          <span className={"group-hover:translate-x-[.25rem] transition-all"}>
-            <Icons.Arrow />
-          </span>
+          {wasSuccessful ? (
+            <>
+              Success
+              <Icons.Check />
+            </>
+          ) : (
+            <>
+              {" "}
+              Submit
+              <span
+                className={"group-hover:translate-x-[.25rem] transition-all"}
+              >
+                <Icons.Arrow />
+              </span>
+            </>
+          )}
         </>
       )}
     </Button>

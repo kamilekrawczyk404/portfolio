@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { setTimeout } from "next/dist/compiled/@edge-runtime/primitives";
 
 interface ContactFormData {
   name: string;
@@ -62,7 +63,7 @@ export async function POST(req: NextRequest) {
       text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`,
     };
 
-    await transporter.sendMail(mailOptions);
+    // await transporter.sendMail(mailOptions);
 
     return NextResponse.json(
       { status: 200, message: "Email sent successfully!" },

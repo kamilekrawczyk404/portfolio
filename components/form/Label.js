@@ -10,7 +10,7 @@ const Label = ({ htmlFor, required, error, children }) => {
   return (
     <label
       htmlFor={htmlFor}
-      className={`${theme.text} ${layoutProperties.text.small} inline-flex gap-2 min-h-[2rem] items-end`}
+      className={`${theme.text} ${layoutProperties.text.small} relative inline-flex gap-2 min-h-[2.5rem] items-end`}
     >
       <span>
         {children}
@@ -21,7 +21,7 @@ const Label = ({ htmlFor, required, error, children }) => {
           <VerticallyAppearingText
             text={error}
             direction={"fromTop"}
-            className={`text-sm text-red-700`}
+            className={`text-sm text-red-700 !p-0 max-w-50`}
           />
         )}
       </AnimatePresence>

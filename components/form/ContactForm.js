@@ -5,33 +5,37 @@ import { layoutProperties } from "@/layout";
 import SubmitButton from "@/components/form/SubmitButton";
 import axios from "axios";
 import formField from "@/components/form/FormField";
-import { log } from "util";
+
+const initialFormState = {
+  name: {
+    value: "",
+    error: null,
+  },
+  email: {
+    value: "",
+    error: null,
+  },
+  phoneNumber: {
+    value: "",
+    error: null,
+  },
+  subject: {
+    value: "",
+    error: null,
+  },
+  message: {
+    value: "",
+    error: null,
+  },
+};
 
 const ContactForm = ({ className = "" }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [formFields, setFormFields] = useState({
-    name: {
-      value: "",
-      error: null,
-    },
-    email: {
-      value: "",
-      error: null,
-    },
-    phoneNumber: {
-      value: "",
-      error: null,
-    },
-    subject: {
-      value: "",
-      error: null,
-    },
-    message: {
-      value: "",
-      error: null,
-    },
+  const [formState, setFormState] = useState({
+    isLoading: false,
+    wasSuccessful: false,
   });
+
+  const [formFields, setFormFields] = useState(initialFormState);
 
   const handleInputChange = (e, name) => {
     setFormFields((prev) => ({
@@ -46,14 +50,26 @@ const ContactForm = ({ className = "" }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = {};
+    const errors = Object.fromEntries(
+      Object.entries(formFields).map(([key, values]) => [key, null]),
+    );
 
     Object.entries(formFields).forEach(([key, values]) => {
+      if (key === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.value)) {
+        errors[key] = "Email is not valid";
+      }
+
+      if (
+        key === "phoneNumber" &&
+        values.value.length > 0 &&
+        !/^(?:\+48|0048)?\d{9}$/.test(values.value)
+      ) {
+        errors[key] = "Phone number is not valid.\n Required 9 digits.";
+      }
+
       if (key !== "phoneNumber") {
         if (values.value.length === 0) {
           errors[key] = "This field cannot be empty";
-        } else {
-          errors[key] = null;
         }
       }
     });
@@ -71,7 +87,15 @@ const ContactForm = ({ className = "" }) => {
 
     if (Object.values(errors).some((e) => e !== null)) return;
 
-    setIsLoading(true);
+    setFormState((prev) => ({ ...prev, isLoading: true }));
+
+    const resetForm = () => {
+      // setFormFields(initialFormState);
+
+      setTimeout(() => {
+        setFormState((prev) => ({ ...prev, wasSuccessful: false }));
+      }, 2000);
+    };
 
     await axios
       .post(
@@ -83,17 +107,25 @@ const ContactForm = ({ className = "" }) => {
           ]),
         ),
       )
-      .then((res) => console.log("resss", res))
+      .then((res) => {
+        if (res.config.timeout < 1000) {
+          setTimeout(() => {
+            setFormState({ isLoading: false, wasSuccessful: true });
+            resetForm();
+          }, 1000);
+        } else {
+          setFormState({ isLoading: false, wasSuccessful: true });
+          resetForm();
+        }
+      })
       .catch((err) => console.log("err", err));
-
-    setIsLoading(false);
   };
 
   return (
     <div className={`${className}`}>
       <form onSubmit={handleSubmit}>
         <div
-          className={`grid md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.large}`}
+          className={`grid md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.medium}`}
         >
           <FormField
             required
@@ -146,7 +178,10 @@ const ContactForm = ({ className = "" }) => {
             inputType={"textarea"}
             className={"md:col-span-2"}
           />
-          <SubmitButton isLoading={isLoading} />
+          <SubmitButton
+            isLoading={formState.isLoading}
+            wasSuccessful={formState.wasSuccessful}
+          />
         </div>
       </form>
     </div>

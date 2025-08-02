@@ -7,6 +7,7 @@ import {
   faArrowRight,
   faArrowUpRightFromSquare,
   faCaretDown,
+  faCheck,
   faClockRotateLeft,
   faClose,
   faCodeBranch,
@@ -15,7 +16,7 @@ import {
   faSun,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 export const Icons = {
   Close: ({ className = "" }) => (
@@ -59,5 +60,11 @@ export const Icons = {
   ),
   Trash: ({ className = "" }) => (
     <FontAwesomeIcon icon={faTrash} className={className} />
+  ),
+  Check: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faCheck} className={className} />
+  ),
+  Linkedin: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faLinkedin} className={className} />
   ),
 };
