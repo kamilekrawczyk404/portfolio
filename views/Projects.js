@@ -12,6 +12,8 @@ import { Icons } from "@/components/Icons";
 import GroupSection from "@/components/containers/GroupSection";
 import SectionTitle from "@/components/containers/SectionTitle";
 import PageContainer from "@/components/containers/PageContainer";
+import { animationProperties } from "@/animations";
+import AppearingContainer from "@/components/containers/AppearingContainer";
 
 const sortingTypes = [
   { type: "CreatedDesc" },
@@ -128,9 +130,14 @@ const Projects = ({ projectsPhotos, apiKey }) => {
     <PageContainer section>
       <SectionTitle title={t("Title")}>
         <div className={"flex flex-col gap-2"}>
-          <GroupSection title={t("Filter.Title")}>
+          <GroupSection
+            title={t("Filter.Title")}
+            delay={animationProperties.durations.long}
+          >
             {!isLoading ? (
               <Categories
+                whileInView
+                delay={animationProperties.durations.long}
                 categories={cached.projectsLanguages}
                 render={(item) => item}
                 callback={handleFilterChange}
@@ -142,8 +149,14 @@ const Projects = ({ projectsPhotos, apiKey }) => {
               />
             )}
           </GroupSection>
-          <GroupSection title={t("Selector.Title")} className={"w-fit"}>
+          <GroupSection
+            title={t("Selector.Title")}
+            className={"w-fit"}
+            delay={animationProperties.durations.long}
+          >
             <Selector
+              whileInView
+              delay={animationProperties.durations.long}
               items={sortingTypes}
               render={(item) => {
                 if (["CreatedDesc", "UpdatedDesc"].includes(item.type)) {
@@ -167,7 +180,7 @@ const Projects = ({ projectsPhotos, apiKey }) => {
           </GroupSection>
         </div>
       </SectionTitle>
-      <div
+      <AppearingContainer
         className={`relative grid md:grid-cols-2 grid-cols-1 basis-full relative ${layoutProperties.gap.horizontal.large}`}
       >
         {filteredAndSortedProjects?.length > 0 ? (
@@ -193,7 +206,7 @@ const Projects = ({ projectsPhotos, apiKey }) => {
             text={"No projects available."}
           />
         )}
-      </div>
+      </AppearingContainer>
     </PageContainer>
   );
 };

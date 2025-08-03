@@ -11,6 +11,7 @@ const AnimateSingleLetterText = ({
   direction = "bottomToTop",
   className = "",
   shouldRender = true,
+  whileInView = false,
 }) => {
   const words = text.split(" ");
 
@@ -25,9 +26,14 @@ const AnimateSingleLetterText = ({
               initial={{
                 y: direction === "bottomToTop" ? "100%" : "-100%",
               }}
-              animate={{
-                y: 0,
-              }}
+              animate={
+                !whileInView
+                  ? {
+                      y: 0,
+                    }
+                  : {}
+              }
+              whileInView={whileInView ? { y: 0 } : {}}
               transition={{
                 ...animationsTypes.default,
                 duration,

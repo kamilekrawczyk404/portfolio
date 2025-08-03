@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 const VerticallyAppearingText = ({
   text,
+  whileInView = false,
   direction = "fromTop",
   className = "",
   delay = 0,
@@ -20,19 +21,33 @@ const VerticallyAppearingText = ({
       className={`overflow-hidden h-fit w-fit lg:pb-1 ${theme.foreground} ${className}`}
     >
       <motion.h3
-        initial={{
-          y: direction === "fromTop" ? "-100%" : "100%",
-        }}
-        animate={{
-          y: 0,
-          transition: {
-            ...animationsTypes.default,
-            delay,
-          },
-        }}
-        exit={{
-          y: direction === "fromTop" ? "100%" : "-100%",
-        }}
+        initial={initial}
+        viewport={{ once: true }}
+        whileInView={
+          whileInView
+            ? {
+                ...animate,
+                transition: {
+                  ...animate.transition,
+                  ...animationsTypes.default,
+                  delay,
+                },
+              }
+            : {}
+        }
+        animate={
+          !whileInView
+            ? {
+                ...animate,
+                transition: {
+                  ...animate.transition,
+                  ...animationsTypes.default,
+                  delay,
+                },
+              }
+            : {}
+        }
+        exit={exit}
         transition={animationsTypes.default}
       >
         {text}

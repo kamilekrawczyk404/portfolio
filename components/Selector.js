@@ -6,7 +6,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import { changeSelectorState } from "@/redux/reducers/selectorSlice";
 
-const Selector = ({ items, render = () => {}, callback = () => {} }) => {
+const Selector = ({
+  items,
+  delay = 0,
+  whileInView = false,
+  render = () => {},
+  callback = () => {},
+}) => {
   const { theme } = useSelector((state) => state.theme);
 
   const dispatch = useDispatch();
@@ -75,8 +81,12 @@ const Selector = ({ items, render = () => {}, callback = () => {} }) => {
   }, [selectedIndex]);
 
   return (
-    <div
+    <motion.div
       ref={selectorRef}
+      initial={{ opacity: 0 }}
+      whileInView={whileInView ? { opacity: 1 } : {}}
+      animate={!whileInView ? { opacity: 1 } : {}}
+      transition={{ delay }}
       onClick={() => {
         dispatch(changeSelectorState(!isOpen));
         setIsOpen(!isOpen);
@@ -126,7 +136,7 @@ const Selector = ({ items, render = () => {}, callback = () => {} }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 

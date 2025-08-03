@@ -6,7 +6,7 @@ import { animationProperties, animationsTypes } from "@/animations";
 import MouseAttachedProjectPreview from "@/components/project/MouseAttachedProjectPreview";
 import Project from "@/components/project/Project";
 import useMousePosition from "@/hooks/useMousePosition";
-import { setIsPreviewOpen } from "@/redux/reducers/projectPreviewSlice";
+import { setCanPreviewBeVisible } from "@/redux/reducers/projectPreviewSlice";
 import LanguageUsageStats from "@/components/project/LanguageUsageStats";
 import { layoutProperties } from "@/layout";
 import { useTranslations } from "next-intl";
@@ -17,7 +17,7 @@ const ProjectPreview = ({ project }) => {
 
   const { isSelectorOpen } = useSelector((state) => state.selector);
   const { theme } = useSelector((state) => state.theme);
-  const { isPreviewOpen } = useSelector((state) => state.projectPreview);
+  const { canPreviewBeVisible } = useSelector((state) => state.projectPreview);
 
   const dispatch = useDispatch();
 
@@ -42,7 +42,7 @@ const ProjectPreview = ({ project }) => {
       containerRef.current.getBoundingClientRect();
 
     if (
-      !isPreviewOpen &&
+      canPreviewBeVisible &&
       !isSelectorOpen &&
       !isExpanded &&
       mousePosition.x >= left &&
@@ -54,11 +54,19 @@ const ProjectPreview = ({ project }) => {
     } else {
       setIsVisible(false);
     }
-  }, [mousePosition, containerRef, previewRef, isExpanded]);
+  }, [
+    mousePosition,
+    containerRef,
+    previewRef,
+    isExpanded,
+    isSelectorOpen,
+    canPreviewBeVisible,
+  ]);
 
   return (
     <motion.div
       ref={containerRef}
+      layout
       className={`relative border-t-1 h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border}`}
     >
       <Backdrop isActive={isExpanded} blur />
@@ -95,7 +103,7 @@ const ProjectPreview = ({ project }) => {
               opacity: 0,
               scale: 0.9,
             }}
-            className={`absolute !z-[1000] rounded-xl border-1 -translate-x-1/2 -translate-y-1/2 overflow-hidden sm:max-h-fit min-h-[30rem] max-h-[75vh] min-w-[20rem]`}
+            className={`absolute !z-[1000] rounded-xl border-1 -translate-x-1/2 -translate-y-1/2 overflow-hidden sm:max-h-fit min-h-[30rem] max-h-[100vh] min-w-[20rem]`}
             transition={{
               ...animationsTypes.default,
               duration: animationProperties.durations.long,
@@ -107,7 +115,7 @@ const ProjectPreview = ({ project }) => {
               shouldBeShown={isExpanded}
               onClose={() => {
                 setIsExpanded(false);
-                dispatch(setIsPreviewOpen(false));
+                dispatch(setCanPreviewBeVisible(true));
               }}
             />
 
@@ -117,7 +125,7 @@ const ProjectPreview = ({ project }) => {
               project={project}
               onClick={() => {
                 setIsExpanded(true);
-                dispatch(setIsPreviewOpen(true));
+                dispatch(setCanPreviewBeVisible(false));
               }}
             />
           </motion.div>

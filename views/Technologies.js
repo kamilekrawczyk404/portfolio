@@ -3,7 +3,7 @@ import React, { useState, useCallback } from "react";
 import PageContainer from "@/components/containers/PageContainer";
 import { layoutProperties } from "@/layout";
 import { AnimatePresence, motion } from "framer-motion";
-import { animationsTypes } from "@/animations";
+import { animationProperties, animationsTypes } from "@/animations";
 import SectionTitle from "@/components/containers/SectionTitle";
 import GroupSection from "@/components/containers/GroupSection";
 import Categories from "@/components/Categories";
@@ -12,6 +12,7 @@ import Aspect from "@/components/lists/Aspect";
 import ProgressBarAspect from "@/components/ProgressBarAspect";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { useTranslations } from "next-intl";
+import AppearingContainer from "@/components/containers/AppearingContainer";
 
 const Technologies = () => {
   const t = useTranslations("HomePage");
@@ -182,8 +183,13 @@ const Technologies = () => {
   return (
     <PageContainer section>
       <SectionTitle title={t("Technologies.Title")}>
-        <GroupSection title={t("Technologies.SelectorTitle")}>
+        <GroupSection
+          title={t("Technologies.SelectorTitle")}
+          delay={animationProperties.durations.long}
+        >
           <Categories
+            delay={animationProperties.durations.long}
+            whileInView
             categories={technologies}
             render={(technology) => technology.type}
             callback={onCategoryChange}
@@ -192,72 +198,74 @@ const Technologies = () => {
           />
         </GroupSection>
       </SectionTitle>
-      <AnimatePresence mode={"popLayout"}>
-        <motion.div
-          key={technologies[selectedTechnologyIndex].type}
-          variants={contentVariants}
-          initial={"initial"}
-          animate={"animate"}
-          exit={"exit"}
-          className={`flex flex-col flex-1 ${layoutProperties.gap.medium}`}
-        >
-          {Object.entries(technologies[selectedTechnologyIndex])
-            .slice(1)
-            .map(([key, value], index) => (
-              <motion.div
-                key={key}
-                variants={groupVariants}
-                initial={"initial"}
-                animate={"animate"}
-                exit={"exit"}
-                className={"flex flex-col gap-y-2"}
-              >
-                {/*Header of each section*/}
-                <VerticallyAppearingText
-                  text={t(
-                    `Technologies.${technologies[selectedTechnologyIndex].type}.Sections.${value.title}`,
-                  )}
-                  className={`${layoutProperties.text.medium}`}
-                />
-
-                {/*Render progress bars or staggered list of aspects*/}
-                {/*If key is one of these, we should render the staggered list*/}
-                {["otheraspects", "projectmanagement"].includes(
-                  key.toLowerCase(),
-                ) ? (
-                  <StaggeredList
-                    items={value.aspects}
-                    render={(aspect) => <Aspect name={aspect.name} />}
+      <AppearingContainer>
+        <AnimatePresence mode={"popLayout"}>
+          <motion.div
+            key={technologies[selectedTechnologyIndex].type}
+            variants={contentVariants}
+            initial={"initial"}
+            animate={"animate"}
+            exit={"exit"}
+            className={`flex flex-col flex-1 ${layoutProperties.gap.medium}`}
+          >
+            {Object.entries(technologies[selectedTechnologyIndex])
+              .slice(1)
+              .map(([key, value], index) => (
+                <motion.div
+                  key={key}
+                  variants={groupVariants}
+                  initial={"initial"}
+                  animate={"animate"}
+                  exit={"exit"}
+                  className={"flex flex-col gap-y-2"}
+                >
+                  {/*Header of each section*/}
+                  <VerticallyAppearingText
+                    text={t(
+                      `Technologies.${technologies[selectedTechnologyIndex].type}.Sections.${value.title}`,
+                    )}
+                    className={`${layoutProperties.text.medium}`}
                   />
-                ) : (
-                  <div
-                    className={`grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.medium}`}
-                  >
-                    {value.aspects.map((aspect) => (
-                      <ProgressBarAspect
-                        key={aspect.name}
-                        aspect={aspect}
-                        variants={aspectItemVariants}
-                        onAnimationComplete={(definition) => {
-                          // When animation is completed start animate the progress bar
-                          if (definition === "animate") {
-                            setAnimatedProgressBars((prev) => ({
-                              ...prev,
-                              [aspect.name]: true,
-                            }));
+
+                  {/*Render progress bars or staggered list of aspects*/}
+                  {/*If key is one of these, we should render the staggered list*/}
+                  {["otheraspects", "projectmanagement"].includes(
+                    key.toLowerCase(),
+                  ) ? (
+                    <StaggeredList
+                      items={value.aspects}
+                      render={(aspect) => <Aspect name={aspect.name} />}
+                    />
+                  ) : (
+                    <div
+                      className={`grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.medium}`}
+                    >
+                      {value.aspects.map((aspect) => (
+                        <ProgressBarAspect
+                          key={aspect.name}
+                          aspect={aspect}
+                          variants={aspectItemVariants}
+                          onAnimationComplete={(definition) => {
+                            // When animation is completed start animate the progress bar
+                            if (definition === "animate") {
+                              setAnimatedProgressBars((prev) => ({
+                                ...prev,
+                                [aspect.name]: true,
+                              }));
+                            }
+                          }}
+                          shouldAnimate={
+                            animatedProgressBars[aspect.name] || false
                           }
-                        }}
-                        shouldAnimate={
-                          animatedProgressBars[aspect.name] || false
-                        }
-                      />
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            ))}
-        </motion.div>
-      </AnimatePresence>
+                        />
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+          </motion.div>
+        </AnimatePresence>
+      </AppearingContainer>
     </PageContainer>
   );
 };

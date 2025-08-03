@@ -4,8 +4,10 @@ import { Icons } from "@/components/Icons";
 import GroupSection from "@/components/containers/GroupSection";
 import { layoutProperties } from "@/layout";
 import StaggeredList from "@/components/lists/StaggeredList";
+import { useTranslations } from "next-intl";
 
 const SocialLinks = () => {
+  const t = useTranslations("HomePage.Contact.SocialLinks");
   const socialLinks = [
     {
       name: "Github",
@@ -30,11 +32,11 @@ const SocialLinks = () => {
   return (
     <GroupSection
       className={`basis-fit ${layoutProperties.gap.medium}`}
-      title={"Essential links"}
+      title={t("Title")}
       headerSize={layoutProperties.text.medium}
     >
       <StaggeredList
-        className={`flex ${layoutProperties.gap.small}`}
+        className={`flex gap-4`}
         items={socialLinks}
         render={renderSocialLinks}
       />

@@ -20,7 +20,7 @@ export const animationsTypes = {
 };
 
 export const variantsPresets = {
-  staggered: {
+  staggered: (props) => ({
     parent: {
       initial: {
         opacity: 0,
@@ -30,6 +30,7 @@ export const variantsPresets = {
         transition: {
           staggerChildren: 0.05,
           when: "beforeChildren",
+          ...props,
         },
       },
       exit: {
@@ -47,7 +48,7 @@ export const variantsPresets = {
         opacity: 0,
       },
     },
-  },
+  }),
   verticalAppearing: (direction = "fromTop") => ({
     initial: {
       y: direction === "fromTop" ? "-100%" : "100%",
@@ -56,12 +57,12 @@ export const variantsPresets = {
     animate: {
       y: 0,
       opacity: 1,
-      transition: { opacity: { delay: 0.1 } },
+      transition: { opacity: { delay: 0.075 } },
     },
     exit: {
       y: direction === "fromTop" ? "100%" : "-100%",
       opacity: 0,
-      transition: { y: { delay: 0.1 } },
+      transition: { y: { delay: 0.075 } },
     },
   }),
 };

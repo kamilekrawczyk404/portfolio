@@ -5,31 +5,49 @@ import { layoutProperties } from "@/layout";
 import SubmitButton from "@/components/form/SubmitButton";
 import axios from "axios";
 import formField from "@/components/form/FormField";
+import { useTranslations } from "next-intl";
 
 const initialFormState = {
   name: {
     value: "",
     error: null,
+    required: true,
+    inputType: "input",
+    type: "text",
   },
   email: {
     value: "",
     error: null,
+    required: true,
+    inputType: "input",
+    type: "email",
   },
   phoneNumber: {
     value: "",
     error: null,
+    required: false,
+    inputType: "input",
+    type: "tel",
   },
   subject: {
     value: "",
     error: null,
+    required: true,
+    inputType: "input",
+    type: "text",
   },
   message: {
     value: "",
     error: null,
+    required: true,
+    inputType: "textarea",
+    type: null,
   },
 };
 
 const ContactForm = ({ className = "" }) => {
+  const t = useTranslations("HomePage.Contact.Form");
+
   const [formState, setFormState] = useState({
     isLoading: false,
     wasSuccessful: false,
@@ -56,7 +74,7 @@ const ContactForm = ({ className = "" }) => {
 
     Object.entries(formFields).forEach(([key, values]) => {
       if (key === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.value)) {
-        errors[key] = "Email is not valid";
+        errors[key] = "Email";
       }
 
       if (
@@ -64,12 +82,12 @@ const ContactForm = ({ className = "" }) => {
         values.value.length > 0 &&
         !/^(?:\+48|0048)?\d{9}$/.test(values.value)
       ) {
-        errors[key] = "Phone number is not valid.\n Required 9 digits.";
+        errors[key] = "PhoneNumber";
       }
 
       if (key !== "phoneNumber") {
         if (values.value.length === 0) {
-          errors[key] = "This field cannot be empty";
+          errors[key] = "Required";
         }
       }
     });
@@ -90,7 +108,7 @@ const ContactForm = ({ className = "" }) => {
     setFormState((prev) => ({ ...prev, isLoading: true }));
 
     const resetForm = () => {
-      // setFormFields(initialFormState);
+      setFormFields(initialFormState);
 
       setTimeout(() => {
         setFormState((prev) => ({ ...prev, wasSuccessful: false }));
@@ -127,58 +145,27 @@ const ContactForm = ({ className = "" }) => {
         <div
           className={`grid md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.medium}`}
         >
-          <FormField
-            required
-            errorMessage={formFields.name.error}
-            value={formFields.name.value}
-            onChange={(e) => handleInputChange(e, "name")}
-            placeholder={"Enter your name"}
-            label={"Name"}
-            type={"text"}
-            inputType={"input"}
-          />
-          <FormField
-            required
-            errorMessage={formFields.email.error}
-            value={formFields.email.value}
-            onChange={(e) => handleInputChange(e, "email")}
-            placeholder={"Enter your email"}
-            label={"Email"}
-            inputType={"input"}
-            type={"email"}
-          />
-          <FormField
-            required={false}
-            errorMessage={formFields.phoneNumber.error}
-            value={formFields.phoneNumber.value}
-            onChange={(e) => handleInputChange(e, "phoneNumber")}
-            placeholder={"Enter your phone"}
-            label={"Phone"}
-            inputType={"input"}
-            type={"tel"}
-          />
-          <FormField
-            required
-            errorMessage={formFields.subject.error}
-            value={formFields.subject.value}
-            onChange={(e) => handleInputChange(e, "subject")}
-            placeholder={"Enter the subject"}
-            label={"Subject"}
-            inputType={"input"}
-            type={"text"}
-          />
+          {Object.entries(formFields).map(([key, values]) => (
+            <FormField
+              key={key}
+              type={values.type}
+              inputType={values.inputType}
+              value={values.value}
+              errorMessage={
+                values.error !== null ? t(`Errors.${values.error}`) : ""
+              }
+              label={t(`Fields.${key}.Label`)}
+              placeholder={t(`Fields.${key}.Placeholder`)}
+              required={values.required}
+              onChange={(e) => handleInputChange(e, key)}
+              className={key === "message" ? "md:col-span-2" : ""}
+            />
+          ))}
 
-          <FormField
-            required
-            errorMessage={formFields.message.error}
-            value={formFields.message.value}
-            onChange={(e) => handleInputChange(e, "message")}
-            placeholder={"Enter your message"}
-            label={"Message"}
-            inputType={"textarea"}
-            className={"md:col-span-2"}
-          />
           <SubmitButton
+            submitText={t("Button.Submit")}
+            successText={t("Button.Success")}
+            className={"md:mt-0 mt-4"}
             isLoading={formState.isLoading}
             wasSuccessful={formState.wasSuccessful}
           />

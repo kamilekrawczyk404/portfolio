@@ -12,7 +12,7 @@ const MouseAttachedProjectPreview = ({ project, shouldBeShown, ...props }) => {
           backgroundImage: `url(${project.thumbnail})`,
         }}
         className={
-          "absolute top-0 left-0 rounded-lg bg-no-repeat bg-cover w-full h-full pointer-events-none"
+          "absolute top-0 left-0 rounded-lg bg-no-repeat bg-contain w-full h-full pointer-events-none bg-center"
         }
         initial={{ opacity: 1 }}
         animate={{ opacity: !shouldBeShown ? 0 : 1 }}

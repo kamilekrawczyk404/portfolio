@@ -4,37 +4,32 @@ import SectionTitle from "@/components/containers/SectionTitle";
 import ContactForm from "@/components/form/ContactForm";
 import GroupSection from "@/components/containers/GroupSection";
 import { layoutProperties } from "@/layout";
-import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
-import StaggeredList from "@/components/lists/StaggeredList";
-import { Icons } from "@/components/Icons";
 import SocialLinks from "@/views/SocialsLinks";
+import AppearingContainer from "@/components/containers/AppearingContainer";
+import { useTranslations } from "next-intl";
 
 const Contact = () => {
+  const t = useTranslations("HomePage.Contact");
   return (
     <PageContainer section>
-      <SectionTitle title={"Get in touch"} className={"!flex-col !items-start"}>
-        <div className={`flex ${layoutProperties.gap.large}`}>
-          <div className={"flex flex-col justify-between basis-1/2 h-full"}>
-            <h3 className={layoutProperties.text.small}>
-              I'm always open to new opportunities, collaborations, or just a
-              friendly chat. Whether you have a project in mind, a question
-              about my work, or just want to say hello, I'd love to hear from
-              you.
-            </h3>
+      <SectionTitle title={t("Title")} className={"!flex-col !items-start"}>
+        <AppearingContainer
+          className={`flex ${layoutProperties.gap.large} md:flex-row flex-col`}
+        >
+          <div
+            className={`flex flex-col justify-between basis-1/2 h-full ${layoutProperties.gap.large}`}
+          >
+            <p className={layoutProperties.text.small}>{t("Description")}</p>
             <SocialLinks />
           </div>
           <GroupSection
-            title={"Let's connect"}
+            title={t("Form.Title")}
             headerSize={layoutProperties.text.medium}
             className={`basis-1/2 flex flex-col ${layoutProperties.gap.medium}`}
           >
-            <p>
-              The quickest way to reach me is by using the form below. I'll do
-              my best to get back to you as soon as possible.
-            </p>
             <ContactForm className={"basis-1/2"} />
           </GroupSection>
-        </div>
+        </AppearingContainer>
       </SectionTitle>
     </PageContainer>
   );

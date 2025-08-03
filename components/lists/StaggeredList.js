@@ -14,7 +14,7 @@ const StaggeredList = forwardRef(
     },
     ref,
   ) => {
-    const { parent, children } = variantsPresets.staggered;
+    const { parent, children } = variantsPresets.staggered();
 
     return (
       <motion.ul

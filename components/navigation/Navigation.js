@@ -13,6 +13,7 @@ import CloseButton from "@/components/buttons/CloseButton";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { getCookie, hasCookie, setCookie } from "cookies-next";
 import Backdrop from "@/components/containers/Backdrop";
+import { setCanPreviewBeVisible } from "@/redux/reducers/projectPreviewSlice";
 
 const Navigation = () => {
   const { theme } = useSelector((state) => state.theme);
@@ -57,6 +58,7 @@ const Navigation = () => {
         !linksContainerRef.current.contains(e.target)
       ) {
         setIsMenuOpen(false);
+        dispatch(setCanPreviewBeVisible(true));
       }
     };
 
@@ -64,6 +66,10 @@ const Navigation = () => {
 
     return () => window.removeEventListener("click", listener);
   }, [isMenuOpen, linksContainerRef, menuButtonRef]);
+
+  useEffect(() => {
+    dispatch(setCanPreviewBeVisible(!isMenuOpen));
+  }, [isMenuOpen]);
 
   useEffect(() => {
     if (!hasCookie("theme-mode")) {
@@ -107,7 +113,7 @@ const Navigation = () => {
             <Backdrop isActive={isMenuOpen} />
             <motion.aside
               ref={linksContainerRef}
-              className={`fixed h-screen lg:w-2/5 w-4/5 top-0 rounded-r-3xl flex flex-col z-[1000] gap-4 ${layoutProperties.padding} ${theme.background} ${theme.foreground}`}
+              className={`fixed h-screen lg:w-2/5 w-4/5 top-0 rounded-r-3xl flex flex-col z-[1000] gap-4 md:px-4 px-2 ${theme.background} ${theme.foreground}`}
               initial={{ left: "-100%", pointerEvents: "none" }}
               animate={{ left: 0, pointerEvents: "auto" }}
               exit={{ left: "-100%", pointerEvents: "none" }}

@@ -215,6 +215,47 @@
           "Development Environment": "Development Environment"
         }
       }
+    },
+    "Contact": {
+      "Title": "Get in touch",
+      "Description": "I'm always open to new opportunities, collaborations, or just a friendly chat. Whether you have a project in mind, a question about my work, or just want to say hello, I'd love to hear from you.",
+      "SocialLinks": {
+        "Title": "Find me here"
+      },
+      "Form": {
+        "Title": "Let's connect",
+        "Errors": {
+          "Required": "This field is required",
+          "Email": "Email is not valid",
+          "PhoneNumber": "Provide a 9 digits one"
+        },
+        "Button": {
+          "Success": "Success",
+          "Submit": "Submit"
+        },
+        "Fields": {
+          "name": {
+            "Placeholder": "Enter your name",
+            "Label": "Name"
+          },
+          "email": {
+            "Placeholder": "Enter your email",
+            "Label": "Email"
+          },
+          "phoneNumber": {
+            "Placeholder": "Enter your phone number",
+            "Label": "Phone number"
+          },
+          "subject": {
+            "Placeholder": "Enter message subject",
+            "Label": "Subject"
+          },
+          "message": {
+            "Placeholder": "Enter your message",
+            "Label": "Message"
+          }
+        }
+      }
     }
   },
   "Navigation": {

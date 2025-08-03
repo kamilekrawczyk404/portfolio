@@ -12,16 +12,16 @@ const Label = ({ htmlFor, required, error, children }) => {
       htmlFor={htmlFor}
       className={`${theme.text} ${layoutProperties.text.small} relative inline-flex gap-2 min-h-[2.5rem] items-end`}
     >
-      <span>
+      <span className={"text-nowrap"}>
         {children}
-        {required && <span> *</span>}
+        {required && <span>*</span>}
       </span>
       <AnimatePresence mode={"popLayout"}>
         {error && (
           <VerticallyAppearingText
             text={error}
             direction={"fromTop"}
-            className={`text-sm text-red-700 !p-0 max-w-50`}
+            className={`text-sm text-red-600 !pb-[.125rem]`}
           />
         )}
       </AnimatePresence>

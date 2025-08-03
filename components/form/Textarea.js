@@ -21,7 +21,7 @@ const Textarea = ({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className={`border-b-1 outline-none min-h-full peer w-full p-2  ${
+          className={`border-b-1 outline-none min-h-full peer w-full p-2 pr-18  ${
             error ? "border-red-500" : theme.border
           } ${className}`}
           initial={false}
@@ -37,10 +37,13 @@ const Textarea = ({
           }}
         />
         <InputUnderline isError={error} />
-      </div>
-
-      <div className={"z-10 text-sm text-gray-500 text-nowrap p-2"}>
-        {value.length} / 300
+        <div
+          className={
+            "absolute right-0 top-0 z-10 text-sm text-gray-500 text-nowrap p-2"
+          }
+        >
+          {value.length} / 300
+        </div>
       </div>
     </div>
   );

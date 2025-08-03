@@ -137,7 +137,7 @@ export const projectsList = [
     githubRepoName: "cpp-weather-app",
     technologies: [
       {
-        title: "Core Language",
+        title: "Core language",
         values: ["C++"],
       },
       {
@@ -175,7 +175,7 @@ export const projectsList = [
     githubRepoName: "vet-clinic",
     technologies: [
       {
-        title: "Core Language",
+        title: "Core language",
         values: ["C#"],
       },
       {
@@ -204,7 +204,7 @@ export const projectsList = [
     githubRepoName: "wpf-advanced-calculator",
     technologies: [
       {
-        title: "Core Language",
+        title: "Core language",
         values: ["C#"],
       },
       {

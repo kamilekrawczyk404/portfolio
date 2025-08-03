@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isPreviewOpen: false,
+  canPreviewBeVisible: true,
 };
 
 const projectPreviewSlice = createSlice({
   name: "projectPreview",
   initialState,
   reducers: {
-    setIsPreviewOpen: (state, action) => {
-      state.isPreviewOpen = action.payload;
+    setCanPreviewBeVisible: (state, action) => {
+      state.canPreviewBeVisible = action.payload;
     },
   },
 });
 
-export const { setIsPreviewOpen } = projectPreviewSlice.actions;
+export const { setCanPreviewBeVisible } = projectPreviewSlice.actions;
 
 export default projectPreviewSlice.reducer;

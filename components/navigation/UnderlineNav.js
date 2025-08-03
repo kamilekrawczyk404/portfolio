@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { animationsTypes } from "@/animations";
 
 const UnderlineNav = ({
@@ -56,56 +56,58 @@ const UnderlineNav = ({
   }, [activeIndex]);
 
   return (
-    <div className={"relative w-full h-full flex flex-col"}>
-      <div
-        className={`flex overflow-x-scroll h-fit border-b-1 gap-x-2 ${theme.border}`}
-      >
-        {items.map((item, index) => (
-          <motion.div
-            ref={(el) => (navigationItemsRefs.current[index] = el)}
-            className={`relative px-2 py-1 flex items-center cursor-pointer`}
-            onClick={() => {
-              // Determine direction based on current and new active index
-              setCarouselDirection(index > activeIndex ? 1 : -1);
-              setActiveIndex(index);
-            }}
-            key={index}
-          >
-            <span
-              className={`${
-                index === activeIndex ? `text-purple` : `${theme.foreground}`
-              } transition-colors text-nowrap`}
-            >
-              {renderNavigationHeader(item.type)}
-            </span>
-            {index === activeIndex && (
-              <motion.div
-                className={`absolute left-0 right-0 bottom-0 h-[.125rem] bg-purple`}
-                layoutId={id}
-                transition={animationsTypes.default}
-              />
-            )}
-          </motion.div>
-        ))}
-      </div>
-      <div className={"relative w-full h-full overflow-hidden"}>
-        <AnimatePresence mode={"sync"} custom={carouselDirection}>
-          {canRender && items[activeIndex] && (
+    <LayoutGroup id={id}>
+      <div className={"relative w-full h-full flex flex-col"}>
+        <div
+          className={`flex overflow-x-scroll h-fit border-b-1 gap-x-2 ${theme.border}`}
+        >
+          {items.map((item, index) => (
             <motion.div
-              key={activeIndex}
-              variants={carouselVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              custom={carouselDirection}
-              className={"absolute left-0 top-0 w-full h-full flex"}
+              ref={(el) => (navigationItemsRefs.current[index] = el)}
+              className={`relative px-2 py-1 flex items-center cursor-pointer`}
+              onClick={() => {
+                // Determine direction based on current and new active index
+                setCarouselDirection(index > activeIndex ? 1 : -1);
+                setActiveIndex(index);
+              }}
+              key={index}
             >
-              {renderView(items[activeIndex])}
+              <span
+                className={`${
+                  index === activeIndex ? `text-purple` : `${theme.foreground}`
+                } transition-colors text-nowrap`}
+              >
+                {renderNavigationHeader(item.type)}
+              </span>
+              {index === activeIndex && (
+                <motion.div
+                  className={`absolute left-0 right-0 bottom-0 h-[.125rem] bg-purple`}
+                  layoutId={"underline"}
+                  transition={animationsTypes.default}
+                />
+              )}
             </motion.div>
-          )}
-        </AnimatePresence>
+          ))}
+        </div>
+        <div className={"relative w-full h-full overflow-hidden"}>
+          <AnimatePresence mode={"sync"} custom={carouselDirection}>
+            {canRender && items[activeIndex] && (
+              <motion.div
+                key={activeIndex}
+                variants={carouselVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                custom={carouselDirection}
+                className={"absolute left-0 top-0 w-full h-full flex"}
+              >
+                {renderView(items[activeIndex])}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </LayoutGroup>
   );
 };
 

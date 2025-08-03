@@ -215,7 +215,49 @@
           "Development Environment": "Środowisko programistyczne"
         }
       }
+    },
+    "Contact": {
+      "Title": "Skontaktuj się ze mną",
+      "Description": "Zawsze jestem otwarty na nowe możliwości, współpracę lub po prostu przyjazną rozmowę. Niezależnie od tego, czy masz na myśli projekt, pytanie o moją pracę, czy po prostu chcesz się przywitać, chętnie Cię wysłucham.",
+      "SocialLinks": {
+        "Title": "Znajdziesz mnie tutaj"
+      },
+      "Form": {
+        "Title": "Skontaktujmy się",
+        "Errors": {
+          "Required": "To pole jest wymagane",
+          "Email": "Adres e-mail jest nieprawidłowy",
+          "PhoneNumber": "Podaj 9-cyfrowy numer"
+        },
+        "Button": {
+          "Success": "Wysłano",
+          "Submit": "Wyślij"
+        },
+        "Fields": {
+          "name": {
+            "Placeholder": "Wpisz swoje imię",
+            "Label": "Imię"
+          },
+          "email": {
+            "Placeholder": "Wpisz swój adres e-mail",
+            "Label": "E-mail"
+          },
+          "phoneNumber": {
+            "Placeholder": "Wpisz swój numer telefonu",
+            "Label": "Numer telefonu"
+          },
+          "subject": {
+            "Placeholder": "Wpisz temat wiadomości",
+            "Label": "Temat"
+          },
+          "message": {
+            "Placeholder": "Wpisz swoją wiadomość",
+            "Label": "Wiadomość"
+          }
+        }
+      }
     }
+
   },
   "Navigation": {
     "links": {

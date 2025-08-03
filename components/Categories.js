@@ -14,8 +14,10 @@ const Categories = ({
   categories,
   callback = () => {},
   render = () => {},
-  singleSelection = false,
   defaultSelectedIndex = -1,
+  delay = 0,
+  singleSelection = false,
+  whileInView = false,
   className = "",
 }) => {
   const { theme } = useSelector((state) => state.theme);
@@ -42,7 +44,7 @@ const Categories = ({
     [selectedIds],
   );
 
-  const { parent, children } = variantsPresets.staggered;
+  const { parent, children } = variantsPresets.staggered({ delay });
 
   useEffect(() => {
     const selected = categories.filter((item, index) => selectedIds[index]);
@@ -56,9 +58,12 @@ const Categories = ({
 
   return (
     <motion.div
+      viewport={{ once: true }}
+      whileInView={whileInView ? "animate" : {}}
+      transition={{ delay }}
       variants={parent}
       initial={"initial"}
-      animate={"animate"}
+      animate={!whileInView ? "animate" : {}}
       exit={"exit"}
       className={`flex flex-wrap gap-2 ${className}`}
     >
