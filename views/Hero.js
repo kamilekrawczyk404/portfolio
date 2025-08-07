@@ -11,7 +11,6 @@ import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { layoutProperties } from "@/layout";
 import TextCarousel from "@/components/text/TextCarousel";
 import { useSelector } from "react-redux";
-import { clearTimeout } from "node:timers";
 
 const Hero = () => {
   const t = useTranslations("HomePage");
