@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import FormField from "@/components/form/FormField";
 import { layoutProperties } from "@/layout";
 import SubmitButton from "@/components/form/SubmitButton";
@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 
 const initialFormState = {
   name: {
+    id: "userName",
     value: "",
     error: null,
     required: true,
@@ -16,6 +17,7 @@ const initialFormState = {
     type: "text",
   },
   email: {
+    id: "userEmail",
     value: "",
     error: null,
     required: true,
@@ -23,6 +25,7 @@ const initialFormState = {
     type: "email",
   },
   phoneNumber: {
+    id: "userPhone",
     value: "",
     error: null,
     required: false,
@@ -30,6 +33,7 @@ const initialFormState = {
     type: "tel",
   },
   subject: {
+    id: "userSubject",
     value: "",
     error: null,
     required: true,
@@ -37,6 +41,7 @@ const initialFormState = {
     type: "text",
   },
   message: {
+    id: "userMessage",
     value: "",
     error: null,
     required: true,
@@ -107,14 +112,6 @@ const ContactForm = ({ className = "" }) => {
 
     setFormState((prev) => ({ ...prev, isLoading: true }));
 
-    const resetForm = () => {
-      setFormFields(initialFormState);
-
-      setTimeout(() => {
-        setFormState((prev) => ({ ...prev, wasSuccessful: false }));
-      }, 2000);
-    };
-
     await axios
       .post(
         "/api/send-email",
@@ -139,6 +136,14 @@ const ContactForm = ({ className = "" }) => {
       .catch((err) => console.log("err", err));
   };
 
+  const resetForm = useCallback(() => {
+    setFormFields(initialFormState);
+
+    setTimeout(() => {
+      setFormState((prev) => ({ ...prev, wasSuccessful: false }));
+    }, 2000);
+  }, []);
+
   return (
     <div className={`${className}`}>
       <form onSubmit={handleSubmit}>
@@ -148,6 +153,7 @@ const ContactForm = ({ className = "" }) => {
           {Object.entries(formFields).map(([key, values]) => (
             <FormField
               key={key}
+              id={values.id}
               type={values.type}
               inputType={values.inputType}
               value={values.value}

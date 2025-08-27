@@ -7,7 +7,7 @@
       },
       "Header": {
         "Before": "Buduję",
-        "TextCarousel": "eleganckie, przejrzyste, nowoczesne, żywe, modne",
+        "TextCarousel": "stylowe, ciekawe, żywe, modne",
         "After": "aplikacje webowe"
       },
       "ActionButtons": {
@@ -219,9 +219,6 @@
     "Contact": {
       "Title": "Skontaktuj się ze mną",
       "Description": "Zawsze jestem otwarty na nowe możliwości, współpracę lub po prostu przyjazną rozmowę. Niezależnie od tego, czy masz na myśli projekt, pytanie o moją pracę, czy po prostu chcesz się przywitać, chętnie Cię wysłucham.",
-      "SocialLinks": {
-        "Title": "Znajdziesz mnie tutaj"
-      },
       "Form": {
         "Title": "Skontaktujmy się",
         "Errors": {
@@ -256,8 +253,20 @@
           }
         }
       }
+    },
+    "Footer": {
+      "Rights": "Wszelkie prawa zastrzeżone.",
+      "Sitemap": {
+        "Title": "Strona",
+        "Links": {
+          "start": "Start",
+          "contact": "Kontakt",
+          "technologies": "Technologie",
+          "projects": "Projekty"
+        }
+      },
+      "Socials": "Znajdź mnie tutaj"
     }
-
   },
   "Navigation": {
     "links": {

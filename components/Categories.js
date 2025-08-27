@@ -9,6 +9,7 @@ import {
   variantsPresets,
 } from "@/animations";
 import FiltersRemover from "@/components/buttons/FiltersRemover";
+import { layoutProperties } from "@/layout";
 
 const Categories = ({
   categories,
@@ -101,7 +102,7 @@ const Categories = ({
               ...animationsTypes.default,
               duration: animationProperties.durations.short,
             }}
-            className={"select-none pr-2 text-nowrap"}
+            className={`select-none pr-2 text-nowrap ${layoutProperties.text.extraSmall}`}
           >
             {render(item)}
           </motion.span>

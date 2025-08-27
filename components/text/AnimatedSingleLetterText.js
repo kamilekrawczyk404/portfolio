@@ -12,6 +12,7 @@ const AnimateSingleLetterText = ({
   className = "",
   shouldRender = true,
   whileInView = false,
+  onlyOnce = true,
 }) => {
   const words = text.split(" ");
 
@@ -19,10 +20,11 @@ const AnimateSingleLetterText = ({
     shouldRender &&
     words.map((word, wordIndex) => (
       <React.Fragment key={wordIndex}>
-        <div className={"h-fit w-fit overflow-hidden inline-flex py-[0.3rem]"}>
+        <div className={"w-fit overflow-hidden inline-flex py-[0.3rem]"}>
           {word.split("").map((letter, letterIndex) => (
             <motion.span
               key={letterIndex}
+              viewport={onlyOnce ? { once: true } : {}}
               initial={{
                 y: direction === "bottomToTop" ? "100%" : "-100%",
               }}
@@ -42,7 +44,7 @@ const AnimateSingleLetterText = ({
                   wordIndex * letterDelay +
                   letterIndex * letterDelay,
               }}
-              className={`inline-block ${className}`}
+              className={`md:leading-[2.7rem] leading-[2rem] inline-block single-letter ${className}`}
             >
               {letter}
             </motion.span>

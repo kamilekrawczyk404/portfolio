@@ -11,8 +11,10 @@ import {
   faClockRotateLeft,
   faClose,
   faCodeBranch,
+  faEnvelope,
   faGlobe,
   faMoon,
+  faPhone,
   faSun,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -66,5 +68,11 @@ export const Icons = {
   ),
   Linkedin: ({ className = "" }) => (
     <FontAwesomeIcon icon={faLinkedin} className={className} />
+  ),
+  Phone: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faPhone} className={className} />
+  ),
+  Envelope: ({ className = "" }) => (
+    <FontAwesomeIcon icon={faEnvelope} className={className} />
   ),
 };

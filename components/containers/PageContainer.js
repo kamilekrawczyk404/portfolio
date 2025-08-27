@@ -8,21 +8,26 @@ const PageContainer = ({
   includeNavigationHeight = false,
   section = false,
   className = "",
+  screenHeight = true,
+  ...props
 }) => {
   const { theme } = useSelector((state) => state.theme);
 
   return (
     <div
       // style={{ minHeight: "fit-content" }}
-      className={`w-full relative min-h-fit ${
+      className={`w-full relative ${
         includeNavigationHeight
-          ? "!mt-[4rem] lg:h-[calc(100vh-4rem)]"
-          : "lg:h-[100vh]"
+          ? "!mt-[4rem] lg:h-[calc(100vh-3rem)] !min-h-[calc(100vh-3rem)]"
+          : `${theme.background}`
       } ${
         section
-          ? `${theme.background} relative flex flex-col justify-center ${layoutProperties.gap.large}`
+          ? `min-h-fit relative flex flex-col justify-center ${layoutProperties.gap.large}`
           : ""
-      } ${layoutProperties.body.padding} ${className}`}
+      } ${screenHeight ? "lg:h-[100vh]" : ""} ${
+        layoutProperties.body.padding
+      } ${className}`}
+      {...props}
     >
       {children}
     </div>

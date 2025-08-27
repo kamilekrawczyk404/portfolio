@@ -181,7 +181,7 @@ const Technologies = () => {
   };
 
   return (
-    <PageContainer section>
+    <PageContainer section id={"technologies"}>
       <SectionTitle title={t("Technologies.Title")}>
         <GroupSection
           title={t("Technologies.SelectorTitle")}

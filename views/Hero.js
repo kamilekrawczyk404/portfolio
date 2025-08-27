@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useAnimate } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import { useTranslations } from "next-intl";
@@ -21,6 +21,20 @@ const Hero = () => {
   const [animationDirection, setAnimationDirection] = useState("vertical");
   const [shouldRenderText, setShouldRenderText] = useState(false);
 
+  const scrollIntoProjectsSection = useCallback(() => {
+    document.getElementById("projects").scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, []);
+
+  const scrollIntoContactSection = useCallback(() => {
+    document.getElementById("contact").scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, []);
+
   useEffect(() => {
     setAnimationDirection(window.innerWidth < 1024 ? "horizontal" : "vertical");
 
@@ -31,10 +45,11 @@ const Hero = () => {
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [animationDirection, shouldRenderText]);
 
   return (
     <PageContainer
+      id={"start"}
       includeNavigationHeight
       className={`flex items-center justify-center ${opposite.background}`}
     >
@@ -76,7 +91,9 @@ const Hero = () => {
         <div
           className={`relative flex flex-col gap-y-4 basis-1/2 lg:w-1/2 w-full ${theme.foreground}`}
         >
-          <div className={`flex flex-col gap-y-2 relative w-full`}>
+          <div
+            className={`flex flex-col ${layoutProperties.gap.small} relative w-full`}
+          >
             <div>
               <div
                 className={"relative flex items-center h-fit flex-wrap w-full"}
@@ -115,7 +132,7 @@ const Hero = () => {
                   ...animationsTypes.default,
                   delay: 2.6,
                 }}
-                className={`w-2/3 ${layoutProperties.text.small}`}
+                className={`md:w-2/3 w-full ${layoutProperties.text.small}`}
               >
                 {t("Hero.Summary")}
               </motion.p>
@@ -136,6 +153,7 @@ const Hero = () => {
                 delay: 2.7,
               }}
               main
+              onClick={scrollIntoProjectsSection}
             >
               {t("Hero.ActionButtons.ExploreMyWorks")}
             </Button>
@@ -154,6 +172,7 @@ const Hero = () => {
                 ...animationsTypes.default,
                 delay: 2.7,
               }}
+              onClick={scrollIntoContactSection}
             >
               {t("Hero.ActionButtons.HireMe")}
             </Button>

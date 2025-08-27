@@ -127,7 +127,7 @@ const Projects = ({ projectsPhotos, apiKey }) => {
   }, []);
 
   return (
-    <PageContainer section>
+    <PageContainer section id={"projects"}>
       <SectionTitle title={t("Title")}>
         <div className={"flex flex-col gap-2"}>
           <GroupSection

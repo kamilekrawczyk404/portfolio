@@ -4,6 +4,7 @@ import Button from "@/components/buttons/Button";
 import { Icons } from "@/components/Icons";
 import { motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
+import { layoutProperties } from "@/layout";
 
 const SubmitButton = ({
   submitText,
@@ -15,9 +16,11 @@ const SubmitButton = ({
   return (
     <Button
       main
-      className={`md:w-fit w-full inline-flex items-center md:justify-start justify-center gap-x-2 group  ${
-        wasSuccessful ? "bg-purple" : ""
-      } ${isLoading ? "brightness-80" : ""} ${className}`}
+      className={`md:w-fit w-full inline-flex items-center md:justify-start justify-center gap-x-2 group ${
+        layoutProperties.text.small
+      } ${wasSuccessful ? "bg-purple" : ""} ${
+        isLoading ? "brightness-80" : ""
+      } ${className}`}
       layout
       disabled={isLoading || wasSuccessful}
     >

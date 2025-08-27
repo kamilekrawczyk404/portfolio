@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useSelector } from "react-redux";
-import { colors } from "@/layout";
+import { colors, layoutProperties } from "@/layout";
 
 const round = (number, floatingPoints = 2) => {
   if (floatingPoints <= 0) return number;
@@ -18,7 +18,7 @@ const LanguageUsageStats = ({ languages }) => {
   return (
     <div className={`flex flex-col gap-4 ${theme.foreground} `}>
       <div
-        className={`md:w-1/3 w-2/3 rounded-lg overflow-hidden flex border-1 ${theme.border}`}
+        className={`md:w-2/3 w-full rounded-md overflow-hidden flex border-1 ${theme.border}`}
       >
         {Object.entries(languages).map(([key, value]) => (
           <div
@@ -38,7 +38,7 @@ const LanguageUsageStats = ({ languages }) => {
               className={`w-3 aspect-square rounded-full border-1 ${theme.border}`}
               style={{ backgroundColor: colors.languages[key] }}
             />
-            <span className={""}>
+            <span className={`${layoutProperties.text.extraSmall}`}>
               {key}
               <span className={"text-xs ml-1 text-gray-500"}>
                 ({(round(value / total, 4) * 100).toFixed(2) + "%"})

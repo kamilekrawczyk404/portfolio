@@ -10,7 +10,7 @@ const Label = ({ htmlFor, required, error, children }) => {
   return (
     <label
       htmlFor={htmlFor}
-      className={`${theme.text} ${layoutProperties.text.small} relative inline-flex gap-2 min-h-[2.5rem] items-end`}
+      className={`${theme.foreground} ${layoutProperties.text.small} relative inline-flex gap-2 items-end`}
     >
       <span className={"text-nowrap"}>
         {children}

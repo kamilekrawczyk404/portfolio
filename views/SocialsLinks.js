@@ -7,7 +7,7 @@ import StaggeredList from "@/components/lists/StaggeredList";
 import { useTranslations } from "next-intl";
 
 const SocialLinks = () => {
-  const t = useTranslations("HomePage.Contact.SocialLinks");
+  const t = useTranslations("HomePage.Footer");
   const socialLinks = [
     {
       name: "Github",
@@ -24,16 +24,16 @@ const SocialLinks = () => {
   const renderSocialLinks = useCallback((item) => {
     return (
       <a href={item.url}>
-        <span className={`text-3xl`}>{item.icon}</span>
+        <span className={`md:text-2xl text-xl text-gray-500`}>{item.icon}</span>
       </a>
     );
   }, []);
 
   return (
     <GroupSection
-      className={`basis-fit ${layoutProperties.gap.medium}`}
-      title={t("Title")}
-      headerSize={layoutProperties.text.medium}
+      className={`basis-fit ${layoutProperties.gap.extraSmall}`}
+      title={t("Socials")}
+      headerSize={layoutProperties.text.small}
     >
       <StaggeredList
         className={`flex gap-4`}

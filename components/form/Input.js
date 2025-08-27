@@ -5,12 +5,13 @@ import InputUnderline from "@/components/form/InputUnderline";
 import { motion, transformProps } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 
-const Input = ({ value, onChange, error, placeholder = "" }) => {
+const Input = ({ id, value, onChange, error, placeholder = "" }) => {
   const { theme } = useSelector((state) => state.theme);
 
   return (
     <div className={"relative"}>
       <motion.input
+        id={id}
         initial={false}
         animate={{
           translateX: error

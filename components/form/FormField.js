@@ -5,6 +5,7 @@ import Textarea from "@/components/form/Textarea";
 
 const FormField = ({
   inputType = "input",
+  id,
   label,
   onChange,
   value,
@@ -16,11 +17,12 @@ const FormField = ({
 }) => {
   return (
     <FormFieldContainer className={className}>
-      <Label required={required} error={errorMessage}>
+      <Label htmlFor={id} required={required} error={errorMessage}>
         {label}
       </Label>
       {inputType === "input" ? (
         <Input
+          id={id}
           onChange={onChange}
           value={value}
           placeholder={placeholder}

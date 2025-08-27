@@ -30,7 +30,7 @@ const TextCarousel = ({
     }, delay * 1000);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [isStarted]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,7 +41,7 @@ const TextCarousel = ({
     }, duration * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentWordIndex, currentColorIndex]);
 
   return (
     <AnimatePresence mode={"popLayout"}>
@@ -49,7 +49,7 @@ const TextCarousel = ({
         words.map(
           (word, index) =>
             currentWordIndex === index && (
-              <div key={index} className={"relative overflow-hidden z-10"}>
+              <div key={index} className={"relative z-10"}>
                 <motion.div
                   className={`absolute top-1/2 -translate-y-1/2 h-full origin-right !rounded-xl -z-10`}
                   initial={{
@@ -57,7 +57,7 @@ const TextCarousel = ({
                     background: backgroundColors[currentColorIndex],
                   }}
                   animate={{
-                    width: "100%",
+                    width: "calc(100% + 1rem)",
                   }}
                   exit={{ scaleX: 0 }}
                   transition={{
@@ -66,19 +66,21 @@ const TextCarousel = ({
                     duration: animationProperties.durations.long,
                   }}
                 />
-                <motion.span
-                  initial={{ y: "-100%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "100%" }}
-                  transition={{
-                    ...animationsTypes.default,
-                    delay: !isStarted ? delay : 0,
-                    duration: animationProperties.durations.long,
-                  }}
-                  className={`${className} inline-block py-2 px-4 ${opposite.foreground}`}
-                >
-                  {words[index]}
-                </motion.span>
+                <div className={"relative overflow-hidden"}>
+                  <motion.div
+                    initial={{ y: "-100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
+                    transition={{
+                      ...animationsTypes.default,
+                      delay: !isStarted ? delay : 0,
+                      duration: animationProperties.durations.long,
+                    }}
+                    className={`${className} ${opposite.foreground} ml-[1rem] mb-[.25rem] select-none`}
+                  >
+                    {words[index]}
+                  </motion.div>
+                </div>
               </div>
             ),
         )}

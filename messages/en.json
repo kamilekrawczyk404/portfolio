@@ -7,7 +7,7 @@
       },
       "Header": {
         "Before": "I build",
-        "TextCarousel": "sleek, clean, modern, vivid, trendy",
+        "TextCarousel": "clean, modern, vivid, trendy",
         "After": "web applications"
       },
       "ActionButtons": {
@@ -219,15 +219,12 @@
     "Contact": {
       "Title": "Get in touch",
       "Description": "I'm always open to new opportunities, collaborations, or just a friendly chat. Whether you have a project in mind, a question about my work, or just want to say hello, I'd love to hear from you.",
-      "SocialLinks": {
-        "Title": "Find me here"
-      },
       "Form": {
         "Title": "Let's connect",
         "Errors": {
           "Required": "This field is required",
           "Email": "Email is not valid",
-          "PhoneNumber": "Provide a 9 digits one"
+          "PhoneNumber": "Provide a 9 digits number"
         },
         "Button": {
           "Success": "Success",
@@ -256,6 +253,19 @@
           }
         }
       }
+    },
+    "Footer": {
+      "Rights": "All rights reserved.",
+      "Sitemap": {
+        "Title": "Site",
+        "Links": {
+          "start": "Start",
+          "contact": "Get in touch",
+          "technologies": "Technologies",
+          "projects": "Projects"
+        }
+      },
+      "Socials": "Find me here"
     }
   },
   "Navigation": {
