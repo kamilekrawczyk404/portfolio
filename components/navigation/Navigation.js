@@ -193,13 +193,19 @@ const Navigation = () => {
 
 export default Navigation;
 
-const DownloadCvButton = ({ t, className = "" }) => (
-  <a
-    href={"/cv/cv-file-kamil-krawczyk.pdf"}
-    download={"kamil-krawczyk-cv"}
-    // navigation
-    className={`h-[1.75rem] text-sm border-1 rounded-xl px-2 w-fit text-nowrap items-center ${className}`}
-  >
-    {t("download-cv")}
-  </a>
-);
+const DownloadCvButton = ({ t, className = "" }) => {
+  return (
+    <a
+      href={`/cv/kamil-krawczyk-cv-${
+        t("download-cv") === "Pobierz CV" ? "polish" : "english"
+      }.pdf`}
+      download={`kamil-krawczyk-cv-${
+        t("download-cv") === "Pobierz CV" ? "polish" : "english"
+      }`}
+      // navigation
+      className={`h-[1.75rem] text-sm border-1 rounded-xl px-2 w-fit text-nowrap items-center ${className}`}
+    >
+      {t("download-cv")}
+    </a>
+  );
+};
