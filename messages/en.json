@@ -1,4 +1,11 @@
 {
+  "metadata": {
+    "locale": "en",
+    "title": "Kamil Krawczyk | Full-Stack Developer Portfolio",
+    "description":
+    "Ready to build something amazing? Discover a collection of projects demonstrating expertise in TypeScript, Next.js, and Laravel. I bring ideas to life with clean code and exceptional user experiences. Get in touch to collaborate.",
+    "tags": "Full-Stack Development, Web Development, Frontend Development, Backend Development, Software Engineering, Next.js, React.js, JavaScript, TypeScript, UI/UX, Responsive Design, HTML5, CSS3, PHP, Laravel, Symfony, Node.js, Express.js, REST API, DevOps, Git, GitHub, Databases, Testing, Agile"
+  },
   "HomePage": {
     "Hero": {
       "LoadingHeaders": {
