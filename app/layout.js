@@ -3,6 +3,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import StoreProvider from "@/redux/StoreProvider";
 import Navigation from "@/components/navigation/Navigation";
+import Footer from "@/views/Footer";
 
 export default async function RootLayout({ children }) {
   const messages = await getMessages();
@@ -15,6 +16,7 @@ export default async function RootLayout({ children }) {
           <body className={`antialiased w-full overflow-x-hidden`}>
             <Navigation />
             {children}
+            <Footer />
           </body>
         </StoreProvider>
       </NextIntlClientProvider>

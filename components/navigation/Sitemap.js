@@ -17,7 +17,11 @@ const Sitemap = () => {
   const t = useTranslations("HomePage.Footer.Sitemap");
 
   return (
-    <GroupSection title={t("Title")} headerSize={layoutProperties.text.small}>
+    <GroupSection
+      title={t("Title")}
+      headerSize={layoutProperties.text.small}
+      className={"justify-between"}
+    >
       <StaggeredList
         items={siteMap}
         render={(link) => (

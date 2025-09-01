@@ -103,7 +103,6 @@ export default async function RootPage() {
       <Technologies />
       <Projects apiKey={apiKey} projectsPhotos={projectPhotos} />
       <Contact />
-      <Footer />
     </div>
   );
 }

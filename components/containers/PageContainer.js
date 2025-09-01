@@ -18,7 +18,7 @@ const PageContainer = ({
       // style={{ minHeight: "fit-content" }}
       className={`w-full relative ${
         includeNavigationHeight
-          ? "!mt-[4rem] lg:h-[calc(100vh-3rem)] !min-h-[calc(100vh-3rem)]"
+          ? "!mt-[4rem] lg:h-[calc(100vh-4rem)] !min-h-[calc(100vh-4rem)]"
           : `${theme.background}`
       } ${
         section
