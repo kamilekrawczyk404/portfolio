@@ -71,7 +71,7 @@ export async function generateMetadata({ params }) {
     },
     icons: {
       icon: `${metadata.url}/icon/icon.webp`,
-      apple: "${metadata.url}/icon/icon.webp",
+      apple: `${metadata.url}/icon/icon.webp`,
     },
     openGraph: {
       title: metadata.title,
