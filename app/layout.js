@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import StoreProvider from "@/redux/StoreProvider";
 import Navigation from "@/components/navigation/Navigation";
 import Footer from "@/views/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 export default async function RootLayout({ children }) {
   const messages = await getMessages();
@@ -17,6 +18,7 @@ export default async function RootLayout({ children }) {
             <Navigation />
             {children}
             <Footer />
+            <Analytics />
           </body>
         </StoreProvider>
       </NextIntlClientProvider>
