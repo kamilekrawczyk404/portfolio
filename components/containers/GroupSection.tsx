@@ -1,9 +1,16 @@
 "use client";
-import React from "react";
+import React, { ComponentProps, ReactNode } from "react";
 import { useSelector } from "react-redux";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { layoutProperties } from "@/layout";
+import { RootState } from "@/redux/store";
 
+type GroupSectionProps = ComponentProps<"div"> & {
+  title: string;
+  headerSize: string;
+  whileInView?: boolean;
+  delay?: number;
+};
 const GroupSection = ({
   title,
   children,
@@ -11,8 +18,8 @@ const GroupSection = ({
   headerSize = "text-sm",
   whileInView = true,
   delay = 0,
-}) => {
-  const { theme } = useSelector((state) => state.theme);
+}: GroupSectionProps): ReactNode => {
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   return (
     <div

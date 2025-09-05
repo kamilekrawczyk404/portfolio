@@ -1,16 +1,25 @@
 "use client";
-import React from "react";
+import React, { JSX } from "react";
 import { motion } from "framer-motion";
 import { Icons } from "@/components/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "@/redux/reducers/themeSlice";
+import { AppDispatch, RootState } from "@/redux/store";
 
-const ThemeSwitcher = ({ className = "" }) => {
-  const { selected } = useSelector((state) => state.theme);
+type ThemeSwitcherProps = {
+  className?: string;
+};
 
-  const dispatch = useDispatch();
+const ThemeSwitcher = ({ className = "" }: ThemeSwitcherProps): JSX.Element => {
+  const { selected } = useSelector((state: RootState) => state.theme);
 
-  const handleChangeTheme = () => {
+  const dispatch: AppDispatch = useDispatch();
+
+  const handleChangeTheme = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    e.stopPropagation();
+
     dispatch(changeTheme(selected === "dark" ? "light" : "dark"));
   };
 
@@ -24,7 +33,7 @@ const ThemeSwitcher = ({ className = "" }) => {
         style={{
           justifyContent: selected === "dark" ? "flex-end" : "flex-start",
         }}
-        onClick={handleChangeTheme}
+        onClick={(e) => handleChangeTheme(e)}
       >
         <motion.div
           layout

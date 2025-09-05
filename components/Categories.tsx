@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import AnimatedCheckbox from "@/components/AnimatedCheckbox";
 import { useSelector } from "react-redux";
@@ -10,18 +10,30 @@ import {
 } from "@/animations";
 import FiltersRemover from "@/components/buttons/FiltersRemover";
 import { layoutProperties } from "@/layout";
+import { RootState } from "@/redux/store";
 
-const Categories = ({
+type CategoriesProps<T> = {
+  categories: T[];
+  callback: (items: T[]) => void;
+  render: (item: T) => ReactNode;
+  defaultSelectedIndex?: number;
+  delay?: number;
+  singleSelection?: false;
+  whileInView?: false;
+  className?: string;
+};
+
+const Categories = <T extends unknown>({
   categories,
-  callback = () => {},
-  render = () => {},
+  callback,
+  render,
   defaultSelectedIndex = -1,
   delay = 0,
   singleSelection = false,
   whileInView = false,
   className = "",
-}) => {
-  const { theme } = useSelector((state) => state.theme);
+}: CategoriesProps<T>) => {
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   const [selectedIds, setSelectedIds] = useState(
     [...categories].map((_, index) => index === defaultSelectedIndex),
@@ -30,7 +42,7 @@ const Categories = ({
   const [isRemoverVisible, setIsRemoverVisible] = useState(false);
 
   const onCategoryClicked = useCallback(
-    (clickedIndex) => {
+    (clickedIndex: number) => {
       if (singleSelection) {
         if (clickedIndex === selectedIds.indexOf(true)) return;
         setSelectedIds((prev) =>
@@ -48,7 +60,7 @@ const Categories = ({
   const { parent, children } = variantsPresets.staggered({ delay });
 
   useEffect(() => {
-    const selected = categories.filter((item, index) => selectedIds[index]);
+    const selected = categories.filter((_, index) => selectedIds[index]);
 
     // Return list of updated categories
     callback(selected);
@@ -91,7 +103,7 @@ const Categories = ({
                 }}
                 className={"overflow-hidden flex items-center justify-center"}
               >
-                <AnimatedCheckbox isChecked={[selectedIds[index]]} />
+                <AnimatedCheckbox isChecked={selectedIds[index]} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -111,7 +123,7 @@ const Categories = ({
       <AnimatePresence mode={"wait"}>
         {isRemoverVisible && (
           <FiltersRemover
-            callback={() => setSelectedIds((prev) => prev.map((i) => false))}
+            callback={() => setSelectedIds((prev) => prev.map((_) => false))}
           />
         )}
       </AnimatePresence>

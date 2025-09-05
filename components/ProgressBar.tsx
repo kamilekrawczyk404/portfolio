@@ -3,10 +3,15 @@ import React, { useEffect, useState } from "react";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import { useSelector } from "react-redux";
-import { colors } from "@/layout"; // Ensure these paths are correct
+import { colors } from "@/layout";
+import { RootState } from "@/redux/store"; // Ensure these paths are correct
 
-const ProgressBar = ({ percentage, shouldAnimate }) => {
-  const { theme } = useSelector((state) => state.theme);
+type ProgressBarProps = {
+  percentage: number;
+  shouldAnimate?: boolean;
+};
+const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   const percentageMotionValue = useMotionValue(0);
   const width = useTransform(
@@ -15,7 +20,7 @@ const ProgressBar = ({ percentage, shouldAnimate }) => {
     [0, percentage],
   );
 
-  const [asPercentage, setAsPercentage] = useState(0);
+  const [asPercentage, setAsPercentage] = useState("");
 
   useEffect(() => {
     if (shouldAnimate) {
@@ -25,7 +30,7 @@ const ProgressBar = ({ percentage, shouldAnimate }) => {
         delay: 0.1,
       });
 
-      width.on("change", (v) => setAsPercentage(`${v}%`));
+      width.on("change", (v) => setAsPercentage(`${v.toFixed()}%`));
 
       return controls.stop;
     } else {
@@ -55,7 +60,7 @@ const ProgressBar = ({ percentage, shouldAnimate }) => {
         <div
           className={`mb-[.25rem] text-sm bg-blue-500 px-2 py-0 rounded-xl border-1 ${colors.dark.border} ${colors.light.foreground} ${colors.light.background}`}
         >
-          <span>{parseInt(asPercentage)}%</span>
+          <span>{asPercentage}</span>
         </div>
         <div
           className={`absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-0 border-[.25rem] border-b-0 border-l-transparent border-r-transparent`}

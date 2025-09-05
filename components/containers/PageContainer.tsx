@@ -1,21 +1,27 @@
 "use client";
-import React from "react";
+import React, { ComponentProps, ElementType, ReactNode } from "react";
 import { layoutProperties } from "@/layout";
 import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+
+type PageContainerProps = ComponentProps<"div"> & {
+  section?: boolean;
+  screenHeight?: boolean;
+  includeNavigationHeight?: boolean;
+};
 
 const PageContainer = ({
   children,
+  className = "",
   includeNavigationHeight = false,
   section = false,
-  className = "",
   screenHeight = true,
   ...props
-}) => {
-  const { theme } = useSelector((state) => state.theme);
+}: PageContainerProps) => {
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   return (
     <div
-      // style={{ minHeight: "fit-content" }}
       className={`w-full relative ${
         includeNavigationHeight
           ? "!mt-[4rem] lg:h-[calc(100vh-4rem)] !min-h-[calc(100vh-4rem)]"

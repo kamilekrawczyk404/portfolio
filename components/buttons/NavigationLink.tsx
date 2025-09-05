@@ -1,6 +1,8 @@
-import React from "react";
-import Link from "next/link";
+import React, { ReactNode } from "react";
+import Link, { LinkProps } from "next/link";
 import { Icons } from "@/components/Icons";
+
+type NavigationLinkProps = LinkProps & { children: ReactNode };
 
 const ButtonBackdrop = () => {
   return (
@@ -11,9 +13,18 @@ const ButtonBackdrop = () => {
     />
   );
 };
-const NavigationLink = ({ children, ...props }) => {
+
+const NavigationLink = ({
+  children,
+  href,
+  ...props
+}: NavigationLinkProps): ReactNode => {
   return (
-    <Link className={"text-5xl relative group w-fit flex"} {...props}>
+    <Link
+      href={href}
+      className={"text-5xl relative group w-fit flex"}
+      {...props}
+    >
       <div
         className={
           "relative scale-0 w-full h-full origin-bottom-left aspect-square group-hover:scale-100 group-hover:mr-2 transition-all duration-300"

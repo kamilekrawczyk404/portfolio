@@ -1,30 +1,38 @@
 "use client";
-import React from "react";
+import React, { ReactNode } from "react";
 import { layoutProperties } from "@/layout";
 import { useSelector } from "react-redux";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { animationProperties } from "@/animations";
 import AnimatedSingleLetterText from "@/components/text/AnimatedSingleLetterText";
+import { RootState } from "@/redux/store";
+
+type SelectionTitleProps = {
+  title: string;
+  children?: ReactNode;
+  className?: string;
+  whileInView?: boolean;
+};
 
 const SectionTitle = ({
   title,
   children,
   className = "",
   whileInView = true,
-}) => {
-  const { theme } = useSelector((state) => state.theme);
+}: SelectionTitleProps): ReactNode => {
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   return (
     <div
       className={`relative flex lg:flex-row flex-col lg:items-end ${layoutProperties.gap.medium} ${theme.foreground} ${className}`}
     >
-      <div>
+      <h2 data-testid={title}>
         <AnimatedSingleLetterText
-          whileInView
+          whileInView={whileInView}
           text={title}
           className={`${layoutProperties.text.large}`}
         />
-      </div>
+      </h2>
       {children}
     </div>
   );

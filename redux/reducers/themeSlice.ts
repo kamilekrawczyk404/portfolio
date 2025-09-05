@@ -1,8 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie } from "cookies-next";
-import { colors } from "@/layout";
+import { BasicColorSet, colors } from "@/layout";
 
-const themes = {
+type ThemeTypes = "light" | "dark";
+
+type HoverEffects = {
+  background: string;
+  foreground: string;
+  border: string;
+};
+
+export type Theme = {
+  [property in ThemeTypes]: BasicColorSet & { hover: HoverEffects };
+};
+
+const themes: Theme = {
   light: {
     ...colors.light,
     hover: {
@@ -21,16 +33,23 @@ const themes = {
   },
 };
 
+export interface ThemeState {
+  selected: ThemeTypes;
+  theme: Theme[ThemeTypes];
+  opposite: Theme[ThemeTypes];
+}
+
+const initialState: ThemeState = {
+  selected: "dark",
+  theme: themes.dark,
+  opposite: themes.light,
+};
+
 const themeSlice = createSlice({
   name: "appMode",
-  initialState: {
-    selected: "dark",
-    theme: themes.dark,
-    opposite: themes.light,
-  },
-
+  initialState,
   reducers: {
-    changeTheme: (state, action) => {
+    changeTheme: (state, action: PayloadAction<ThemeTypes>) => {
       // whether there is parameter or not
       const theme = action.payload;
 

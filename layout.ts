@@ -1,4 +1,34 @@
-export const layoutProperties = {
+type SizeProperties = {
+  large: string;
+  medium: string;
+  small: string;
+  extraSmall?: string;
+};
+
+type GapProperties = SizeProperties & {
+  horizontal?: {
+    large: string;
+    medium: string;
+    small: string;
+  };
+};
+
+type TextProperties = SizeProperties;
+
+type BodyProperties = {
+  padding: string;
+  margin: string;
+};
+
+export type LayoutSystem = {
+  padding: string;
+  margin: string;
+  body: BodyProperties;
+  gap: GapProperties;
+  text: TextProperties;
+};
+
+export const layoutProperties: LayoutSystem = {
   padding: "md:p-4 p-2",
   margin: "md:m-4 m-2",
   gap: {
@@ -24,7 +54,22 @@ export const layoutProperties = {
   },
 };
 
-export const colors = {
+export type BasicColorSet = {
+  background: string;
+  foreground: string;
+  border: string;
+  outline: string;
+};
+
+export type ColorPalette = {
+  purple: string;
+  orange: string;
+  languages: Record<string, string>;
+  light: BasicColorSet;
+  dark: BasicColorSet;
+};
+
+export const colors: ColorPalette = {
   purple: "#6a00f4",
   orange: "#ff9e00",
   languages: {

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { ComponentProps, ReactElement } from "react";
 import { Icons } from "@/components/Icons";
-import Button from "@/components/buttons/Button";
+import Button, { ButtonProps } from "@/components/buttons/Button";
 
-const CloseButton = ({ ...props }) => {
+const CloseButton = ({ ...props }: ButtonProps) => {
   return (
     <Button square navigation {...props}>
       <Icons.Close

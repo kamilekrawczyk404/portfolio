@@ -1,16 +1,25 @@
 "use client";
-import React from "react";
+import React, { JSX } from "react";
 import ProgressBar from "@/components/ProgressBar";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import { Variants } from "motion-dom";
+import { RootState } from "@/redux/store";
+
+type ProgressBarAspectProps = {
+  aspect: { name: string; knowledge: number };
+  variants: Variants;
+  shouldAnimate?: boolean;
+  onAnimationComplete: () => void;
+};
 
 const ProgressBarAspect = ({
   aspect,
   variants = {},
   shouldAnimate,
   onAnimationComplete = () => {},
-}) => {
-  const { theme } = useSelector((state) => state.theme);
+}: ProgressBarAspectProps): JSX.Element => {
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   return (
     <motion.div

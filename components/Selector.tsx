@@ -1,19 +1,28 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { JSX, ReactNode, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Icons } from "@/components/Icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import { changeSelectorState } from "@/redux/reducers/selectorSlice";
+import { RootState } from "@/redux/store";
 
-const Selector = ({
+type SelectorProps<T> = {
+  items: T[];
+  render: (item: T) => ReactNode;
+  callback: (item: T) => void;
+  delay?: number;
+  whileInView?: boolean;
+};
+
+const Selector = <T extends unknown>({
   items,
+  render,
+  callback,
   delay = 0,
   whileInView = false,
-  render = () => {},
-  callback = () => {},
-}) => {
-  const { theme } = useSelector((state) => state.theme);
+}: SelectorProps<T>): JSX.Element => {
+  const { theme } = useSelector((state: RootState) => state.theme);
 
   const dispatch = useDispatch();
 

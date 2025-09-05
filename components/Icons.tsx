@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
@@ -20,7 +20,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
-export const Icons = {
+type IconsType = {
+  [key: string]: FC<{ className?: string }>;
+};
+
+export const Icons: IconsType = {
   Close: ({ className = "" }) => (
     <FontAwesomeIcon icon={faClose} className={className} />
   ),

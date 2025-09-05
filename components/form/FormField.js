@@ -1,6 +1,6 @@
 import React from "react";
 import Label from "@/components/form/Label";
-import Input from "@/components/form/Input";
+import CustomInput from "@/components/form/CustomInput";
 import Textarea from "@/components/form/Textarea";
 
 const FormField = ({
@@ -21,7 +21,7 @@ const FormField = ({
         {label}
       </Label>
       {inputType === "input" ? (
-        <Input
+        <CustomInput
           id={id}
           onChange={onChange}
           value={value}
@@ -42,7 +42,3 @@ const FormField = ({
 };
 
 export default FormField;
-
-const FormFieldContainer = ({ children, className = "" }) => (
-  <div className={`flex flex-col gap-1 ${className}`}>{children}</div>
-);

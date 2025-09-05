@@ -8,6 +8,17 @@ import {
   animationsTypes,
   animationsTypes as animationTypes,
 } from "@/animations";
+import { RootState } from "@/redux/store";
+
+type TextCarouselProps = {
+  words: string[];
+  delay?: number;
+  duration?: number;
+  className?: string;
+  shouldRender?: boolean;
+};
+
+const backgroundColors = [colors.purple, colors.orange];
 
 const TextCarousel = ({
   words,
@@ -15,14 +26,12 @@ const TextCarousel = ({
   duration = 3,
   className = "",
   shouldRender = true,
-}) => {
-  const { opposite } = useSelector((state) => state.theme);
+}: TextCarouselProps) => {
+  const { opposite } = useSelector((state: RootState) => state.theme);
 
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentColorIndex, setCurrentColorIndex] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
-
-  const backgroundColors = [colors.purple, colors.orange];
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -47,7 +56,7 @@ const TextCarousel = ({
     <AnimatePresence mode={"popLayout"}>
       {shouldRender &&
         words.map(
-          (word, index) =>
+          (_, index) =>
             currentWordIndex === index && (
               <div key={index} className={"relative z-10"}>
                 <motion.div

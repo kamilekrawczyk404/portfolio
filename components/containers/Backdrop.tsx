@@ -1,8 +1,13 @@
 "use client";
-import React from "react";
+import React, { ReactNode } from "react";
 import { motion } from "framer-motion";
 
-const Backdrop = ({ isActive, blur = false }) => {
+type BackdropProps = {
+  isActive: boolean;
+  blur?: boolean;
+};
+
+const Backdrop = ({ isActive, blur = false }: BackdropProps): ReactNode => {
   return (
     isActive && (
       <motion.div

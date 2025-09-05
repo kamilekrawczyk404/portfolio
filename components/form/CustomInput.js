@@ -5,7 +5,14 @@ import InputUnderline from "@/components/form/InputUnderline";
 import { motion, transformProps } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 
-const Input = ({ id, value, onChange, error, placeholder = "" }) => {
+const CustomInput = ({
+  id,
+  value,
+  onChange,
+  error,
+  placeholder = "",
+  ...props
+}) => {
   const { theme } = useSelector((state) => state.theme);
 
   return (
@@ -28,10 +35,11 @@ const Input = ({ id, value, onChange, error, placeholder = "" }) => {
         className={`outline-none w-full border-b-1 p-2 peer ${
           error ? "border-red-500" : theme.border
         }`}
+        {...props}
       />
       <InputUnderline isError={error} />
     </div>
   );
 };
 
-export default Input;
+export default CustomInput;

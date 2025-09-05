@@ -94,7 +94,7 @@ const Hero = () => {
           <div
             className={`flex flex-col ${layoutProperties.gap.small} relative w-full`}
           >
-            <div>
+            <h1>
               <div
                 className={"relative flex items-center h-fit flex-wrap w-full"}
               >
@@ -117,7 +117,7 @@ const Hero = () => {
                 animationDelay={0.2}
                 shouldRender={shouldRenderText}
               />
-            </div>
+            </h1>
             <div className={"overflow-hidden"}>
               <motion.p
                 initial={{

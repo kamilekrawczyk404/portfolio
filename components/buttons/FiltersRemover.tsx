@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { Icons } from "@/components/Icons";
 import { useSelector } from "react-redux";
 import { animationsTypes } from "@/animations";
+import { RootState } from "@/redux/store";
 
-const FiltersRemover = ({ callback }) => {
-  const { opposite } = useSelector((state) => state.theme);
+type FiltersRemoverProps = {
+  callback: (e: MouseEvent<HTMLButtonElement>) => void;
+};
+
+const FiltersRemover = ({ callback }: FiltersRemoverProps) => {
+  const { opposite } = useSelector((state: RootState) => state.theme);
 
   return (
     <motion.div
@@ -18,7 +23,7 @@ const FiltersRemover = ({ callback }) => {
     >
       <div className={`w-[1px] h-full ${opposite.background}`} />
       <button
-        onClick={callback}
+        onClick={(e) => callback(e)}
         className={
           "px-2 border-red-500 flex items-center gap-x-1 border-1 border-red-500 h-[1.75rem] rounded-xl text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
         }

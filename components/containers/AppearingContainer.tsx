@@ -1,9 +1,12 @@
 "use client";
-import React from "react";
+import React, { ComponentProps, ReactNode } from "react";
 import { motion } from "framer-motion";
 import { animationProperties } from "@/animations";
 
-const AppearingContainer = ({ children, className }) => {
+const AppearingContainer = ({
+  children,
+  className,
+}: ComponentProps<"div">): ReactNode => {
   return (
     <motion.div
       className={className}

@@ -1,4 +1,33 @@
-export const animationProperties = {
+import { Variants, Transition } from "motion-dom";
+
+export type Direction = "fromTop" | "fromBottom";
+
+export type VariantsPresets = {
+  staggered: (props?: Transition) => {
+    parent: Variants;
+    children: Variants;
+  };
+  verticalAppearing: (direction?: Direction) => Variants;
+};
+
+export type AnimationProperties = {
+  durations: {
+    short: number;
+    medium: number;
+    long: number;
+  };
+  bounce: {
+    small: number;
+    medium: number;
+    large: number;
+  };
+};
+
+export type AnimationType = {
+  default: Transition;
+};
+
+export const animationProperties: AnimationProperties = {
   durations: {
     short: 0.2,
     medium: 0.4,
@@ -11,7 +40,7 @@ export const animationProperties = {
   },
 };
 
-export const animationsTypes = {
+export const animationsTypes: AnimationType = {
   default: {
     duration: animationProperties.durations.medium,
     type: "spring",
@@ -19,7 +48,7 @@ export const animationsTypes = {
   },
 };
 
-export const variantsPresets = {
+export const variantsPresets: VariantsPresets = {
   staggered: (props) => ({
     parent: {
       initial: {
@@ -28,7 +57,7 @@ export const variantsPresets = {
       animate: {
         opacity: 1,
         transition: {
-          staggerChildren: 0.05,
+          delayChildren: 0.05,
           when: "beforeChildren",
           ...props,
         },

@@ -1,19 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import Button from "@/components/buttons/Button";
 import { routing } from "@/i18n/routing";
 import { useRouter } from "next/navigation";
 
-const LanguagesButtons = () => {
+const LanguagesButtons = (): JSX.Element[] => {
   const [locale, setLocale] = useState("");
   const router = useRouter();
 
-  const changeLocale = (newLocale) => {
+  const changeLocale = (newLocale: string) => {
     setLocale(newLocale);
+
     document.cookie = `portfolio_locale=${newLocale};`;
+
     router.refresh();
   };
+
   useEffect(() => {
     const cookieLocale = document.cookie
       .split(";")

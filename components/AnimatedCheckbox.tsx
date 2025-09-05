@@ -2,10 +2,24 @@
 import React from "react";
 import { useMotionValue, useTransform, motion } from "framer-motion";
 import { colors } from "@/layout";
+import { Variants } from "motion-dom";
 
-const AnimatedCheckbox = ({ className = "", isChecked }) => {
-  const tickVariants = {
-    pressed: (isChecked) => ({ pathLength: isChecked ? 0.85 : 0.2 }),
+type Cord = {
+  x: number;
+  y: number;
+};
+
+type AnimatesCheckboxProps = {
+  isChecked: boolean;
+  className?: string;
+};
+
+const AnimatedCheckbox = ({
+  className = "",
+  isChecked,
+}: AnimatesCheckboxProps) => {
+  const tickVariants: Variants = {
+    pressed: (value: boolean) => ({ pathLength: value ? 0.85 : 0.2 }),
     checked: {
       pathLength: 1,
       transition: { duration: 0.2, ease: "easeInOut" },
@@ -16,7 +30,7 @@ const AnimatedCheckbox = ({ className = "", isChecked }) => {
     },
   };
 
-  const boxVariants = {
+  const boxVariants: Variants = {
     hover: { scale: 1.05 },
     pressed: { scale: 0.95 },
   };
@@ -26,15 +40,14 @@ const AnimatedCheckbox = ({ className = "", isChecked }) => {
 
   const scaleFactor = 28 / 300; // Target size / Original size
 
-  const originalCoords = [
+  const originalCords: Cord[] = [
     { x: 0, y: 160.666 },
     { x: 120.658, y: 310.373 },
     { x: 300.808, y: 0 },
   ];
-
-  const scaledCoords = originalCoords.map((coord) => ({
-    x: coord.x * scaleFactor,
-    y: coord.y * scaleFactor,
+  const scaledCoords = originalCords.map((cord: Cord) => ({
+    x: cord.x * scaleFactor,
+    y: cord.y * scaleFactor,
   }));
 
   const newPathD = `M ${scaledCoords[0].x} ${scaledCoords[0].y} L ${scaledCoords[1].x} ${scaledCoords[1].y} L ${scaledCoords[2].x} ${scaledCoords[2].y}`;
@@ -49,7 +62,11 @@ const AnimatedCheckbox = ({ className = "", isChecked }) => {
       animate={isChecked ? "checked" : "unchecked"}
       className={`aspect-square cursor-pointer relative ${className}`}
     >
-      <input type={"checkbox"} className={"hidden"} value={isChecked} />
+      <input
+        type={"checkbox"}
+        className={"hidden"}
+        value={isChecked ? "checked" : "unchecked"}
+      />
       <svg
         width={28} // 1.75rem = 28px (assuming 1rem = 16px)
         height={28} // 1.75rem = 28px

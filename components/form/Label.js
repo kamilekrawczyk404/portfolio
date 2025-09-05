@@ -5,28 +5,6 @@ import { colors, layoutProperties } from "@/layout";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import { AnimatePresence } from "framer-motion";
 
-const Label = ({ htmlFor, required, error, children }) => {
-  const { theme } = useSelector((state) => state.theme);
-  return (
-    <label
-      htmlFor={htmlFor}
-      className={`${theme.foreground} ${layoutProperties.text.small} relative inline-flex gap-2 items-end`}
-    >
-      <span className={"text-nowrap"}>
-        {children}
-        {required && <span>*</span>}
-      </span>
-      <AnimatePresence mode={"popLayout"}>
-        {error && (
-          <VerticallyAppearingText
-            text={error}
-            direction={"fromTop"}
-            className={`text-sm text-red-600 !pb-[.125rem]`}
-          />
-        )}
-      </AnimatePresence>
-    </label>
-  );
-};
+// const Label =
 
-export default Label;
+// export default Label;

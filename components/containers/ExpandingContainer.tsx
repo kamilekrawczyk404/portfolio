@@ -1,9 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ExpandingContainer = ({ isExpanded }) => {
+type ExpandingContainerProps = {
+  isExpanded: boolean;
+};
+
+const ExpandingContainer = ({
+  isExpanded,
+}: ExpandingContainerProps): ReactNode => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {

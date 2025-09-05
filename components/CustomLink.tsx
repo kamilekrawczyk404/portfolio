@@ -2,7 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { Icons } from "@/components/Icons";
 
-const CustomLink = ({ href, title = "" }) => {
+type CustomLinkProps = {
+  href: string;
+  title?: string;
+};
+
+const CustomLink = ({ href, title = "" }: CustomLinkProps) => {
   return (
     <div className={"relative group w-full"}>
       <Link href={href} className={"break-all w-full group-hover:underline"}>
