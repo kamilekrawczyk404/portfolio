@@ -1,4 +1,5 @@
-import { Variants, Transition } from "motion-dom";
+import { Variants, Transition, Variant } from "motion-dom";
+import { VariantLabels } from "framer-motion";
 
 export type Direction = "fromTop" | "fromBottom";
 
@@ -7,7 +8,13 @@ export type VariantsPresets = {
     parent: Variants;
     children: Variants;
   };
-  verticalAppearing: (direction?: Direction) => Variants;
+  verticalAppearing: (direction?: Direction) => {
+    [key: string]: {
+      y: number | string;
+      opacity: number;
+      transition?: Transition;
+    };
+  };
 };
 
 export type AnimationProperties = {

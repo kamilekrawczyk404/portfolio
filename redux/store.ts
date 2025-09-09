@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import themeSlice, { ThemeState } from "@/redux/reducers/themeSlice";
-import selectorSlice from "@/redux/reducers/selectorSlice";
-import projectPreviewSlice from "@/redux/reducers/projectPreviewSlice";
+import selectorSlice, { SelectorState } from "@/redux/reducers/selectorSlice";
+import projectPreviewSlice, {
+  ProjectPreview,
+} from "@/redux/reducers/projectPreviewSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -15,8 +17,8 @@ export const makeStore = () => {
 
 export type RootState = {
   theme: ThemeState;
-  selector: any;
-  projectPreview: any;
+  selector: SelectorState;
+  projectPreview: ProjectPreview;
 };
 
 export type AppStore = ReturnType<typeof makeStore>;

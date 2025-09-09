@@ -9,8 +9,11 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import CustomInput from "@/components/form/CustomInput";
+import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
+import Textarea from "@/components/form/Textarea";
+import { has } from "immer/src/utils/common";
 
 // --- Utility Functions and Types (Re-created for a single-file example) ---
 const capitalizeWord = (word: string): string =>
@@ -29,25 +32,27 @@ const errorMessages: {
 type ValidationProps = {
   required?: boolean;
   unique?: unknown[];
+  custom?: {
+    validate: (value: any) => boolean;
+    message?: string;
+  };
 };
 
-export type FieldConfig<T> = {
-  value: T;
-  label: string;
-  placeholder: string;
+export type FieldConfig = {
+  value: string | boolean;
   validation?: ValidationProps;
 };
 
 export type FormFieldsProperties<T> = {
-  [K in keyof T]: FieldConfig<T[K]>;
+  [K in keyof T]: FieldConfig;
 };
 
-type FormFieldState<T> = FieldConfig<T> & {
+type FormFieldState = FieldConfig & {
   error: string | null;
 };
 
 type FormState<T> = {
-  [K in keyof T]: FormFieldState<T[K]>;
+  [K in keyof T]: FormFieldState;
 };
 
 // Represents the errors returned by the validation function
@@ -57,9 +62,7 @@ type FormErrors<T> = {
 
 type FormContextType<T> = {
   formState: FormState<T>;
-  updateValue: (name: keyof T, value: T[keyof T]) => void;
-  // We'll also provide a way to trigger validation from child components if needed
-  validateField: (name: keyof T) => void;
+  updateField: (name: keyof T, value: string | boolean, error?: string) => void;
 };
 
 const FormContext = createContext<FormContextType<any> | undefined>(undefined);
@@ -72,29 +75,64 @@ const useFormContext = () => {
   return context;
 };
 
+const validateField = (
+  name: string,
+  value: string | boolean,
+  validation: ValidationProps,
+): string | null => {
+  let error: string | null = null;
+
+  if (validation?.required) {
+    if (
+      (typeof value === "string" && !(value as string).trim().length) ||
+      (typeof value === "number" && isNaN(value))
+    ) {
+      error = errorMessages.required(name);
+    }
+  }
+
+  if ((value as string).length > 0 && validation?.custom) {
+    if (!validation.custom.validate(value)) {
+      error = validation.custom?.message ?? errorMessages.required(name);
+    }
+  }
+
+  if (validation?.unique && validation.unique.includes(value)) {
+    error = errorMessages.unique(name);
+  }
+
+  return error;
+};
+
 // --- Form Component and Sub-Components ---
 type FormProps<T> = {
+  id: string;
   fields: FormFieldsProperties<T>;
+  options?: {
+    resetOnSubmit: boolean;
+  };
   onSubmit: (values: T) => void;
   children: ReactNode;
   className?: string;
 };
 
 const Form = <T extends Record<string, any>>({
+  id,
   fields,
   onSubmit,
   children,
+  options = { resetOnSubmit: true },
   className = "",
 }: FormProps<T>) => {
   const [formState, setFormState] = useState<FormState<T>>(() => {
     const state: any = {};
+
     for (const name in fields) {
       if (Object.prototype.hasOwnProperty.call(fields, name)) {
-        const { value, label, placeholder, validation } = fields[name];
+        const { value, validation } = fields[name];
+
         state[name] = {
           value,
-          label,
-          placeholder,
           validation,
           error: null,
         };
@@ -103,73 +141,36 @@ const Form = <T extends Record<string, any>>({
     return state as FormState<T>;
   });
 
-  // A pure validation function that returns an errors object
   const validateForm = useCallback((state: FormState<T>): FormErrors<T> => {
     const errors: any = {};
 
     for (const name in state) {
       if (Object.prototype.hasOwnProperty.call(state, name)) {
         const { value, validation } = state[name];
-        const fieldName = String(name);
 
-        if (validation?.required) {
-          if (
-            (typeof value === "string" && !value.trim()) ||
-            value === null ||
-            value === undefined ||
-            (typeof value === "number" && isNaN(value))
-          ) {
-            errors[name] = errorMessages.required(fieldName);
-            continue; // Stop validation for this field once an error is found
-          }
-        }
-
-        if (validation?.unique && validation.unique.includes(value)) {
-          errors[name] = errorMessages.unique(fieldName);
-        }
+        errors[name] = validateField(name, value, validation);
       }
     }
+
     return errors as FormErrors<T>;
   }, []);
 
-  const updateValue = useCallback((name: keyof T, value: T[keyof T]) => {
-    setFormState((prev) => {
-      // Clear the error for the field being updated
-      const newState = {
-        ...prev,
-        [name]: {
-          ...prev[name],
-          value,
-          error: null,
-        },
-      };
-      return newState;
-    });
-  }, []);
+  const updateField = useCallback(
+    (name: keyof T, value: string | boolean, error?: string): void => {
+      setFormState((prev) => {
+        const newState: FormState<T> = {
+          ...prev,
+          [name]: {
+            ...prev[name],
+            value,
+            error,
+          },
+        };
 
-  // A function to validate a single field (e.g., onBlur)
-  const validateField = useCallback(
-    (name: keyof T) => {
-      const errors = validateForm(formState);
-      if (errors[name]) {
-        setFormState((prev) => ({
-          ...prev,
-          [name]: {
-            ...prev[name],
-            error: errors[name],
-          },
-        }));
-      } else {
-        setFormState((prev) => ({
-          ...prev,
-          [name]: {
-            ...prev[name],
-            error: null,
-          },
-        }));
-      }
+        return newState;
+      });
     },
-    [formState, validateForm],
+    [],
   );
 
   const handleSubmit = useCallback(
@@ -177,12 +178,13 @@ const Form = <T extends Record<string, any>>({
       e.preventDefault();
 
       const errors = validateForm(formState);
-      const hasErrors = Object.keys(errors).length > 0;
+      const hasErrors = Object.values(errors).some((e) => e !== null);
 
       if (hasErrors) {
         // Update state with all errors at once
         setFormState((prev) => {
           const newState = { ...prev };
+
           for (const name in errors) {
             if (Object.prototype.hasOwnProperty.call(errors, name)) {
               newState[name] = { ...newState[name], error: errors[name] };
@@ -192,58 +194,61 @@ const Form = <T extends Record<string, any>>({
         });
       } else {
         const values: any = {};
+
         for (const name in formState) {
           if (Object.prototype.hasOwnProperty.call(formState, name)) {
             values[name] = formState[name].value;
           }
         }
+
         onSubmit(values as T);
+
+        if (options.resetOnSubmit) {
+          setFormState(
+            Object.fromEntries(
+              Object.entries(formState).map(([key, values]) => [
+                key,
+                { ...values, value: "", error: null },
+              ]),
+            ) as FormState<T>,
+          );
+        }
       }
     },
     [formState, onSubmit, validateForm],
   );
 
   const contextValue = useMemo(
-    () => ({ formState, updateValue, validateField }),
-    [formState, updateValue, validateField],
+    () => ({
+      formState,
+      updateField,
+    }),
+    [formState, updateField],
   );
 
   return (
     <FormContext.Provider value={contextValue}>
-      <form onSubmit={handleSubmit} className={className}>
+      <form id={id} onSubmit={handleSubmit} className={className}>
         {children}
       </form>
     </FormContext.Provider>
   );
 };
 
-// --- In-line Sub-Components (to make the file runnable) ---
-const VerticallyAppearingText = ({ text, className = "" }) => (
-  <motion.span
-    initial={{ opacity: 0, y: -10 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 10 }}
-    transition={{ duration: 0.2 }}
-    className={className}
-  >
-    {text}
-  </motion.span>
-);
-
 const FormLabel = ({ htmlFor, required, error, children }) => (
   <label
     htmlFor={htmlFor}
-    className="relative inline-flex gap-2 items-end text-sm text-gray-600 font-medium"
+    className="relative inline-flex gap-2 items-end w-full text-sm text-gray-600 font-medium"
   >
     <span className="whitespace-nowrap">
       {children}
-      {required && <span className="text-red-500">*</span>}
+      {required && <span>*</span>}
     </span>
     <AnimatePresence mode={"wait"}>
       {error && (
         <VerticallyAppearingText
           text={error}
-          className="text-sm text-red-600 !pb-[.125rem]"
+          className="text-sm text-red-600"
         />
       )}
     </AnimatePresence>
@@ -260,25 +265,31 @@ const FormContainer = ({
   </div>
 );
 
-const Input = ({
+const FormInput = ({
   name,
+  className,
+  label,
+  placeholder,
   type = "text",
-}: Pick<ComponentProps<"input">, "name" | "type">) => {
-  const { formState, updateValue, validateField } = useFormContext();
-  const { error, value, validation, label, placeholder } = formState[name];
+}: Pick<
+  ComponentProps<"input">,
+  "name" | "type" | "className" | "placeholder"
+> & { label: string }) => {
+  const { formState, updateField } = useFormContext();
+  const { error, value, validation } = formState[name];
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    updateValue(name, newValue);
+    updateField(name, newValue);
   };
 
   const handleBlur = () => {
-    validateField(name);
+    updateField(name, value, validateField(name, value, validation));
   };
 
   return (
-    <FormContainer>
+    <FormContainer className={className}>
       <FormLabel htmlFor={name} required={validation?.required} error={error}>
         {label}
       </FormLabel>
@@ -297,9 +308,47 @@ const Input = ({
   );
 };
 
+const FormTextarea = ({
+  name,
+  placeholder,
+  label,
+  className,
+}: Pick<ComponentProps<"textarea">, "name" | "className" | "placeholder"> & {
+  label: string;
+}) => {
+  const { formState, updateField } = useFormContext();
+  const { error, value, validation } = formState[name];
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    updateField(name, e.target.value);
+  };
+
+  const handleBlur = () => {
+    updateField(name, value, validateField(name, value, validation));
+  };
+
+  return (
+    <FormContainer className={className}>
+      <FormLabel htmlFor={name} required={validation?.required} error={error}>
+        {label}
+      </FormLabel>
+      <Textarea
+        id={name}
+        name={name}
+        error={error}
+        value={value as string}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder={placeholder}
+      />
+    </FormContainer>
+  );
+};
+
 // --- Assigning sub-components ---
 Form.Label = FormLabel;
 Form.Container = FormContainer;
-Form.Input = Input;
+Form.Textarea = FormTextarea;
+Form.Input = FormInput;
 
 export default Form;

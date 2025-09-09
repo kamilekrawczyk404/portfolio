@@ -1,0 +1,103 @@
+"use client";
+import React, {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useRef,
+} from "react";
+import Image from "next/image";
+import {
+  motion,
+  MotionValue,
+  useMotionTemplate,
+  useTime,
+  useTransform,
+} from "framer-motion";
+import { useSelector } from "react-redux";
+import { colors } from "@/layout";
+import StaggeredList from "@/components/lists/StaggeredList";
+import { ProjectPhoto } from "@/views/Projects";
+import { RootState } from "@/redux/store";
+
+type OnPhotoChange<T> = (photo: T) => void;
+
+type PhotosCarouselProps<T> = {
+  photos: T[];
+  onPhotoChange: Dispatch<SetStateAction<T>> | OnPhotoChange<T>;
+  selected: T;
+  className?: string;
+};
+
+const PhotosCarousel = <T extends ProjectPhoto>({
+  photos,
+  onPhotoChange,
+  selected,
+  className = "",
+}: PhotosCarouselProps<T>) => {
+  const { theme } = useSelector((state: RootState) => state.theme);
+
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const itemRefs = useRef<HTMLDivElement[] | null[]>([]);
+
+  useEffect(() => {
+    if (selected && itemRefs.current.length > 0) {
+      const selectedIndex = photos.findIndex(
+        (photo) => photo.src === selected.src,
+      );
+
+      if (selectedIndex !== -1 && itemRefs.current[selectedIndex]) {
+        const selectedPhotoElement = itemRefs.current[selectedIndex];
+
+        // Use scrollIntoView to bring the element into view
+        selectedPhotoElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "center",
+        });
+      }
+    }
+  }, [selected, photos]);
+
+  return (
+    <StaggeredList
+      ref={scrollContainerRef}
+      className={`relative h-full flex lg:flex-col flex-row gap-2 lg:overflow-y-scroll lg:overflow-x-visible overflow-y-unset overflow-x-scroll p-2 ${className}`}
+      items={photos}
+      render={(photo, index) => (
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          ref={(el) => {
+            if (el) {
+              itemRefs.current[index] = el;
+            }
+          }}
+          className={`relative rounded-lg pointer lg:w-full lg:min-w-fit min-w-[33vw] lg:min-h-[6rem] h-full w-full cursor-pointer transition-[outline] overflow-hidden ${
+            photo.src === selected?.src
+              ? "outline-2 outline-purple"
+              : `outline-1 ${theme.outline}`
+          }`}
+          onClick={() => onPhotoChange(photos[index])}
+        >
+          <Image
+            {...photo}
+            fill
+            sizes={"max-width: 100vw"}
+            style={{ objectFit: "contain" }}
+            loading={"lazy"}
+            quality={25}
+            className={"rounded-lg pointer-events-none"}
+          />
+          <div
+            className={`absolute rounded-br-md left-0 top-0 text-md bg-purple pl-1 pr-[.3rem] text-center z-10 ${colors.dark.foreground}`}
+          >
+            {index + 1}
+          </div>
+        </motion.div>
+      )}
+    />
+  );
+};
+
+export default PhotosCarousel;

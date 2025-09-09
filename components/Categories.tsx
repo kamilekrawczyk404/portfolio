@@ -18,8 +18,8 @@ type CategoriesProps<T> = {
   render: (item: T) => ReactNode;
   defaultSelectedIndex?: number;
   delay?: number;
-  singleSelection?: false;
-  whileInView?: false;
+  singleSelection?: boolean;
+  whileInView?: boolean;
   className?: string;
 };
 

@@ -7,7 +7,7 @@ import { RootState } from "@/redux/store";
 
 type GroupSectionProps = ComponentProps<"div"> & {
   title: string;
-  headerSize: string;
+  headerSize?: string;
   whileInView?: boolean;
   delay?: number;
 };

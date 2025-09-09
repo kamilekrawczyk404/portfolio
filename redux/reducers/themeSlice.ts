@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setCookie } from "cookies-next";
 import { BasicColorSet, colors } from "@/layout";
 
-type ThemeTypes = "light" | "dark";
+export type ThemeTypes = "light" | "dark";
 
 type HoverEffects = {
   background: string;
