@@ -81,7 +81,7 @@ const Categories = <T extends unknown>({
       className={`flex flex-wrap gap-2 ${className}`}
     >
       {categories.map((item, index) => (
-        <motion.div
+        <motion.button
           variants={children}
           key={index}
           className={`flex items-center relative border-1 rounded-xl h-[1.75rem] cursor-pointer transition-colors overflow-hidden ${
@@ -118,7 +118,7 @@ const Categories = <T extends unknown>({
           >
             {render(item)}
           </motion.span>
-        </motion.div>
+        </motion.button>
       ))}
       <AnimatePresence mode={"wait"}>
         {isRemoverVisible && (

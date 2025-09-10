@@ -12,6 +12,7 @@ type VerticallyAppearingTextProps = {
   whileInView?: boolean;
   className?: string;
   delay?: number;
+  dataTestId?: string;
 };
 const VerticallyAppearingText = ({
   text,
@@ -19,6 +20,7 @@ const VerticallyAppearingText = ({
   direction = "fromTop",
   className = "",
   delay = 0,
+  dataTestId = null,
 }: VerticallyAppearingTextProps): ReactNode => {
   const { theme } = useSelector((state: RootState) => state.theme);
 
@@ -29,6 +31,7 @@ const VerticallyAppearingText = ({
       className={`overflow-hidden h-fit w-fit ${theme.foreground} ${className}`}
     >
       <motion.h3
+        data-testid={dataTestId}
         variants={variants}
         viewport={{ once: true }}
         initial={"initial"}

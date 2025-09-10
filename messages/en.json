@@ -231,8 +231,9 @@
         "Title": "Let's connect",
         "Errors": {
           "Required": "This field is required",
+          "Unique": "This record already exists",
           "Email": "Email is not valid",
-          "PhoneNumber": "Provide a 9 digits number"
+          "PhoneNumber": "Enter a 9-digit number"
         },
         "Button": {
           "Success": "Success",

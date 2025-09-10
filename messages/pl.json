@@ -231,6 +231,7 @@
         "Title": "Skontaktujmy się",
         "Errors": {
           "Required": "To pole jest wymagane",
+          "Unique": "Pole z tą wartością już istnieje",
           "Email": "Adres e-mail jest nieprawidłowy",
           "PhoneNumber": "Podaj 9-cyfrowy numer"
         },

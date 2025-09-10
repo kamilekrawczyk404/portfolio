@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   ChangeEvent,
   ComponentProps,
@@ -6,6 +8,7 @@ import React, {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -13,20 +16,27 @@ import { AnimatePresence } from "framer-motion";
 import CustomInput from "@/components/form/CustomInput";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
 import Textarea from "@/components/form/Textarea";
-import { has } from "immer/src/utils/common";
+import { useTranslations } from "next-intl";
+import { useLocale } from "use-intl";
+import { TFunction } from "@/types/types";
 
-// --- Utility Functions and Types (Re-created for a single-file example) ---
-const capitalizeWord = (word: string): string =>
-  word.substring(0, 1).toUpperCase() + word.substring(1);
+type ErrorMessageType =
+  | "required"
+  | "unique"
+  | "email"
+  | "phoneNumber"
+  | "custom";
 
-type Validation = "required" | "unique";
+const translationPrefix = "HomePage.Contact.Form.Errors";
 
 const errorMessages: {
-  [K in Validation]: (fieldName: string) => string;
+  [K in ErrorMessageType]: (t: TFunction, i18nValue?: string) => string;
 } = {
-  required: (fieldName) => `${capitalizeWord(fieldName)} is required.`,
-  unique: (fieldName) =>
-    `${capitalizeWord(fieldName)} has an already used value.`,
+  required: (t) => t(`${translationPrefix}.Required`),
+  email: (t) => t(`${translationPrefix}.Email`),
+  phoneNumber: (t) => t(`${translationPrefix}.PhoneNumber`),
+  unique: (t) => t(`${translationPrefix}.Unique`),
+  custom: (t, i18nValue) => t(i18nValue),
 };
 
 type ValidationProps = {
@@ -34,7 +44,7 @@ type ValidationProps = {
   unique?: unknown[];
   custom?: {
     validate: (value: any) => boolean;
-    message?: string;
+    i18nValue?: string;
   };
 };
 
@@ -49,6 +59,7 @@ export type FormFieldsProperties<T> = {
 
 type FormFieldState = FieldConfig & {
   error: string | null;
+  touched: boolean;
 };
 
 type FormState<T> = {
@@ -76,7 +87,7 @@ const useFormContext = () => {
 };
 
 const validateField = (
-  name: string,
+  t: TFunction,
   value: string | boolean,
   validation: ValidationProps,
 ): string | null => {
@@ -87,18 +98,18 @@ const validateField = (
       (typeof value === "string" && !(value as string).trim().length) ||
       (typeof value === "number" && isNaN(value))
     ) {
-      error = errorMessages.required(name);
+      error = errorMessages.required(t);
     }
   }
 
   if ((value as string).length > 0 && validation?.custom) {
     if (!validation.custom.validate(value)) {
-      error = validation.custom?.message ?? errorMessages.required(name);
+      error = errorMessages.custom(t, validation.custom.i18nValue);
     }
   }
 
   if (validation?.unique && validation.unique.includes(value)) {
-    error = errorMessages.unique(name);
+    error = errorMessages.unique(t);
   }
 
   return error;
@@ -111,7 +122,7 @@ type FormProps<T> = {
   options?: {
     resetOnSubmit: boolean;
   };
-  onSubmit: (values: T) => void;
+  onSubmit: (values: { [K in keyof T]: string | boolean }) => void;
   children: ReactNode;
   className?: string;
 };
@@ -124,6 +135,9 @@ const Form = <T extends Record<string, any>>({
   options = { resetOnSubmit: true },
   className = "",
 }: FormProps<T>) => {
+  const t = useTranslations();
+  const locale = useLocale();
+
   const [formState, setFormState] = useState<FormState<T>>(() => {
     const state: any = {};
 
@@ -135,25 +149,29 @@ const Form = <T extends Record<string, any>>({
           value,
           validation,
           error: null,
+          touched: false,
         };
       }
     }
     return state as FormState<T>;
   });
 
-  const validateForm = useCallback((state: FormState<T>): FormErrors<T> => {
-    const errors: any = {};
+  const validateForm = useCallback(
+    (state: FormState<T>): FormErrors<T> => {
+      const errors: any = {};
 
-    for (const name in state) {
-      if (Object.prototype.hasOwnProperty.call(state, name)) {
-        const { value, validation } = state[name];
+      for (const name in state) {
+        if (Object.prototype.hasOwnProperty.call(state, name)) {
+          const { value, validation } = state[name];
 
-        errors[name] = validateField(name, value, validation);
+          errors[name] = validateField(t, value, validation);
+        }
       }
-    }
 
-    return errors as FormErrors<T>;
-  }, []);
+      return errors as FormErrors<T>;
+    },
+    [t],
+  );
 
   const updateField = useCallback(
     (name: keyof T, value: string | boolean, error?: string): void => {
@@ -164,6 +182,7 @@ const Form = <T extends Record<string, any>>({
             ...prev[name],
             value,
             error,
+            touched: true,
           },
         };
 
@@ -193,15 +212,15 @@ const Form = <T extends Record<string, any>>({
           return newState;
         });
       } else {
-        const values: any = {};
+        const values = Object.keys(formState).reduce(
+          (acc, key: keyof T) => {
+            acc[key] = formState[key].value;
+            return acc;
+          },
+          {} as { [K in keyof T]: string | boolean },
+        );
 
-        for (const name in formState) {
-          if (Object.prototype.hasOwnProperty.call(formState, name)) {
-            values[name] = formState[name].value;
-          }
-        }
-
-        onSubmit(values as T);
+        onSubmit(values);
 
         if (options.resetOnSubmit) {
           setFormState(
@@ -223,8 +242,26 @@ const Form = <T extends Record<string, any>>({
       formState,
       updateField,
     }),
-    [formState, updateField],
+    [formState, updateField, locale],
   );
+
+  useEffect(() => {
+    const newErrors = validateForm(formState);
+
+    setFormState((prev) => {
+      const newState = { ...prev };
+
+      for (const name in newErrors) {
+        if (Object.prototype.hasOwnProperty.call(newErrors, name)) {
+          if (!newState[name].touched) continue;
+
+          newState[name] = { ...newState[name], error: newErrors[name] };
+        }
+      }
+
+      return newState;
+    });
+  }, [locale]);
 
   return (
     <FormContext.Provider value={contextValue}>
@@ -247,6 +284,7 @@ const FormLabel = ({ htmlFor, required, error, children }) => (
     <AnimatePresence mode={"wait"}>
       {error && (
         <VerticallyAppearingText
+          dataTestId={`${htmlFor}-error-label`}
           text={error}
           className="text-sm text-red-600"
         />
@@ -275,6 +313,8 @@ const FormInput = ({
   ComponentProps<"input">,
   "name" | "type" | "className" | "placeholder"
 > & { label: string }) => {
+  const t = useTranslations();
+
   const { formState, updateField } = useFormContext();
   const { error, value, validation } = formState[name];
 
@@ -285,7 +325,7 @@ const FormInput = ({
   };
 
   const handleBlur = () => {
-    updateField(name, value, validateField(name, value, validation));
+    updateField(name, value, validateField(t, value, validation));
   };
 
   return (
@@ -316,6 +356,7 @@ const FormTextarea = ({
 }: Pick<ComponentProps<"textarea">, "name" | "className" | "placeholder"> & {
   label: string;
 }) => {
+  const t = useTranslations();
   const { formState, updateField } = useFormContext();
   const { error, value, validation } = formState[name];
 
@@ -324,7 +365,7 @@ const FormTextarea = ({
   };
 
   const handleBlur = () => {
-    updateField(name, value, validateField(name, value, validation));
+    updateField(name, value, validateField(t, value, validation));
   };
 
   return (

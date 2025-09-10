@@ -34,8 +34,6 @@ export const useFormState = <T extends unknown>() => {
     }
   }, [formState]);
 
-  console.log("is pending", isPending, formState);
-
   return {
     submit: startTransition,
     onError,

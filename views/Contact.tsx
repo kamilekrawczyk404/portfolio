@@ -42,7 +42,7 @@ const Contact = () => {
           <div
             className={`basis-1/2 flex flex-col ${layoutProperties.gap.medium}`}
           >
-            <ContactForm id={"contactForm"} className={"basis-1/2"} />
+            <ContactForm className={"basis-1/2"} />
           </div>
           <div
             className={`flex flex-col justify-between basis-1/2 h-full ${layoutProperties.gap.large}`}

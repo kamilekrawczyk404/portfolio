@@ -28,7 +28,7 @@ const fields: FormFieldsProperties<ContactFormFields> = {
       required: true,
       custom: {
         validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-        message: "Invalid email format.",
+        i18nValue: "HomePage.Contact.Form.Errors.Email",
       },
     },
   },
@@ -37,7 +37,7 @@ const fields: FormFieldsProperties<ContactFormFields> = {
     validation: {
       custom: {
         validate: (value: string) => /^(?:\+48|0048)?\d{9}$/.test(value),
-        message: "Invalid phone format.",
+        i18nValue: "HomePage.Contact.Form.Errors.PhoneNumber",
       },
     },
   },
@@ -56,9 +56,8 @@ const fields: FormFieldsProperties<ContactFormFields> = {
 };
 
 const ContactForm = ({
-  id,
   className = "",
-}: Pick<ComponentProps<"form">, "id" | "className">) => {
+}: Pick<ComponentProps<"form">, "className">) => {
   const t = useTranslations("HomePage.Contact.Form");
 
   const { submit, onSuccess, onError, isPending, isSuccess } = useFormState();
@@ -84,10 +83,9 @@ const ContactForm = ({
   return (
     <div className={`${className}`}>
       <Form
-        id={id}
+        id={"contact-form"}
         fields={fields}
         onSubmit={handleSubmit}
-        options={{ resetOnSubmit: false }}
         className={`grid md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.medium}`}
       >
         <Form.Input
