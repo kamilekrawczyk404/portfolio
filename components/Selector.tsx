@@ -11,15 +11,19 @@ type SelectorProps<T> = {
   items: T[];
   render: (item: T) => ReactNode;
   callback: (item: T) => void;
-  delay?: number;
-  whileInView?: boolean;
+  delay: number;
+  whileInView: boolean;
+  disabled?: boolean;
+  dataTestId?: string;
 };
 
 const Selector = <T extends unknown>({
   items,
   render,
   callback,
+  disabled,
   delay = 0,
+  dataTestId,
   whileInView = false,
 }: SelectorProps<T>): JSX.Element => {
   const { theme } = useSelector((state: RootState) => state.theme);
@@ -43,6 +47,7 @@ const Selector = <T extends unknown>({
       transition: {
         staggerChildren: 0.05,
         when: "beforeChildren",
+        delay,
       },
     },
     exit: {
@@ -91,16 +96,20 @@ const Selector = <T extends unknown>({
 
   return (
     <motion.div
+      data-testid={dataTestId}
       ref={selectorRef}
+      viewport={{ once: true }}
       initial={{ opacity: 0 }}
       whileInView={whileInView ? { opacity: 1 } : {}}
       animate={!whileInView ? { opacity: 1 } : {}}
-      transition={{ delay }}
+      transition={{ delay: 1.75 * delay }}
       onClick={() => {
+        if (disabled) return;
+
         dispatch(changeSelectorState(!isOpen));
         setIsOpen(!isOpen);
       }}
-      className={`relative z-[10] flex items-center justify-between border-1 px-2 h-[1.75rem] min-w-[6rem] rounded-xl cursor-pointer ${theme.border}`}
+      className={`relative z-[10] flex items-center justify-between border-1 px-1 h-[1.75rem] min-w-[6rem] rounded-xl cursor-pointer ${theme.border}`}
     >
       <span className={"select-none"}>
         {items.length && render(items[selectedIndex])}
@@ -108,7 +117,7 @@ const Selector = <T extends unknown>({
       <motion.span
         initial={false}
         animate={{ rotate: isOpen ? "180deg" : "0deg" }}
-        className={"ml-2 mr-1 origin-center-center"}
+        className={"mr-2 ml-1 origin-center-center"}
       >
         <Icons.CaretDown className={"text-sm"} />
       </motion.span>
@@ -121,7 +130,7 @@ const Selector = <T extends unknown>({
             exit={"exit"}
             transition={animationsTypes.default}
             ref={dropdownRef}
-            className={`absolute border-1 left-0 top-[calc(100%+.5rem)] p-1 overflow-hidden rounded-xl ${theme.background} bg-gray-100`}
+            className={`absolute border-1 left-0 top-[calc(100%+.5rem)] p-2 overflow-hidden rounded-xl ${theme.background} bg-gray-100`}
           >
             <ul
               className={
@@ -133,7 +142,7 @@ const Selector = <T extends unknown>({
                   variants={dropdownItemVariants}
                   transition={animationsTypes.default}
                   className={
-                    "px-2 h-[1.75rem] flex items-center bg-inherit hover:bg-purple/10 rounded-lg w-full text-nowrap"
+                    " h-[1.75rem] flex items-center bg-inherit hover:bg-purple/25 rounded-lg w-fit text-nowrap transition-colors"
                   }
                   key={index}
                   onClick={() => setSelectedIndex(index)}

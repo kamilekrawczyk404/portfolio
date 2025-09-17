@@ -2,7 +2,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import Categories from "@/components/Categories";
 import Selector from "@/components/Selector";
-import ProjectPreview from "@/components/project/ProjectPreview";
 import { projectsList } from "@/projectsList";
 import useCachedGithubRepos from "@/hooks/useCachedGithubRepos";
 import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
@@ -14,7 +13,14 @@ import SectionTitle from "@/components/containers/SectionTitle";
 import PageContainer from "@/components/containers/PageContainer";
 import { animationProperties } from "@/animations";
 import AppearingContainer from "@/components/containers/AppearingContainer";
-import * as url from "node:url";
+import Button from "@/components/buttons/Button";
+import { AnimatePresence } from "framer-motion";
+import {
+  FormattedProject,
+  GithubRepo,
+  ProjectDescription,
+} from "@/types/types";
+import ProjectsList from "@/components/project/ProjectsList";
 
 type SortingType = {
   type: "CreatedDesc" | "CreatedAsc" | "UpdatedDesc" | "UpdatedAsc";
@@ -27,33 +33,9 @@ const sortingTypes: SortingType[] = [
   { type: "UpdatedAsc" },
 ];
 
-type Technologies = {
-  title: string;
-  values: string[];
-};
-
 export type ProjectPhoto = {
   src: string;
   alt: string;
-};
-
-type ProjectDescription = {
-  githubRepoName: string;
-  keyFeaturesTitles: string[];
-  technologies: Technologies[];
-  link?: string;
-};
-
-export type ProjectLanguage = { [k in string]: number };
-
-type Repository = {
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  defaultBranch: string;
-  languages: ProjectLanguage;
-  visibility: "public" | "private";
-  url: string;
 };
 
 export type View = {
@@ -61,17 +43,11 @@ export type View = {
   photos?: ProjectPhoto[];
 };
 
-export type FormattedProject = ProjectDescription & {
-  thumbnail: string;
-  views: View[];
-  repository: Repository;
-};
-
 // Join all necessary information about project (its photos, repository information, etc.)
 const getFormattedProject = (
   projectDescription: ProjectDescription,
   projectPhotos: ProjectPhoto[],
-  repositories: Repository[],
+  repositories: GithubRepo[],
 ): FormattedProject => {
   const repository = repositories.filter(
     (r) => r.name === projectDescription.githubRepoName,
@@ -98,11 +74,10 @@ type ProjectProps = {
 const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
   const t = useTranslations("HomePage.ProjectsSection");
 
-  const { cached, error, isLoading, setForceRefresh } =
-    useCachedGithubRepos(apiKey);
+  const { cached, error, isLoading, refresh } = useCachedGithubRepos(apiKey);
 
-  const projects = useMemo(() => {
-    if (cached && cached.repositories) {
+  const projects = useMemo<FormattedProject[]>(() => {
+    if (cached && cached.repositories.length > 0) {
       return projectsList.map((p) =>
         getFormattedProject(
           p,
@@ -118,6 +93,7 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
   const [selectedSortingType, setSelectedSortingType] = useState<
     SortingType["type"]
   >(sortingTypes[1].type);
+
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]); // Renamed for clarity
 
   // Function to filter projects based on selected languages
@@ -173,16 +149,17 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
     },
     [],
   );
-
   // Memoized list of filtered and sorted projects
-  const filteredAndSortedProjects = useMemo(() => {
+  const filteredAndSortedProjects = useMemo<FormattedProject[]>(() => {
+    if (!projects.length) return;
+
     let currentProjects = projects;
 
     currentProjects = filterProjects(currentProjects, selectedFilters);
     currentProjects = sortProjects(currentProjects, selectedSortingType);
 
     return currentProjects;
-  }, [selectedFilters, selectedSortingType, filterProjects, sortProjects]);
+  }, [selectedFilters, selectedSortingType, projects]);
 
   const handleFilterChange = useCallback((updatedFilters: string[]) => {
     setSelectedFilters(updatedFilters);
@@ -195,76 +172,95 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
   return (
     <PageContainer section id={"projects"}>
       <SectionTitle title={t("Title")}>
-        <div className={"flex flex-col gap-2"}>
-          <GroupSection
-            title={t("Filter.Title")}
-            delay={animationProperties.durations.long}
-          >
-            {!isLoading ? (
-              <Categories
-                whileInView
+        <div className={"flex justify-between items-end w-full"}>
+          <div className={"flex flex-col gap-2"}>
+            <AnimatePresence mode={"popLayout"}>
+              <GroupSection
+                title={t("Filter.Title")}
                 delay={animationProperties.durations.long}
-                categories={cached.projectsLanguages}
-                render={(item) => item}
-                callback={handleFilterChange}
-              />
-            ) : (
-              <VerticallyAppearingText
-                text={"Zaczekaj, trwa ładowanie filtrów..."}
-                className={"h-[1.5rem] text-gray-500"}
-              />
-            )}
-          </GroupSection>
-          <GroupSection
-            title={t("Selector.Title")}
-            className={"w-fit"}
-            delay={animationProperties.durations.long}
-          >
-            <Selector
-              whileInView
+              >
+                {!isLoading ? (
+                  <Categories
+                    whileInView={true}
+                    delay={animationProperties.durations.long}
+                    categories={cached.projectsLanguages}
+                    render={(item) => item}
+                    callback={handleFilterChange}
+                  />
+                ) : (
+                  <VerticallyAppearingText
+                    text={t("Filter.Loading")}
+                    className={"h-[1.5rem] text-gray-500"}
+                  />
+                )}
+              </GroupSection>
+            </AnimatePresence>
+            <GroupSection
+              title={t("Sorting.Title")}
+              className={"w-fit"}
               delay={animationProperties.durations.long}
-              items={sortingTypes}
-              render={(item) => {
-                if (["CreatedDesc", "UpdatedDesc"].includes(item.type)) {
-                  return (
-                    <span>
-                      {t(`Selector.Values.${item.type}`)}
-                      <Icons.Arrow className={"rotate-90 ml-2 text-sm"} />
-                    </span>
-                  );
-                } else {
-                  return (
-                    <span>
-                      {t(`Selector.Values.${item.type}`)}
-                      <Icons.Arrow className={"-rotate-90 ml-2 text-sm"} />
-                    </span>
-                  );
-                }
-              }}
-              callback={handleSortingChange}
-            />
-          </GroupSection>
+            >
+              <Selector
+                dataTestId={"projects-sorting-selector"}
+                disabled={isLoading}
+                whileInView={true}
+                delay={animationProperties.durations.long}
+                items={sortingTypes}
+                render={(item) => {
+                  if (["CreatedDesc", "UpdatedDesc"].includes(item.type)) {
+                    return (
+                      <span className={"inline-flex items-center gap-1 px-1"}>
+                        <Icons.Arrow className={"rotate-90 text-sm"} />
+                        {t(`Sorting.Values.${item.type}`)}
+                      </span>
+                    );
+                  } else {
+                    return (
+                      <span className={"inline-flex items-center gap-1 px-1"}>
+                        <Icons.Arrow className={"-rotate-90 text-sm"} />
+                        {t(`Sorting.Values.${item.type}`)}
+                      </span>
+                    );
+                  }
+                }}
+                callback={handleSortingChange}
+              />
+            </GroupSection>
+          </div>
+
+          <Button
+            datatest-id={"refresh-projects-button"}
+            navigation
+            className={"inline-flex gap-1 items-center"}
+            onClick={async () => {
+              refresh();
+            }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              delay: animationProperties.durations.long,
+            }}
+          >
+            <Icons.Refresh />
+            <span className={"text-nowrap"}>{t("RefreshProjectsButton")}</span>
+          </Button>
         </div>
       </SectionTitle>
       <AppearingContainer
-        className={`relative grid md:grid-cols-2 grid-cols-1 basis-full relative ${layoutProperties.gap.horizontal.large}`}
+        className={`relative basis-full relative ${layoutProperties.gap.horizontal.large}`}
       >
-        {filteredAndSortedProjects?.length > 0 ? (
-          filteredAndSortedProjects.map((project, index) => (
-            <ProjectPreview
-              key={project.githubRepoName || index}
-              project={project}
-            />
-          ))
+        {isLoading ? (
+          <VerticallyAppearingText
+            className={"col-span-2 text-center text-gray-500"}
+            text={t("Loading")}
+          />
+        ) : filteredAndSortedProjects?.length > 0 ? (
+          <ProjectsList projects={filteredAndSortedProjects} />
         ) : projects.length > 0 && selectedFilters.length > 0 ? (
           <VerticallyAppearingText
             className={`col-span-2 text-center text-gray-500`}
             text={"No projects match the selected filters."}
-          />
-        ) : isLoading ? (
-          <VerticallyAppearingText
-            className={"col-span-2 text-center text-gray-500"}
-            text={"Loading projects..."}
           />
         ) : (
           <VerticallyAppearingText

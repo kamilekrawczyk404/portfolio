@@ -14,7 +14,8 @@ import { Icons } from "@/components/Icons";
 import { DateTimeFormatOptions, useTranslations } from "next-intl";
 import GroupSection from "@/components/containers/GroupSection";
 import { RootState } from "@/redux/store";
-import { FormattedProject, View } from "@/views/Projects";
+import { FormattedProject } from "@/types/types";
+import { View } from "@/views/Projects";
 
 const formatDateToDayMonthYear = (dateInput: Date | string): string => {
   let date: Date;
@@ -203,7 +204,12 @@ const Project = ({
   }, []);
 
   return (
-    <div className={"relative w-full h-full flex flex-col"}>
+    <div
+      style={{
+        cursor: shouldBeShown ? "default" : "none",
+      }}
+      className={"relative w-full h-full flex flex-col"}
+    >
       {/*top bar - header*/}
       <motion.div
         initial={{ opacity: 0 }}

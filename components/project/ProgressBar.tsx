@@ -100,7 +100,7 @@ const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
           }}
         ></motion.div>
         <div
-          className={`absolute left-0 top-0 w-full h-full z-0 ${theme.background} brightness-75`}
+          className={`absolute left-0 top-0 w-full h-full z-0  brightness-100 ${theme.backgroundSecondary}`}
         />
       </div>
     </div>

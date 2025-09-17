@@ -1,76 +1,60 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import MouseAttachedProjectPreview from "@/components/project/MouseAttachedProjectPreview";
 import Project from "@/components/project/Project";
-import useMousePosition from "@/hooks/useMousePosition";
-import { setCanPreviewBeVisible } from "@/redux/reducers/projectPreviewSlice";
+import {
+  setCanPreviewBeVisible,
+  setIsAttachedPreviewContainerVisible,
+} from "@/redux/reducers/projectPreviewSlice";
 import LanguageUsageStats from "@/components/project/LanguageUsageStats";
 import { layoutProperties } from "@/layout";
 import { useTranslations } from "next-intl";
 import Backdrop from "@/components/containers/Backdrop";
 import { RootState } from "@/redux/store";
+import useAttachedObjectToCursor from "@/hooks/useAttachedObjectToCursor";
+import { FormattedProject } from "@/types/types";
 
-const ProjectPreview = ({ project }) => {
+const MARGIN = 50;
+
+type ProjectPreviewProps = {
+  project: FormattedProject;
+  dataTestId?: string;
+};
+
+const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
   const t = useTranslations("HomePage.ProjectsSection.Projects");
 
-  const { isSelectorOpen } = useSelector((state: RootState) => state.selector);
   const { theme } = useSelector((state: RootState) => state.theme);
+  const { isSelectorOpen } = useSelector((state: RootState) => state.selector);
   const { canPreviewBeVisible } = useSelector(
     (state: RootState) => state.projectPreview,
   );
 
   const dispatch = useDispatch();
 
-  const mousePosition = useMousePosition();
-
   const containerRef = useRef(null);
   const previewRef = useRef(null);
-
-  const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const getLeftOffset = () =>
-    mousePosition.x -
-    (containerRef?.current?.getBoundingClientRect()?.left || 0);
-
-  const getTopOffset = () =>
-    mousePosition.y -
-    (containerRef?.current?.getBoundingClientRect()?.top || 0);
-
-  useEffect(() => {
-    const { top, left, width, height } =
-      containerRef.current.getBoundingClientRect();
-
-    if (
-      canPreviewBeVisible &&
-      !isSelectorOpen &&
-      !isExpanded &&
-      mousePosition.x >= left &&
-      mousePosition.x <= left + width &&
-      mousePosition.y >= top &&
-      mousePosition.y <= top + height
-    ) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  }, [
-    mousePosition,
-    containerRef,
-    previewRef,
-    isExpanded,
-    isSelectorOpen,
-    canPreviewBeVisible,
-  ]);
+  const { isVisible, leftOffset, topOffset } = useAttachedObjectToCursor({
+    parent: containerRef,
+    target: previewRef,
+    options: {
+      renderWhen: canPreviewBeVisible && !isSelectorOpen && !isExpanded,
+      margin: MARGIN,
+    },
+    onEnter: () => dispatch(setIsAttachedPreviewContainerVisible(true)),
+    onLeave: () => dispatch(setIsAttachedPreviewContainerVisible(false)),
+  });
 
   return (
     <motion.div
+      data-testid={dataTestId}
       ref={containerRef}
-      layout
-      className={`relative border-t-1 h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border}`}
+      className={`relative border-t-1 h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border} cursor-none`}
     >
       <Backdrop isActive={isExpanded} blur />
 
@@ -79,7 +63,7 @@ const ProjectPreview = ({ project }) => {
           <motion.div
             layout
             ref={previewRef}
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.75 }}
             animate={{
               opacity: 1,
               scale: 1,
@@ -91,8 +75,8 @@ const ProjectPreview = ({ project }) => {
                   delay: 0.2,
                 },
               },
-              x: isExpanded ? null : getLeftOffset(),
-              y: isExpanded ? null : getTopOffset(),
+              x: isExpanded ? null : leftOffset,
+              y: isExpanded ? null : topOffset,
             }}
             style={{
               left: isExpanded ? "50%" : 0,
@@ -101,10 +85,11 @@ const ProjectPreview = ({ project }) => {
               height: isExpanded ? `calc(100dvh - 10%)` : "30vh",
               minHeight: "12rem",
               position: isExpanded ? "fixed" : "absolute",
+              cursor: isVisible ? "none" : "default",
             }}
             exit={{
               opacity: 0,
-              scale: 0.9,
+              scale: 0.75,
             }}
             className={`absolute !z-[1000] rounded-xl border-1 -translate-x-1/2 -translate-y-1/2 overflow-hidden sm:max-h-fit min-h-[30rem] max-h-[100vh] min-w-[20rem]`}
             transition={{
@@ -143,7 +128,7 @@ const ProjectPreview = ({ project }) => {
       >
         {t(`${project.githubRepoName}.Title`)}
       </h3>
-      <LanguageUsageStats languages={project.repository.languages || []} />
+      <LanguageUsageStats languages={project.repository.languages} />
     </motion.div>
   );
 };

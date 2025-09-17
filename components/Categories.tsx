@@ -1,6 +1,12 @@
 "use client";
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import AnimatedCheckbox from "@/components/AnimatedCheckbox";
 import { useSelector } from "react-redux";
 import {
@@ -35,11 +41,10 @@ const Categories = <T extends unknown>({
 }: CategoriesProps<T>) => {
   const { theme } = useSelector((state: RootState) => state.theme);
 
-  const [selectedIds, setSelectedIds] = useState(
-    [...categories].map((_, index) => index === defaultSelectedIndex),
-  );
-
+  const [selectedIds, setSelectedIds] = useState<boolean[]>([]);
   const [isRemoverVisible, setIsRemoverVisible] = useState(false);
+
+  const { parent, children } = variantsPresets.staggered({ delay });
 
   const onCategoryClicked = useCallback(
     (clickedIndex: number) => {
@@ -54,20 +59,26 @@ const Categories = <T extends unknown>({
         );
       }
     },
-    [selectedIds],
+    [singleSelection, selectedIds],
   );
 
-  const { parent, children } = variantsPresets.staggered({ delay });
+  useEffect(() => {
+    if (categories.length > 0) {
+      setSelectedIds(
+        [...categories].map((_, index) => index === defaultSelectedIndex),
+      );
+    } else {
+      setSelectedIds([]);
+    }
+  }, [categories, defaultSelectedIndex]);
 
   useEffect(() => {
     const selected = categories.filter((_, index) => selectedIds[index]);
 
-    // Return list of updated categories
     callback(selected);
 
-    // Handle remover visibility
     setIsRemoverVisible(selected.length > 1);
-  }, [selectedIds]);
+  }, [selectedIds, categories, callback]);
 
   return (
     <motion.div
@@ -91,7 +102,7 @@ const Categories = <T extends unknown>({
           }`}
           onClick={() => onCategoryClicked(index)}
         >
-          <AnimatePresence mode={"wait"}>
+          <AnimatePresence>
             {selectedIds[index] && (
               <motion.div
                 initial={{ width: 0, marginLeft: 0 }}

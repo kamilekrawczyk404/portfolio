@@ -51,17 +51,24 @@
     "ProjectsSection": {
       "Title": "Projects",
       "Filter": {
-        "Title": "Filter by languages"
+        "Title": "Filter by languages",
+        "Loading": "Wait, filters are being loaded..."
       },
-      "Selector": {
+      "Sorting": {
         "Title": "Sort by",
         "Values": {
-          "CreatedDesc":  "Creation date",
-          "CreatedAsc": "Creation date",
-          "UpdatedDesc":  "Modification date",
-          "UpdatedAsc":  "Modification date"
+          "CreatedDesc":  "Creation date (Newest)",
+          "CreatedAsc": "Creation date (Oldest)",
+          "UpdatedDesc":  "Modification date (Newest)",
+          "UpdatedAsc":  "Modification date (Oldest)"
         }
       },
+      "RefreshProjectsButton": "Refresh projects list",
+      "MouseAttachedContainers": {
+        "OnProject": "View",
+        "OnList": "Hover your mouse over the project"
+      },
+      "Loading": "Loading projects...",
       "Projects": {
         "and-wiert": {
           "Title": "Website for deep wells drilling company",

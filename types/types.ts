@@ -1,3 +1,25 @@
+import { View } from "@/views/Projects";
+
+export type Technologies = {
+  title: string;
+  values: string[];
+};
+
+export type ProjectLanguage = { [k in string]: number };
+
+export type ProjectDescription = {
+  githubRepoName: string;
+  keyFeaturesTitles: string[];
+  technologies: Technologies[];
+  link?: string;
+};
+
+export type FormattedProject = ProjectDescription & {
+  thumbnail: string;
+  views: View[];
+  repository: GithubRepo;
+};
+
 export type GithubRepo = {
   id: number;
   name: string;
@@ -6,7 +28,7 @@ export type GithubRepo = {
   visibility: boolean;
   defaultBranch: string;
   url: string;
-  languages: object[] | [] | null;
+  languages: ProjectLanguage;
 };
 
 import {

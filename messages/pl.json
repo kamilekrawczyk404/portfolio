@@ -51,17 +51,24 @@
     "ProjectsSection": {
       "Title": "Projekty",
       "Filter": {
-        "Title": "Filtruj wg języków"
+        "Title": "Filtruj według języków",
+        "Loading": "Zaczekaj, trwa pobieranie filtrów..."
       },
-      "Selector": {
-        "Title": "Sortuj wg",
+      "Sorting": {
+        "Title": "Sortuj według",
         "Values": {
-          "CreatedDesc":  "Daty utworzenia",
-          "CreatedAsc": "Daty utworzenia",
-          "UpdatedDesc":  "Daty modyfikacji",
-          "UpdatedAsc":  "Daty modyfikacji"
+          "CreatedDesc":  "Daty utworzenia (najnowsze)",
+          "CreatedAsc": "Daty utworzenia (najstarsze)",
+          "UpdatedDesc":  "Daty modyfikacji (najnowsze)",
+          "UpdatedAsc":  "Daty modyfikacji (najstarsze)"
         }
       },
+      "RefreshProjectsButton": "Odśwież listę projektów",
+      "MouseAttachedContainers": {
+        "OnProject": "Zobacz",
+        "OnList": "Najedź myszką nad wybrany projekt"
+      },
+      "Loading": "Ładowanie projektów...",
       "Projects": {
         "and-wiert": {
           "Title": "Strona internetowa dla firmy wiertniczej",
