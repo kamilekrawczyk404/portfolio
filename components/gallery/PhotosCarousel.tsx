@@ -37,7 +37,7 @@ const PhotosCarousel = <T extends ProjectPhoto>({
 }: PhotosCarouselProps<T>) => {
   const { theme } = useSelector((state: RootState) => state.theme);
 
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const scrollContainerRef = useRef<HTMLUListElement | null>(null);
   const itemRefs = useRef<HTMLDivElement[] | null[]>([]);
 
   useEffect(() => {
