@@ -4,33 +4,13 @@ import { BasicColorSet, colors } from "@/layout";
 
 export type ThemeTypes = "light" | "dark";
 
-type HoverEffects = {
-  background: string;
-  foreground: string;
-  border: string;
-};
-
 export type Theme = {
-  [property in ThemeTypes]: BasicColorSet & { hover: HoverEffects };
+  [property in ThemeTypes]: BasicColorSet;
 };
 
 const themes: Theme = {
-  light: {
-    ...colors.light,
-    hover: {
-      background: "hover:bg-neutral-900",
-      foreground: "hover:text-gray-100",
-      border: "hover:border-gray-100",
-    },
-  },
-  dark: {
-    ...colors.dark,
-    hover: {
-      background: "hover:bg-gray-100",
-      foreground: "hover:text-neutral-900",
-      border: "hover:border-neutral-900",
-    },
-  },
+  light: colors.light,
+  dark: colors.dark,
 };
 
 export interface ThemeState {

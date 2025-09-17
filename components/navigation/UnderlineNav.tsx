@@ -82,7 +82,12 @@ const UnderlineNav = <T extends { type: string }>({
 
   return (
     <LayoutGroup id={id}>
-      <div className={"relative w-full h-full flex flex-col"}>
+      <div
+        style={{
+          cursor: canRender ? "default" : "none",
+        }}
+        className={"relative w-full h-full flex flex-col"}
+      >
         <div
           className={`flex overflow-x-scroll h-fit border-b-1 gap-x-2 ${theme.border}`}
         >
@@ -93,7 +98,7 @@ const UnderlineNav = <T extends { type: string }>({
                   navigationItemsRefs.current[index] = el;
                 }
               }}
-              className={`relative px-2 py-1 flex items-center cursor-pointer`}
+              className={`relative px-2 py-1 flex items-center`}
               onClick={() => {
                 // Determine direction based on current and new active index
                 setCarouselDirection(index > activeIndex ? 1 : -1);
