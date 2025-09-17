@@ -61,7 +61,7 @@ const getGithubRepositories = async (
             defaultBranch: default_branch,
             visibility,
             url: html_url,
-            languages: [],
+            languages: {},
           };
 
           return repository;

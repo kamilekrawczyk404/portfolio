@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { colors, layoutProperties } from "@/layout";
 import { RootState } from "@/redux/store";
-import { ProjectLanguage } from "@/views/Projects";
+import { ProjectLanguage } from "@/types/types";
 
 const round = (number: number, floatingPoints: number = 2) => {
   if (floatingPoints <= 0) return number;

@@ -61,7 +61,7 @@ const AnimateSingleLetterText = ({
             </motion.span>
           ))}
         </span>
-        {wordIndex <= words.length - 1 && (
+        {words.length > 1 && wordIndex <= words.length - 1 && (
           <span className="inline-block w-[1em] h-fit" aria-hidden="true">
             &nbsp;
           </span>

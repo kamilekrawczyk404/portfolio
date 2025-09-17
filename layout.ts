@@ -54,12 +54,15 @@ export const layoutProperties: LayoutSystem = {
   },
 };
 
-export type BasicColorSet = {
+type ColorSet = {
   background: string;
+  backgroundSecondary?: string;
   foreground: string;
   border: string;
   outline: string;
 };
+
+export type BasicColorSet = ColorSet & { hover: ColorSet };
 
 export type ColorPalette = {
   purple: string;
@@ -86,15 +89,29 @@ export const colors: ColorPalette = {
     "C#": "#239120",
   },
   light: {
-    background: "bg-gray-100",
-    foreground: "text-neutral-900",
-    border: "border-neutral-900",
-    outline: "outline-neutral-900",
+    background: "bg-gray-200",
+    backgroundSecondary: "bg-gray-400",
+    foreground: "text-neutral-950",
+    border: "border-neutral-950",
+    outline: "outline-neutral-950",
+    hover: {
+      background: "hover:bg-neutral-950",
+      foreground: "hover:text-gray-300",
+      border: "hover:border-gray-300",
+      outline: "hover:outline-gray-300",
+    },
   },
   dark: {
-    background: "bg-neutral-900",
-    foreground: "text-gray-100",
-    border: "border-gray-100",
-    outline: "outline-gray-100",
+    background: "bg-black",
+    backgroundSecondary: "bg-neutral-800",
+    foreground: "text-gray-300",
+    border: "border-gray-700",
+    outline: "outline-gray-700",
+    hover: {
+      background: "hover:bg-gray-200",
+      foreground: "hover:text-neutral-950",
+      border: "hover:border-neutral-950",
+      outline: "hover:outline-neutral-950",
+    },
   },
 };

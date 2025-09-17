@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { animationsTypes, Direction, variantsPresets } from "@/animations";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";

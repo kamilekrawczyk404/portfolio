@@ -1,82 +1,87 @@
-import React, { FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAdd,
-  faAngleLeft,
-  faAngleRight,
-  faArrowRight,
-  faArrowUpRightFromSquare,
-  faCaretDown,
-  faCheck,
-  faClockRotateLeft,
+  faArrowsRotate,
   faClose,
-  faCodeBranch,
-  faEnvelope,
-  faGlobe,
-  faMoon,
-  faPhone,
+  faArrowRight,
+  faCaretDown,
+  faAngleRight,
+  faAngleLeft,
   faSun,
+  faMoon,
+  faArrowUpRightFromSquare,
+  faCodeBranch,
+  faGlobe,
+  faClockRotateLeft,
+  faAdd,
   faTrash,
+  faCheck,
+  faPhone,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
-type IconsType = {
-  [key: string]: FC<{ className?: string }>;
-};
+interface IconProps {
+  className?: string;
+}
 
-export const Icons: IconsType = {
-  Close: ({ className = "" }) => (
+export const Icons = {
+  Refresh: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faArrowsRotate} className={className} />
+  ),
+  Close: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faClose} className={className} />
   ),
-  Arrow: ({ className = "" }) => (
+  Arrow: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faArrowRight} className={className} />
   ),
-  CaretDown: ({ className = "" }) => (
+  CaretDown: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faCaretDown} className={className} />
   ),
-  AngleRight: ({ className = "" }) => (
+  AngleRight: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faAngleRight} className={className} />
   ),
-  AngleLeft: ({ className = "" }) => (
+  AngleLeft: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faAngleLeft} className={className} />
   ),
-  Sun: ({ className = "" }) => (
+  Sun: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faSun} className={className} />
   ),
-  Moon: ({ className = "" }) => (
+  Moon: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faMoon} className={className} />
   ),
-  Link: ({ className = "" }) => (
+  Link: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faArrowUpRightFromSquare} className={className} />
   ),
-  CodeBranch: ({ className = "" }) => (
+  CodeBranch: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faCodeBranch} className={className} />
   ),
-  GitHub: ({ className = "" }) => (
+  GitHub: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faGithub} className={className} />
   ),
-  Globe: ({ className = "" }) => (
+  Globe: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faGlobe} className={className} />
   ),
-  Update: ({ className = "" }) => (
+  Update: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faClockRotateLeft} className={className} />
   ),
-  Add: ({ className = "" }) => (
+  Add: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faAdd} className={className} />
   ),
-  Trash: ({ className = "" }) => (
+  Trash: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faTrash} className={className} />
   ),
-  Check: ({ className = "" }) => (
+  Check: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faCheck} className={className} />
   ),
-  Linkedin: ({ className = "" }) => (
+  Linkedin: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faLinkedin} className={className} />
   ),
-  Phone: ({ className = "" }) => (
+  Phone: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faPhone} className={className} />
   ),
-  Envelope: ({ className = "" }) => (
+  Envelope: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faEnvelope} className={className} />
   ),
-};
+} as const;
+
+export type IconsType = keyof typeof Icons;

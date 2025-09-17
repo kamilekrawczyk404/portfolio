@@ -1,5 +1,4 @@
-import { Variants, Transition, Variant } from "motion-dom";
-import { VariantLabels } from "framer-motion";
+import { Variants, Transition, stagger } from "motion-dom";
 
 export type Direction = "fromTop" | "fromBottom";
 
@@ -64,7 +63,7 @@ export const variantsPresets: VariantsPresets = {
       animate: {
         opacity: 1,
         transition: {
-          delayChildren: 0.05,
+          delayChildren: stagger(0.05),
           when: "beforeChildren",
           ...props,
         },

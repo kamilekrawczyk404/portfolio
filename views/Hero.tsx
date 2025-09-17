@@ -12,6 +12,7 @@ import { layoutProperties } from "@/layout";
 import TextCarousel from "@/components/text/TextCarousel";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import DarkVeil from "@/components/components/DarkVeil";
 
 const Hero = () => {
   const t = useTranslations("HomePage");
@@ -60,7 +61,9 @@ const Hero = () => {
         type={"container"}
         text={"Strategic thinker"}
         animationDirection={animationDirection}
-      />
+      >
+        <DarkVeil hueShift={350} speed={1} />
+      </Container>
 
       {/*section of loading animated text*/}
       <motion.div

@@ -63,13 +63,13 @@ export async function POST(req: NextRequest) {
       text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`,
     };
 
-    // await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
 
-    await new Promise((res) => {
-      setTimeout(() => {
-        res(null);
-      }, 1000);
-    });
+    // await new Promise((res) => {
+    //   setTimeout(() => {
+    //     res(null);
+    //   }, 1000);
+    // });
 
     return NextResponse.json(
       { status: 200, message: "Email sent successfully!" },

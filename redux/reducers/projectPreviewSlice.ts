@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ProjectPreview {
   canPreviewBeVisible: boolean;
+  isAttachedPreviewContainerVisible: boolean;
 }
 
 const initialState: ProjectPreview = {
   canPreviewBeVisible: true,
+  isAttachedPreviewContainerVisible: false,
 };
 
 const projectPreviewSlice = createSlice({
@@ -15,9 +17,16 @@ const projectPreviewSlice = createSlice({
     setCanPreviewBeVisible: (state, action: PayloadAction<boolean>) => {
       state.canPreviewBeVisible = action.payload;
     },
+    setIsAttachedPreviewContainerVisible: (
+      state,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.isAttachedPreviewContainerVisible = action.payload;
+    },
   },
 });
 
-export const { setCanPreviewBeVisible } = projectPreviewSlice.actions;
+export const { setCanPreviewBeVisible, setIsAttachedPreviewContainerVisible } =
+  projectPreviewSlice.actions;
 
 export default projectPreviewSlice.reducer;
