@@ -20,9 +20,11 @@ const ProjectsList = ({ projects }: ProjectListProps) => {
   const parentRef = useRef<HTMLDivElement | null>(null);
   const attachedToMouseContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const { isAttachedPreviewContainerVisible } = useSelector(
-    (state: RootState) => state.projectPreview,
-  );
+  const {
+    isAttachedPreviewContainerVisible,
+    canPreviewBeVisible,
+    isProjectVisible,
+  } = useSelector((state: RootState) => state.projectPreview);
   const { isSelectorOpen } = useSelector((state: RootState) => state.selector);
   const { theme } = useSelector((state: RootState) => state.theme);
 
@@ -30,13 +32,19 @@ const ProjectsList = ({ projects }: ProjectListProps) => {
     parent: parentRef,
     target: attachedToMouseContainerRef,
     options: {
-      renderWhen: !isSelectorOpen && !isAttachedPreviewContainerVisible,
+      renderWhen:
+        canPreviewBeVisible &&
+        !isSelectorOpen &&
+        !isAttachedPreviewContainerVisible,
     },
   });
 
   return (
     <>
-      <div ref={parentRef} className={"relative cursor-none"}>
+      <div
+        ref={parentRef}
+        className={`relative ${!isProjectVisible ? "cursor-none" : ""}`}
+      >
         <AnimatePresence>
           {isVisible && (
             <motion.div

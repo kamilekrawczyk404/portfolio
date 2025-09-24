@@ -8,6 +8,7 @@ import Project from "@/components/project/Project";
 import {
   setCanPreviewBeVisible,
   setIsAttachedPreviewContainerVisible,
+  setIsProjectVisible,
 } from "@/redux/reducers/projectPreviewSlice";
 import LanguageUsageStats from "@/components/project/LanguageUsageStats";
 import { layoutProperties } from "@/layout";
@@ -54,7 +55,7 @@ const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
     <motion.div
       data-testid={dataTestId}
       ref={containerRef}
-      className={`relative border-t-1 h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border} cursor-none`}
+      className={`relative border-t-1 h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border}`}
     >
       <Backdrop isActive={isExpanded} blur />
 
@@ -91,7 +92,7 @@ const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
               opacity: 0,
               scale: 0.75,
             }}
-            className={`absolute !z-[1000] rounded-xl border-1 -translate-x-1/2 -translate-y-1/2 overflow-hidden sm:max-h-fit min-h-[30rem] max-h-[100vh] min-w-[20rem]`}
+            className={`absolute !z-[1000] rounded-xl border-1 -translate-x-1/2 -translate-y-1/2 overflow-hidden sm:max-h-fit min-h-[30rem] max-h-[100vh] min-w-[20rem] ${theme.border}`}
             transition={{
               ...animationsTypes.default,
               duration: animationProperties.durations.long,
@@ -99,16 +100,19 @@ const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
           >
             {/*View that will appear after user click the preview*/}
             <Project
+              dataTestId={"expanded-project-preview"}
               project={project}
               shouldBeShown={isExpanded}
               onClose={() => {
                 setIsExpanded(false);
                 dispatch(setCanPreviewBeVisible(true));
+                dispatch(setIsProjectVisible(false));
               }}
             />
 
             {/*Preview that follows user mouse position*/}
             <MouseAttachedProjectPreview
+              dataTestId={"project-preview-button"}
               shouldBeShown={!isExpanded}
               project={project}
               onClick={(e) => {
@@ -116,6 +120,7 @@ const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
 
                 setIsExpanded(true);
                 dispatch(setCanPreviewBeVisible(false));
+                dispatch(setIsProjectVisible(true));
               }}
             />
           </motion.div>

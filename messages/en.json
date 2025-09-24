@@ -54,6 +54,10 @@
         "Title": "Filter by languages",
         "Loading": "Wait, filters are being loaded..."
       },
+      "Actions": {
+        "Title": "Actions",
+        "RefreshProjects": "Refresh projects list"
+      },
       "Sorting": {
         "Title": "Sort by",
         "Values": {

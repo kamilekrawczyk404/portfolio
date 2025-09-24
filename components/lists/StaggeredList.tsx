@@ -8,11 +8,13 @@ type StaggeredListProps<T> = {
   items: T[];
   render: (item: T, index?: number) => ReactNode;
   transition?: Transition;
+  dataTestId?: string;
 } & HTMLMotionProps<"ul">;
 
 const StaggeredList = <T extends unknown>({
   items,
   render,
+  dataTestId,
   transition = {},
   ...props
 }: StaggeredListProps<T>) => {
@@ -20,6 +22,7 @@ const StaggeredList = <T extends unknown>({
 
   return (
     <motion.ul
+      data-testid={dataTestId}
       {...props}
       variants={parent}
       initial={"initial"}

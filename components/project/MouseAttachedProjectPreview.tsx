@@ -10,12 +10,14 @@ import { FormattedProject } from "@/types/types";
 type MouseAttachedProjectPreviewProps = {
   project: FormattedProject;
   shouldBeShown?: boolean;
-  onClick: (e: MouseEvent<HTMLDivElement>) => void;
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  dataTestId?: string;
 };
 const MouseAttachedProjectPreview = ({
   project,
   shouldBeShown,
   onClick,
+  dataTestId,
 }: MouseAttachedProjectPreviewProps) => {
   const t = useTranslations("HomePage.ProjectsSection.MouseAttachedContainers");
   const { theme } = useSelector((state: RootState) => state.theme);
@@ -38,7 +40,8 @@ const MouseAttachedProjectPreview = ({
           duration: animationProperties.durations.long,
         }}
       />
-      <motion.div
+      <motion.button
+        data-testid={dataTestId}
         initial={{ opacity: 1, scale: 1 }}
         animate={{
           opacity: !shouldBeShown ? 0 : 1,
@@ -47,11 +50,11 @@ const MouseAttachedProjectPreview = ({
         transition={animationsTypes.default}
         className={`absolute border-1 select-none cursor-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center aspect-square w-[5rem] rounded-full bg-purple !z-[1000] ${
           theme.background
-        } ${theme.foreground}${!shouldBeShown ? "pointer-events-none" : ""}`}
+        } text-neutral-200 ${!shouldBeShown ? "pointer-events-none" : ""}`}
         onClick={(e) => onClick(e)}
       >
         {t("OnProject")}
-      </motion.div>
+      </motion.button>
     </>
   );
 };

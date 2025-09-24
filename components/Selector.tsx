@@ -130,7 +130,7 @@ const Selector = <T extends unknown>({
             exit={"exit"}
             transition={animationsTypes.default}
             ref={dropdownRef}
-            className={`absolute border-1 left-0 top-[calc(100%+.5rem)] p-2 overflow-hidden rounded-xl ${theme.background} bg-gray-100`}
+            className={`absolute border-1 left-0 top-[calc(100%+.5rem)] p-2 overflow-hidden rounded-xl ${theme.background}`}
           >
             <ul
               className={
@@ -141,9 +141,7 @@ const Selector = <T extends unknown>({
                 <motion.li
                   variants={dropdownItemVariants}
                   transition={animationsTypes.default}
-                  className={
-                    " h-[1.75rem] flex items-center bg-inherit hover:bg-purple/25 rounded-lg w-fit text-nowrap transition-colors"
-                  }
+                  className={`h-[1.75rem] flex items-center bg-inherit hover:text-purple border-1 border-transparent rounded-lg w-fit text-nowrap transition-colors text-xs`}
                   key={index}
                   onClick={() => setSelectedIndex(index)}
                 >

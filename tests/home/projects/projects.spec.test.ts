@@ -4,6 +4,8 @@ import { projectsList } from "@/projectsList";
 import { CachedProjectsData } from "@/hooks/useCachedGithubRepos";
 import { GithubRepo } from "@/types/types";
 import { Regex } from "lucide-react";
+import { Locator } from "playwright";
+import { sort } from "next/dist/build/webpack/loaders/css-loader/src/utils";
 
 test.describe("Projects", () => {
   type Translations = {
@@ -113,17 +115,69 @@ test.describe("Projects", () => {
     // Wait until the loading indicator disappears
     await waitUntilProjectsAreLoaded(page);
 
-    // Get the sort selector and change sorting to "Creation Date Descending"
+    // Get the sort selector and change sorting to "Creation Date (Newest)"
     const sortSelector = getSortSelector(page);
-    await sortSelector.click();
+    await selectSelectorItem(
+      sortSelector,
+      translations.sorting.creationDateDesc,
+    );
 
-    const selectorCreatedDescOption = sortSelector
-      .getByText(translations.sorting.creationDateDesc)
-      .first();
+    const sortByCreatedDesc = (a: GithubRepo, b: GithubRepo) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
 
-    await selectorCreatedDescOption.waitFor({ state: "visible" });
-    await selectorCreatedDescOption.click();
+    await checkProjectsOrder(sortSelector, sortByCreatedDesc, page);
+  });
 
+  test("should sort projects by creation date ascending", async ({ page }) => {
+    // Wait until the loading indicator disappears
+    await waitUntilProjectsAreLoaded(page);
+
+    // Get the sort selector and change sorting to "Creation Date (Oldest)"
+    const sortSelector = getSortSelector(page);
+    await selectSelectorItem(
+      sortSelector,
+      translations.sorting.creationDateAsc,
+    );
+
+    const sortByCreatedAsc = (a: GithubRepo, b: GithubRepo) =>
+      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+
+    await checkProjectsOrder(sortSelector, sortByCreatedAsc, page);
+  });
+
+  test("should sort projects by update date descending", async ({ page }) => {
+    // Wait until the loading indicator disappears
+    await waitUntilProjectsAreLoaded(page);
+
+    // Get the sort selector and change sorting to "Modification Date (Newest)"
+    const sortSelector = getSortSelector(page);
+    await selectSelectorItem(sortSelector, translations.sorting.updatedDesc);
+
+    const sortByUpdatedDesc = (a: GithubRepo, b: GithubRepo) =>
+      new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+
+    await checkProjectsOrder(sortSelector, sortByUpdatedDesc, page);
+  });
+
+  test("should sort projects by update date ascending", async ({ page }) => {
+    // Wait until the loading indicator disappears
+    await waitUntilProjectsAreLoaded(page);
+
+    // Get the sort selector and change sorting to "Modification Date (Oldest)"
+    const sortSelector = getSortSelector(page);
+    await selectSelectorItem(sortSelector, translations.sorting.updatedAsc);
+
+    const sortByUpdatedAsc = (a: GithubRepo, b: GithubRepo) =>
+      new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
+
+    await checkProjectsOrder(sortSelector, sortByUpdatedAsc, page);
+  });
+
+  const checkProjectsOrder = async (
+    sortSelector: Locator,
+    sortingAlgorithm: (a: GithubRepo, b: GithubRepo) => number,
+    page: Page,
+  ) => {
     const firstProject = page.getByTestId("project-preview").first();
 
     // Get cached projects to determine the expected first project
@@ -131,10 +185,7 @@ test.describe("Projects", () => {
     if (!cachedProjects) throw new Error("No cached projects found");
 
     // Sort cached projects by creation date descending
-    const expectedFirstProject = cachedProjects.sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    )[0];
+    const expectedFirstProject = cachedProjects.sort(sortingAlgorithm)[0];
 
     // Verify that the first displayed project matches the expected first project's title
     await expect(firstProject).toContainText(
@@ -145,20 +196,20 @@ test.describe("Projects", () => {
     await expect(sortSelector).toContainText(
       translations.sorting.creationDateDesc,
     );
-  });
+  };
 
-  const getCachedProjects = async (
-    page: Page,
-  ): Promise<GithubRepo[] | null> => {
-    const cachedData = await page.evaluate(() => {
-      return localStorage.getItem("githubReposCache");
-    });
+  const selectSelectorItem = async (
+    selector: Locator,
+    selectorItemText: string,
+  ) => {
+    await selector.click();
 
-    if (cachedData) {
-      const parsedCache = JSON.parse(cachedData);
-      return (parsedCache.data as CachedProjectsData).repositories;
-    }
-    return null;
+    const selectorCreatedDescOption = selector
+      .getByText(selectorItemText)
+      .first();
+
+    await selectorCreatedDescOption.waitFor({ state: "visible" });
+    await selectorCreatedDescOption.click();
   };
 
   const getLoadingIndicator = (page: Page) =>
@@ -175,3 +226,17 @@ test.describe("Projects", () => {
   const getSortSelector = (page: Page) =>
     page.getByTestId("projects-sorting-selector");
 });
+
+export const getCachedProjects = async (
+  page: Page,
+): Promise<GithubRepo[] | null> => {
+  const cachedData = await page.evaluate(() => {
+    return localStorage.getItem("githubReposCache");
+  });
+
+  if (cachedData) {
+    const parsedCache = JSON.parse(cachedData);
+    return (parsedCache.data as CachedProjectsData).repositories;
+  }
+  return null;
+};

@@ -1,8 +1,6 @@
 "use client";
 import React, { SetStateAction, useRef, useState } from "react";
 import Image from "next/image";
-import Button from "@/components/buttons/Button";
-import { Icons } from "@/components/Icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { animationProperties, animationsTypes } from "@/animations";
@@ -16,6 +14,7 @@ type MainPhotoProps<T> = {
   currentPhoto: T;
   onPhotoChange: React.Dispatch<SetStateAction<T>> | OnPhotoChange<T>;
   className?: string;
+  onPhotoHover?: (isHover: boolean) => any;
 };
 
 const MainPhoto = <T extends ProjectPhoto>({
@@ -23,6 +22,7 @@ const MainPhoto = <T extends ProjectPhoto>({
   photos,
   currentPhoto,
   onPhotoChange,
+  onPhotoHover,
 }: MainPhotoProps<T>) => {
   const { theme } = useSelector((state: RootState) => state.theme);
 
@@ -55,6 +55,7 @@ const MainPhoto = <T extends ProjectPhoto>({
       exit={{ opacity: 0 }}
       transition={{ ...animationsTypes.default }}
       className={`relative flex flex-col gap-4 overflow-hidden ${className}`}
+      data-testid={"gallery-main-photo"}
     >
       <AnimatePresence mode={"sync"}>
         <div
@@ -73,9 +74,20 @@ const MainPhoto = <T extends ProjectPhoto>({
             onDragEnd={() => {
               selectPhoto(draggingDirection === "left" ? -1 : 1);
               setDraggingDirection(null);
+              onPhotoHover(true);
             }}
             onDrag={(e: MouseEvent) => {
               setDraggingDirection(e.movementX > 0 ? "left" : "right");
+            }}
+            onHoverStart={() => {
+              if (onPhotoHover) {
+                onPhotoHover(true);
+              }
+            }}
+            onHoverEnd={() => {
+              if (onPhotoHover) {
+                onPhotoHover(false);
+              }
             }}
             exit={{ opacity: 0 }}
             animate={{ opacity: 1 }}

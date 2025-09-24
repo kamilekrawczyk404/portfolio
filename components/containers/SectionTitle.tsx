@@ -2,8 +2,6 @@
 import React, { ReactNode } from "react";
 import { layoutProperties } from "@/layout";
 import { useSelector } from "react-redux";
-import VerticallyAppearingText from "@/components/text/VerticallyAppearingText";
-import { animationProperties } from "@/animations";
 import AnimatedSingleLetterText from "@/components/text/AnimatedSingleLetterText";
 import { RootState } from "@/redux/store";
 
@@ -24,7 +22,7 @@ const SectionTitle = ({
 
   return (
     <div
-      className={`relative flex lg:flex-row flex-col lg:items-end ${layoutProperties.gap.medium} ${theme.foreground} ${className}`}
+      className={`relative flex flex-col gap-y-2 ${theme.foreground} ${className}`}
     >
       <h2 data-testid={title}>
         <AnimatedSingleLetterText

@@ -54,6 +54,10 @@
         "Title": "Filtruj według języków",
         "Loading": "Zaczekaj, trwa pobieranie filtrów..."
       },
+      "Actions": {
+        "Title": "Akcje",
+        "RefreshProjects": "Odśwież listę projektów"
+      },
       "Sorting": {
         "Title": "Sortuj według",
         "Values": {

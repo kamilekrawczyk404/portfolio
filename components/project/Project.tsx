@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useCallback } from "react";
+import React, { ComponentProps, ReactNode, useCallback } from "react";
 import { motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import CloseButton from "@/components/buttons/CloseButton";
@@ -55,12 +55,14 @@ type ProjectProps = {
   project: FormattedProject;
   shouldBeShown?: boolean;
   onClose?: () => void;
+  dataTestId?: string;
 };
 
 const Project = ({
   project,
   shouldBeShown,
   onClose,
+  dataTestId,
 }: ProjectProps): ReactNode => {
   const t = useTranslations("HomePage.ProjectsSection");
 
@@ -74,8 +76,8 @@ const Project = ({
     switch (view.type) {
       case "gallery":
         return (
-          <ChildContainer className={"h-full"}>
-            <Gallery photos={view.photos} />
+          <ChildContainer className={"h-full"} dataTestId={"gallery-view"}>
+            <Gallery photos={view.photos} pauseOnHover={true} />
           </ChildContainer>
         );
 
@@ -121,6 +123,7 @@ const Project = ({
 
         return (
           <ChildContainer
+            dataTestId={"project-description-view"}
             className={`grid md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.large}`}
           >
             {sections.map((section) => (
@@ -173,7 +176,10 @@ const Project = ({
         const featureKeys = project.keyFeaturesTitles;
 
         return (
-          <ChildContainer className={"flex flex-col gap-4"}>
+          <ChildContainer
+            className={"flex flex-col gap-4"}
+            dataTestId={"key-features-view"}
+          >
             <GroupSection
               title={t(`NavigationViewsHeaders.${view.type}`)}
               headerSize={layoutProperties.text.medium}
@@ -209,6 +215,7 @@ const Project = ({
         cursor: shouldBeShown ? "default" : "none",
       }}
       className={"relative w-full h-full flex flex-col"}
+      data-testid={dataTestId}
     >
       {/*top bar - header*/}
       <motion.div
@@ -224,7 +231,7 @@ const Project = ({
         <h3 className={`${theme.foreground} ${layoutProperties.text.medium}`}>
           {t(`Projects.${project.githubRepoName}.Title`)}
         </h3>
-        <CloseButton onClick={onClose} />
+        <CloseButton dataTestId={"close-button"} onClick={onClose} />
       </motion.div>
 
       {/*bottom section - navigation*/}
@@ -241,9 +248,9 @@ const Project = ({
         <UnderlineNav
           items={project.views}
           renderNavigationHeader={(header) => (
-            <span className={"inline-flex px-2 h-[1.75rem] items-center"}>
+            <button className={"inline-flex px-2 h-[1.75rem] items-center"}>
               {t(`NavigationViewsHeaders.${header}`)}
-            </span>
+            </button>
           )}
           renderView={renderView}
           id={"projectAspectsNavigation"}
@@ -256,8 +263,21 @@ const Project = ({
 
 export default Project;
 
-const ChildContainer = ({ className = "", children }) => (
-  <div className={`p-4 w-full relative overflow-y-scroll ${className}`}>
+type ChildContainerProps = ComponentProps<"div"> & {
+  dataTestId?: string;
+};
+
+const ChildContainer = ({
+  className = "",
+  dataTestId,
+  children,
+  ...props
+}: ChildContainerProps) => (
+  <div
+    data-testid={dataTestId}
+    className={`p-4 w-full relative overflow-y-scroll ${className}`}
+    {...props}
+  >
     {children}
   </div>
 );

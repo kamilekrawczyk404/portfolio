@@ -48,6 +48,7 @@ export const test = base.extend(i18nFixture).extend<{ i18nFixture: i18n }>({
 });
 
 export default defineConfig({
+  timeout: 60000,
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,

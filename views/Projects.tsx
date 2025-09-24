@@ -209,14 +209,22 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
                 render={(item) => {
                   if (["CreatedDesc", "UpdatedDesc"].includes(item.type)) {
                     return (
-                      <span className={"inline-flex items-center gap-1 px-1"}>
+                      <span
+                        className={
+                          "inline-flex items-center gap-1 px-1 text-sm "
+                        }
+                      >
                         <Icons.Arrow className={"rotate-90 text-sm"} />
                         {t(`Sorting.Values.${item.type}`)}
                       </span>
                     );
                   } else {
                     return (
-                      <span className={"inline-flex items-center gap-1 px-1"}>
+                      <span
+                        className={
+                          "inline-flex items-center gap-1 px-1 text-sm"
+                        }
+                      >
                         <Icons.Arrow className={"-rotate-90 text-sm"} />
                         {t(`Sorting.Values.${item.type}`)}
                       </span>
@@ -226,25 +234,32 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
                 callback={handleSortingChange}
               />
             </GroupSection>
+            <GroupSection
+              title={t("Actions.Title")}
+              className={"w-fit"}
+              delay={animationProperties.durations.long}
+            >
+              <Button
+                datatest-id={"refresh-projects-button"}
+                navigation
+                className={"inline-flex gap-1 items-center"}
+                onClick={async () => {
+                  refresh();
+                }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  delay: animationProperties.durations.long,
+                }}
+              >
+                <Icons.Refresh />
+                <span className={"text-nowrap"}>
+                  {t("RefreshProjectsButton")}
+                </span>
+              </Button>
+            </GroupSection>
           </div>
-
-          <Button
-            datatest-id={"refresh-projects-button"}
-            navigation
-            className={"inline-flex gap-1 items-center"}
-            onClick={async () => {
-              refresh();
-            }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{
-              delay: animationProperties.durations.long,
-            }}
-          >
-            <Icons.Refresh />
-            <span className={"text-nowrap"}>{t("RefreshProjectsButton")}</span>
-          </Button>
         </div>
       </SectionTitle>
       <AppearingContainer
