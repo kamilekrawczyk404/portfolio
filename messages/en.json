@@ -203,6 +203,9 @@
             "title_MathematicalExpressionHandling": "Mathematical Expression Handling",
             "desc_MathematicalExpressionHandling": "Ability to correctly interpret and calculate complex mathematical expressions, considering the order of operations."
           }
+        },
+        "Tags": {
+          "More": "more"
         }
       },
       "NavigationViewsHeaders": {

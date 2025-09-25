@@ -62,7 +62,7 @@ const Hero = () => {
         text={"Strategic thinker"}
         animationDirection={animationDirection}
       >
-        <DarkVeil hueShift={350} speed={1} />
+        {/*<DarkVeil hueShift={350} speed={1} />*/}
       </Container>
 
       {/*section of loading animated text*/}
@@ -81,7 +81,7 @@ const Hero = () => {
           text={t("Hero.LoadingHeaders.Loading")}
           className={`${layoutProperties.text.large} ${opposite.foreground} select-none`}
         />
-        <div className={"mr-4"}>
+        <div className={"mr-8"}>
           <AnimatedSingleLetterText
             text={t("Hero.LoadingHeaders.Rest")}
             className={`${layoutProperties.text.large} ${opposite.foreground} select-none`}
@@ -104,11 +104,13 @@ const Hero = () => {
               <div
                 className={"relative flex items-center h-fit flex-wrap w-full"}
               >
-                <AnimatedSingleLetterText
-                  text={t("Hero.Header.Before")}
-                  className={`${layoutProperties.text.large}`}
-                  shouldRender={shouldRenderText}
-                />
+                <div className={"mr-2"}>
+                  <AnimatedSingleLetterText
+                    text={t("Hero.Header.Before")}
+                    className={`${layoutProperties.text.large}`}
+                    shouldRender={shouldRenderText}
+                  />
+                </div>
                 <TextCarousel
                   key={"carousel"}
                   className={`${layoutProperties.text.large}`}
@@ -120,7 +122,7 @@ const Hero = () => {
               <AnimatedSingleLetterText
                 text={t("Hero.Header.After")}
                 className={`${layoutProperties.text.large}`}
-                animationDelay={0.2}
+                animationDelay={0.3}
                 shouldRender={shouldRenderText}
               />
             </h1>

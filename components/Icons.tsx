@@ -17,6 +17,7 @@ import {
   faCheck,
   faPhone,
   faEnvelope,
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
@@ -25,6 +26,9 @@ interface IconProps {
 }
 
 export const Icons = {
+  Filter: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faFilter} className={className} />
+  ),
   Refresh: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faArrowsRotate} className={className} />
   ),

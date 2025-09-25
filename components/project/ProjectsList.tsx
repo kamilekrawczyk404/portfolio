@@ -76,10 +76,20 @@ const ProjectsList = ({ projects }: ProjectListProps) => {
           )}
         </AnimatePresence>
         <StaggeredList
-          className={`grid md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.horizontal.large}`}
+          className={`grid md:grid-cols-2 grid-cols-1 ${layoutProperties.gap.small}`}
+          animationType={"horizontalAppearing"}
           items={projects}
-          render={(project) => (
-            <ProjectPreview project={project} dataTestId={"project-preview"} />
+          transition={{ ...animationsTypes.default }}
+          animationOptions={{
+            childrenOffset: "2rem",
+            duration: 1,
+          }}
+          render={(project, index) => (
+            <ProjectPreview
+              project={project}
+              dataTestId={"project-preview"}
+              index={index}
+            />
           )}
         />
       </div>

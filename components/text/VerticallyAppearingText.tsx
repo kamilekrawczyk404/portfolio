@@ -11,7 +11,7 @@ type VerticallyAppearingTextProps = {
   direction?: Direction;
   whileInView?: boolean;
   className?: string;
-  delay?: number;
+  delay?: number | null;
   dataTestId?: string;
 };
 const VerticallyAppearingText = ({
@@ -27,9 +27,7 @@ const VerticallyAppearingText = ({
   const variants = variantsPresets.verticalAppearing(direction);
 
   return (
-    <div
-      className={`overflow-hidden h-fit w-fit ${theme.foreground} ${className}`}
-    >
+    <div className={`overflow-hidden w-fit ${className}`}>
       <motion.h3
         data-testid={dataTestId}
         variants={variants}
@@ -37,7 +35,7 @@ const VerticallyAppearingText = ({
         initial={"initial"}
         exit={"exit"}
         whileInView={
-          whileInView
+          whileInView && delay !== null
             ? {
                 ...variants.animate,
                 transition: {
@@ -49,7 +47,7 @@ const VerticallyAppearingText = ({
             : {}
         }
         animate={
-          !whileInView
+          !whileInView && delay !== null
             ? {
                 ...variants.animate,
                 transition: {

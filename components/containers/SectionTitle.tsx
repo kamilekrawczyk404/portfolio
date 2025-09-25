@@ -4,33 +4,56 @@ import { layoutProperties } from "@/layout";
 import { useSelector } from "react-redux";
 import AnimatedSingleLetterText from "@/components/text/AnimatedSingleLetterText";
 import { RootState } from "@/redux/store";
+import { animationProperties, variantsPresets } from "@/animations";
+import { motion } from "framer-motion";
 
 type SelectionTitleProps = {
   title: string;
+  description?: string;
   children?: ReactNode;
   className?: string;
   whileInView?: boolean;
+  onTitleAnimationComplete?: (animationCompleteTime: number) => any;
 };
 
 const SectionTitle = ({
   title,
   children,
+  description,
   className = "",
   whileInView = true,
+  onTitleAnimationComplete,
 }: SelectionTitleProps): ReactNode => {
   const { theme } = useSelector((state: RootState) => state.theme);
+  const variants = variantsPresets.appearing({
+    delay: animationProperties.durations.medium,
+  });
 
   return (
-    <div
-      className={`relative flex flex-col gap-y-2 ${theme.foreground} ${className}`}
-    >
-      <h2 data-testid={title}>
-        <AnimatedSingleLetterText
-          whileInView={whileInView}
-          text={title}
-          className={`${layoutProperties.text.large}`}
-        />
-      </h2>
+    <div className={`relative flex flex-col ${theme.foreground} ${className}`}>
+      <div
+        className={`flex flex-col items-center lg:mb-16 mb-8 ${layoutProperties.gap.small}`}
+      >
+        <h2 data-testid={title}>
+          <AnimatedSingleLetterText
+            whileInView={whileInView}
+            text={title}
+            className={`${layoutProperties.text.large} font-light`}
+            onAnimationComplete={onTitleAnimationComplete}
+          />
+        </h2>
+        {description && (
+          <motion.p
+            viewport={{ once: true }}
+            whileInView={variants.animate}
+            initial={variants.initial}
+            exit={variants.exit}
+            className={`${layoutProperties.text.medium} text-neutral-500`}
+          >
+            {description}
+          </motion.p>
+        )}
+      </div>
       {children}
     </div>
   );

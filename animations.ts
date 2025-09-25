@@ -1,19 +1,44 @@
-import { Variants, Transition, stagger } from "motion-dom";
+import { Variants, Transition, stagger } from "framer-motion";
 
 export type Direction = "fromTop" | "fromBottom";
 
-export type VariantsPresets = {
-  staggered: (props?: Transition) => {
-    parent: Variants;
-    children: Variants;
-  };
-  verticalAppearing: (direction?: Direction) => {
-    [key: string]: {
-      y: number | string;
-      opacity: number;
-      transition?: Transition;
+export type ChildrenVariants =
+  | Variants
+  | {
+      left: Variants;
+      right: Variants;
     };
+
+export type StaggerVariants = {
+  parent: Variants;
+  children: Variants;
+};
+
+export type HorizontalAppearing = {
+  parent: Variants;
+  children: {
+    left: Variants;
+    right: Variants;
   };
+};
+
+export type VariantsPresets = {
+  staggered: ({ props }: { props?: Transition }) => StaggerVariants;
+  horizontalAppearing: ({
+    props,
+    offset,
+  }: {
+    props?: Transition;
+    offset?: number | string;
+  }) => HorizontalAppearing;
+  verticalAppearing: (direction?: Direction) => Variants;
+  appearing: ({
+    duration,
+    delay,
+  }: {
+    duration?: number;
+    delay?: number;
+  }) => Variants;
 };
 
 export type AnimationProperties = {
@@ -55,7 +80,67 @@ export const animationsTypes: AnimationType = {
 };
 
 export const variantsPresets: VariantsPresets = {
-  staggered: (props) => ({
+  horizontalAppearing: ({ props, offset = 10 }) => ({
+    parent: {
+      initial: {
+        opacity: 0,
+      },
+      animate: {
+        transition: {
+          delayChildren: 0.05,
+          when: "beforeChildren",
+          ...props,
+        },
+        opacity: 1,
+      },
+      exit: {
+        opacity: 0,
+      },
+    },
+    children: {
+      left: {
+        initial: {
+          x: "-" + offset,
+          opacity: 0,
+        },
+        animate: {
+          x: 0,
+          opacity: 1,
+          transition: {
+            opacity: {
+              delay: 0.1,
+              duration: props.duration * 0.75,
+            },
+          },
+        },
+        exit: {
+          x: "-" + offset,
+          opacity: 0,
+        },
+      },
+      right: {
+        initial: {
+          x: offset,
+          opacity: 0,
+        },
+        animate: {
+          x: 0,
+          opacity: 1,
+          transition: {
+            opacity: {
+              delay: 0.1,
+              duration: props.duration * 0.75,
+            },
+          },
+        },
+        exit: {
+          x: offset,
+          opacity: 0,
+        },
+      },
+    },
+  }),
+  staggered: ({ props }) => ({
     parent: {
       initial: {
         opacity: 0,
@@ -98,6 +183,18 @@ export const variantsPresets: VariantsPresets = {
       y: direction === "fromTop" ? "100%" : "-100%",
       opacity: 0,
       transition: { y: { delay: 0.075 } },
+    },
+  }),
+  appearing: ({ duration = 0.5, delay = 0 }) => ({
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: { duration, delay },
+    },
+    exit: {
+      opacity: 0,
     },
   }),
 };

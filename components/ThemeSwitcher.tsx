@@ -3,8 +3,8 @@ import React, { JSX } from "react";
 import { motion } from "framer-motion";
 import { Icons } from "@/components/Icons";
 import { useDispatch, useSelector } from "react-redux";
-import { changeTheme } from "@/redux/reducers/themeSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import { changeTheme } from "@/redux/reducers/themeSlice";
 
 type ThemeSwitcherProps = {
   className?: string;

@@ -1,5 +1,5 @@
 "use client";
-import React, { ComponentProps, ElementType, ReactNode } from "react";
+import React, { ComponentProps } from "react";
 import { layoutProperties } from "@/layout";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -22,7 +22,7 @@ const PageContainer = ({
 
   return (
     <div
-      className={`w-full relative ${
+      className={`relative w-full ${
         includeNavigationHeight
           ? "!mt-[4rem] lg:h-[calc(100vh-4rem)] !min-h-[calc(100vh-4rem)]"
           : `${theme.background}`
@@ -35,7 +35,7 @@ const PageContainer = ({
       } ${className}`}
       {...props}
     >
-      {children}
+      <div className={"lg:w-6xl mx-auto"}>{children}</div>
     </div>
   );
 };

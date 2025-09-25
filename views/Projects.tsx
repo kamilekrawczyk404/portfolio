@@ -93,7 +93,6 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
   const [selectedSortingType, setSelectedSortingType] = useState<
     SortingType["type"]
   >(sortingTypes[1].type);
-
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]); // Renamed for clarity
 
   // Function to filter projects based on selected languages
@@ -171,18 +170,28 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
 
   return (
     <PageContainer section id={"projects"}>
-      <SectionTitle title={t("Title")}>
+      <SectionTitle
+        title={t("Title")}
+        description={
+          "A selection of my recent work showcasing modern web development and user experience design."
+        }
+      >
         <div className={"flex justify-between items-end w-full"}>
-          <div className={"flex flex-col gap-2"}>
+          <div className={"flex flex-col gap-2 w-full"}>
             <AnimatePresence mode={"popLayout"}>
               <GroupSection
-                title={t("Filter.Title")}
-                delay={animationProperties.durations.long}
+                title={() => (
+                  <span className={"inline-flex items-center space-x-2"}>
+                    <Icons.Filter className={"text-xl"} />
+                    <span>{t("Filter.Title")}</span>
+                  </span>
+                )}
+                delay={animationProperties.durations.medium}
               >
                 {!isLoading ? (
                   <Categories
+                    delay={animationProperties.durations.medium}
                     whileInView={true}
-                    delay={animationProperties.durations.long}
                     categories={cached.projectsLanguages}
                     render={(item) => item}
                     callback={handleFilterChange}
@@ -190,80 +199,65 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
                 ) : (
                   <VerticallyAppearingText
                     text={t("Filter.Loading")}
-                    className={"h-[1.5rem] text-gray-500"}
+                    className={"min-h-7 text-neutral-500"}
                   />
                 )}
               </GroupSection>
             </AnimatePresence>
-            <GroupSection
-              title={t("Sorting.Title")}
-              className={"w-fit"}
-              delay={animationProperties.durations.long}
+            <div
+              className={`flex md:flex-row flex-col gap-2 w-full justify-between`}
             >
-              <Selector
-                dataTestId={"projects-sorting-selector"}
-                disabled={isLoading}
-                whileInView={true}
-                delay={animationProperties.durations.long}
-                items={sortingTypes}
-                render={(item) => {
-                  if (["CreatedDesc", "UpdatedDesc"].includes(item.type)) {
-                    return (
-                      <span
-                        className={
-                          "inline-flex items-center gap-1 px-1 text-sm "
-                        }
-                      >
-                        <Icons.Arrow className={"rotate-90 text-sm"} />
-                        {t(`Sorting.Values.${item.type}`)}
-                      </span>
-                    );
-                  } else {
-                    return (
-                      <span
-                        className={
-                          "inline-flex items-center gap-1 px-1 text-sm"
-                        }
-                      >
-                        <Icons.Arrow className={"-rotate-90 text-sm"} />
-                        {t(`Sorting.Values.${item.type}`)}
-                      </span>
-                    );
-                  }
-                }}
-                callback={handleSortingChange}
-              />
-            </GroupSection>
-            <GroupSection
-              title={t("Actions.Title")}
-              className={"w-fit"}
-              delay={animationProperties.durations.long}
-            >
-              <Button
-                datatest-id={"refresh-projects-button"}
-                navigation
-                className={"inline-flex gap-1 items-center"}
-                onClick={async () => {
-                  refresh();
-                }}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{
-                  delay: animationProperties.durations.long,
-                }}
+              <GroupSection
+                title={() => <span>{t("Sorting.Title")}</span>}
+                className={`flex-row items-center gap-2`}
+                delay={animationProperties.durations.medium}
               >
-                <Icons.Refresh />
-                <span className={"text-nowrap"}>
-                  {t("RefreshProjectsButton")}
-                </span>
-              </Button>
-            </GroupSection>
+                <Selector
+                  dataTestId={"projects-sorting-selector"}
+                  disabled={isLoading}
+                  whileInView={true}
+                  items={sortingTypes}
+                  render={(item) => (
+                    <span className={"inline-flex items-center gap-1 text-sm"}>
+                      {t(`Sorting.Values.${item.type}`)}
+                    </span>
+                  )}
+                  callback={handleSortingChange}
+                />
+              </GroupSection>
+              <GroupSection
+                title={() => <span>{t("Actions.Title")}</span>}
+                className={"w-fit flex-row items-center gap-2"}
+                delay={animationProperties.durations.long}
+              >
+                <Button
+                  main
+                  datatest-id={"refresh-projects-button"}
+                  className={
+                    "inline-flex gap-2 items-center p-2 rounded-lg text-sm"
+                  }
+                  onClick={async () => {
+                    refresh();
+                  }}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    delay: animationProperties.durations.long,
+                  }}
+                >
+                  <Icons.Refresh />
+                  <span className={"text-nowrap"}>
+                    {t("RefreshProjectsButton")}
+                  </span>
+                </Button>
+              </GroupSection>
+            </div>
           </div>
         </div>
       </SectionTitle>
       <AppearingContainer
-        className={`relative basis-full relative ${layoutProperties.gap.horizontal.large}`}
+        className={`relative mt-4 basis-full relative ${layoutProperties.gap.horizontal.large}`}
       >
         {isLoading ? (
           <VerticallyAppearingText

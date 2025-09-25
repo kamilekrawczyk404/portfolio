@@ -17,15 +17,23 @@ import Backdrop from "@/components/containers/Backdrop";
 import { RootState } from "@/redux/store";
 import useAttachedObjectToCursor from "@/hooks/useAttachedObjectToCursor";
 import { FormattedProject } from "@/types/types";
+import StaggeredList from "@/components/lists/StaggeredList";
+import projects from "@/views/Projects";
+import List from "@/components/lists/List";
 
 const MARGIN = 50;
 
 type ProjectPreviewProps = {
   project: FormattedProject;
   dataTestId?: string;
+  index: number;
 };
 
-const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
+const ProjectPreview = ({
+  project,
+  dataTestId,
+  index,
+}: ProjectPreviewProps) => {
   const t = useTranslations("HomePage.ProjectsSection.Projects");
 
   const { theme } = useSelector((state: RootState) => state.theme);
@@ -33,6 +41,10 @@ const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
   const { canPreviewBeVisible } = useSelector(
     (state: RootState) => state.projectPreview,
   );
+
+  const projectTags: string[] = project.technologies
+    .map((t) => t.values)
+    .flat();
 
   const dispatch = useDispatch();
 
@@ -55,7 +67,7 @@ const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
     <motion.div
       data-testid={dataTestId}
       ref={containerRef}
-      className={`relative border-t-1 h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border}`}
+      className={`relative border-1 rounded-md h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border}`}
     >
       <Backdrop isActive={isExpanded} blur />
 
@@ -133,7 +145,37 @@ const ProjectPreview = ({ project, dataTestId }: ProjectPreviewProps) => {
       >
         {t(`${project.githubRepoName}.Title`)}
       </h3>
-      <LanguageUsageStats languages={project.repository.languages} />
+      <div className={"space-y-2"}>
+        <LanguageUsageStats languages={project.repository.languages} />
+        <div
+          className={`w-full flex flex-wrap items-end gap-2 text-sm ${theme.border} ${theme.foreground}`}
+        >
+          <List
+            items={
+              projectTags.length - 4 > 0
+                ? ([
+                    ...projectTags.slice(0, 4),
+                    `${projectTags.length - 4} ${t("Tags.More")}...`,
+                  ] as string[])
+                : projectTags
+            }
+            render={(tag) => (
+              <span
+                className={`inline-block h-6 content-center px-2 rounded-xl border-1`}
+              >
+                {tag}
+              </span>
+            )}
+          />
+        </div>
+      </div>
+      <div
+        className={
+          "absolute inset-0 content-center text-center text-gray-500/15 text-[500%]"
+        }
+      >
+        #{index + 1}
+      </div>
     </motion.div>
   );
 };

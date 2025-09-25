@@ -11,7 +11,7 @@ type SelectorProps<T> = {
   items: T[];
   render: (item: T) => ReactNode;
   callback: (item: T) => void;
-  delay: number;
+  delay?: number;
   whileInView: boolean;
   disabled?: boolean;
   dataTestId?: string;
@@ -40,6 +40,7 @@ const Selector = <T extends unknown>({
     initial: {
       y: -10,
       opacity: 0,
+      scale: 0.975,
     },
     animate: {
       y: 0,
@@ -49,16 +50,18 @@ const Selector = <T extends unknown>({
         when: "beforeChildren",
         delay,
       },
+      scale: 1,
     },
     exit: {
       y: -10,
       opacity: 0,
       transition: {
         staggerChildren: 0.025,
-        when: "afterChildren",
+        when: "beforeChildren",
         staggerDirection: -1,
         duration: animationProperties.durations.short,
       },
+      scale: 0.975,
     },
   };
 
@@ -109,18 +112,14 @@ const Selector = <T extends unknown>({
         dispatch(changeSelectorState(!isOpen));
         setIsOpen(!isOpen);
       }}
-      className={`relative z-[10] flex items-center justify-between border-1 px-1 h-[1.75rem] min-w-[6rem] rounded-xl cursor-pointer ${theme.border}`}
+      className={`relative z-[10] flex items-center justify-between border-1 px-2 min-h-10 min-w-[6rem] rounded-lg cursor-pointer ${theme.border}`}
     >
-      <span className={"select-none"}>
+      <span className={`select-none flex-inline items-center`}>
         {items.length && render(items[selectedIndex])}
       </span>
-      <motion.span
-        initial={false}
-        animate={{ rotate: isOpen ? "180deg" : "0deg" }}
-        className={"mr-2 ml-1 origin-center-center"}
-      >
-        <Icons.CaretDown className={"text-sm"} />
-      </motion.span>
+      <span className={"mr-1 ml-2 origin-center-center"}>
+        <Icons.CaretDown className={"text-sm text-neutral-500"} />
+      </span>
       <AnimatePresence mode={"wait"}>
         {isOpen && (
           <motion.div
@@ -130,21 +129,24 @@ const Selector = <T extends unknown>({
             exit={"exit"}
             transition={animationsTypes.default}
             ref={dropdownRef}
-            className={`absolute border-1 left-0 top-[calc(100%+.5rem)] p-2 overflow-hidden rounded-xl ${theme.background}`}
+            className={`absolute border-1 left-0 min-w-full top-[calc(100%+.5rem)] overflow-hidden rounded-lg ${theme.background} ${theme.border}`}
           >
             <ul
               className={
-                "max-h-[10rem] overflow-y-scroll flex flex-col gap-y-2 bg-inherit"
+                "max-h-[10rem] overflow-y-scroll flex flex-col gap-y-2 bg-inherit p-1"
               }
             >
               {items.map((item, index) => (
                 <motion.li
                   variants={dropdownItemVariants}
                   transition={animationsTypes.default}
-                  className={`h-[1.75rem] flex items-center bg-inherit hover:text-purple border-1 border-transparent rounded-lg w-fit text-nowrap transition-colors text-xs`}
+                  className={`h-[1.75rem] px-2 py-1   flex items-center bg-inherit hover:brightness-95 border-1 border-transparent rounded-md w-fit text-nowrap transition-colors text-xs`}
                   key={index}
                   onClick={() => setSelectedIndex(index)}
                 >
+                  <div className={"w-4"}>
+                    {index === selectedIndex && <Icons.Check />}
+                  </div>
                   {render(item)}
                 </motion.li>
               ))}

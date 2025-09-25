@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { BasicColorSet, colors } from "@/layout";
 
 export type ThemeTypes = "light" | "dark";
@@ -38,6 +38,9 @@ const themeSlice = createSlice({
       state.theme = theme === "dark" ? themes.dark : themes.light;
       state.opposite = theme === "dark" ? themes.light : themes.dark;
       state.selected = theme;
+
+      // document.body.classList.add(theme);
+      // document.body.classList.remove(theme === "dark" ? "light" : "dark");
     },
   },
 });

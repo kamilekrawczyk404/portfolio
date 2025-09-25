@@ -39,7 +39,7 @@ const SocialLinks = () => {
   return (
     <GroupSection
       className={`basis-fit ${layoutProperties.gap.extraSmall}`}
-      title={t("Socials")}
+      title={() => <span>{t("Socials")}</span>}
       headerSize={layoutProperties.text.small}
     >
       <StaggeredList

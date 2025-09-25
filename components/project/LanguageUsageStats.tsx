@@ -23,21 +23,7 @@ const LanguageUsageStats = ({ languages }: LanguagesUsageStatusProps) => {
   const total = Object.values(languages).reduce((a, b) => a + b);
 
   return (
-    <div className={`flex flex-col gap-4 ${theme.foreground} `}>
-      <div
-        className={`md:w-2/3 w-full rounded-md overflow-hidden flex border-1 ${theme.border}`}
-      >
-        {Object.entries(languages).map(([key, value]) => (
-          <div
-            key={key}
-            className={"h-[1rem]"}
-            style={{
-              backgroundColor: colors.languages[key],
-              width: round(value / total, 4) * 100 + "%",
-            }}
-          />
-        ))}
-      </div>
+    <div className={`flex flex-col gap-4 ${theme.foreground}`}>
       <div className={"flex flex-wrap gap-2"}>
         {Object.entries(languages).map(([key, value]) => (
           <div className={"flex items-center gap-x-2"} key={key}>
@@ -45,9 +31,11 @@ const LanguageUsageStats = ({ languages }: LanguagesUsageStatusProps) => {
               className={`w-3 aspect-square rounded-full border-1 ${theme.border}`}
               style={{ backgroundColor: colors.languages[key] }}
             />
-            <span className={`${layoutProperties.text.extraSmall}`}>
+            <span
+              className={`${layoutProperties.text.extraSmall} font-[500] ${theme.foreground}`}
+            >
               {key}
-              <span className={"text-xs ml-1 text-gray-500"}>
+              <span className={`text-xs ml-1 text-neutral-500`}>
                 ({(round(value / total, 4) * 100).toFixed(2) + "%"})
               </span>
             </span>

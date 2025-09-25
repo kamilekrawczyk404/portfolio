@@ -20,7 +20,7 @@ const MouseAttachedProjectPreview = ({
   dataTestId,
 }: MouseAttachedProjectPreviewProps) => {
   const t = useTranslations("HomePage.ProjectsSection.MouseAttachedContainers");
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme, opposite } = useSelector((state: RootState) => state.theme);
 
   return (
     <>
@@ -29,7 +29,7 @@ const MouseAttachedProjectPreview = ({
           backgroundImage: `url(${project.thumbnail})`,
         }}
         className={
-          "absolute top-0 left-0 rounded-lg bg-no-repeat bg-contain w-full h-full pointer-events-none bg-center z-[100] cursor-none"
+          "absolute top-0 left-0 rounded-md bg-no-repeat bg-contain w-full h-full pointer-events-none bg-center z-[100] cursor-none"
         }
         initial={{ opacity: 1 }}
         animate={{ opacity: !shouldBeShown ? 0 : 1 }}
@@ -48,9 +48,9 @@ const MouseAttachedProjectPreview = ({
           scale: !shouldBeShown ? 0.75 : 1,
         }}
         transition={animationsTypes.default}
-        className={`absolute border-1 select-none cursor-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center aspect-square w-[5rem] rounded-full bg-purple !z-[1000] ${
-          theme.background
-        } text-neutral-200 ${!shouldBeShown ? "pointer-events-none" : ""}`}
+        className={`absolute border-1 select-none cursor-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center aspect-square w-[5rem] rounded-full !z-[1000] ${
+          opposite.background
+        } text-neutral-500 ${!shouldBeShown ? "pointer-events-none" : ""}`}
         onClick={(e) => onClick(e)}
       >
         {t("OnProject")}

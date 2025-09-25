@@ -13,9 +13,11 @@ type AnimateSingleLetterTextProps = {
   shouldRender?: boolean;
   whileInView?: boolean;
   onlyOnce?: boolean;
+  onAnimationComplete?: (animationCompleteTime: number) => void;
 };
 const AnimateSingleLetterText = ({
   text,
+  onAnimationComplete,
   duration = 0.5,
   animationDelay = 0,
   letterDelay = 0.05,
@@ -24,50 +26,55 @@ const AnimateSingleLetterText = ({
   shouldRender = true,
   whileInView = false,
   onlyOnce = true,
-}: AnimateSingleLetterTextProps): ReactNode[] => {
+}: AnimateSingleLetterTextProps): ReactNode => {
   const words = text.split(" ");
+  const letters = words
+    .map((word, index) =>
+      index !== words.length - 1 ? [...word.split(""), " "] : word.split(""),
+    )
+    .flat();
 
   return (
-    shouldRender &&
-    words.map((word, wordIndex) => (
-      <React.Fragment key={wordIndex}>
-        <span className={"w-fit overflow-hidden inline-flex py-[0.3rem]"}>
-          {word.split("").map((letter, letterIndex) => (
-            <motion.span
-              key={letterIndex}
-              viewport={onlyOnce ? { once: true } : {}}
-              initial={{
-                y: direction === "fromBottom" ? "100%" : "-100%",
-              }}
-              animate={
-                !whileInView
-                  ? {
-                      y: 0,
-                    }
-                  : {}
+    <div>
+      {shouldRender &&
+        letters.map((letter, index) => (
+          <motion.span
+            key={index}
+            viewport={onlyOnce ? { once: true } : {}}
+            initial={{
+              y: direction === "fromBottom" ? "25%" : "-25%",
+              opacity: 0,
+            }}
+            animate={
+              !whileInView
+                ? {
+                    y: 0,
+                    opacity: 1,
+                  }
+                : {}
+            }
+            whileInView={whileInView ? { y: 0, opacity: 1 } : {}}
+            transition={{
+              ...animationsTypes.default,
+              duration,
+              delay: animationDelay + index * letterDelay,
+              opacity: {
+                delay: animationDelay + index * letterDelay + letterDelay / 8,
+              },
+            }}
+            className={`inline-block single-letter ${className}`}
+            onAnimationComplete={() => {
+              if (index === letters.length - 1 && onAnimationComplete) {
+                onAnimationComplete(
+                  animationDelay + letterDelay * letters.length,
+                );
               }
-              whileInView={whileInView ? { y: 0 } : {}}
-              transition={{
-                ...animationsTypes.default,
-                duration,
-                delay:
-                  animationDelay +
-                  wordIndex * letterDelay +
-                  letterIndex * letterDelay,
-              }}
-              className={`md:leading-[2.7rem] leading-[2rem] inline-block single-letter ${className}`}
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </span>
-        {words.length > 1 && wordIndex <= words.length - 1 && (
-          <span className="inline-block w-[1em] h-fit" aria-hidden="true">
-            &nbsp;
-          </span>
-        )}
-      </React.Fragment>
-    ))
+            }}
+          >
+            {letter === " " ? "\u00A0" : letter}
+          </motion.span>
+        ))}
+    </div>
   );
 };
 

@@ -212,8 +212,7 @@ const Technologies = () => {
     <PageContainer section id={"technologies"}>
       <SectionTitle title={t("Technologies.Title")}>
         <GroupSection
-          title={t("Technologies.SelectorTitle")}
-          delay={animationProperties.durations.long}
+          title={() => <span>{t("Technologies.SelectorTitle")}</span>}
         >
           <Categories
             categories={technologies}

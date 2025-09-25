@@ -10,11 +10,11 @@ import { layoutProperties } from "@/layout";
 import { changeTheme, ThemeTypes } from "@/redux/reducers/themeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CloseButton from "@/components/buttons/CloseButton";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { getCookie, hasCookie, setCookie } from "cookies-next";
 import Backdrop from "@/components/containers/Backdrop";
 import { setCanPreviewBeVisible } from "@/redux/reducers/projectPreviewSlice";
 import { RootState } from "@/redux/store";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const Navigation = () => {
   const { theme } = useSelector((state: RootState) => state.theme);

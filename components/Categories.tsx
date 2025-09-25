@@ -44,7 +44,7 @@ const Categories = <T extends unknown>({
   const [selectedIds, setSelectedIds] = useState<boolean[]>([]);
   const [isRemoverVisible, setIsRemoverVisible] = useState(false);
 
-  const { parent, children } = variantsPresets.staggered({ delay });
+  const { parent, children } = variantsPresets.staggered({ props: { delay } });
 
   const onCategoryClicked = useCallback(
     (clickedIndex: number) => {
@@ -97,7 +97,7 @@ const Categories = <T extends unknown>({
           key={index}
           className={`flex items-center relative border-1 rounded-xl h-[1.75rem] cursor-pointer transition-colors overflow-hidden ${
             selectedIds[index]
-              ? "border-purple text-purple bg-purple/10"
+              ? "border-purple text-purple bg-purple/25"
               : `${theme.border}`
           }`}
           onClick={() => onCategoryClicked(index)}

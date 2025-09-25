@@ -33,9 +33,9 @@ const Button = ({
           ? `${opposite.background} ${opposite.foreground} ${theme.border}`
           : `${theme.foreground} ${theme.hover.background} ${theme.hover.foreground} ${theme.hover.border} ${theme.border}`
       } border-1 cursor-pointer relative transition-colors ${
-        square ? "aspect-square rounded-full" : "rounded-xl"
+        square ? "aspect-square rounded-full" : "rounded-lg"
       } ${navigation ? "px-2 h-[1.75rem] w-fit text-sm " : ""} ${
-        main ? "text-xl px-4 min-h-[2.75rem]" : ""
+        main ? "px-2 min-h-10" : ""
       } ${className}`}
       {...props}
     >

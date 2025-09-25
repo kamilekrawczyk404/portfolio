@@ -203,6 +203,9 @@
             "title_MathematicalExpressionHandling": "Obsługa wyrażeń matematycznych",
             "desc_MathematicalExpressionHandling": "Zdolność do prawidłowej interpretacji i obliczania złożonych wyrażeń matematycznych z uwzględnieniem kolejności operacji."
           }
+        },
+        "Tags": {
+          "More": "więcej"
         }
       },
       "NavigationViewsHeaders": {

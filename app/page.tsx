@@ -3,6 +3,7 @@ import Technologies from "@/views/Technologies";
 import Projects from "@/views/Projects";
 import Contact from "@/views/Contact";
 import { getTranslations } from "next-intl/server";
+import AboutMe from "@/views/AboutMe";
 
 const fetcher = (url, params = {}) =>
   fetch(
@@ -109,6 +110,7 @@ export default async function RootPage() {
   return (
     <div className={`flex flex-col relative bg-transparent`}>
       <Hero />
+      <AboutMe />
       <Technologies />
       <Projects apiKey={apiKey} projectsPhotos={projectPhotos} />
       <Contact />
