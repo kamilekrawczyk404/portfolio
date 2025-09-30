@@ -26,16 +26,12 @@ const PageContainer = ({
         includeNavigationHeight
           ? "!mt-[4rem] lg:h-[calc(100vh-4rem)] !min-h-[calc(100vh-4rem)]"
           : `${theme.background}`
-      } ${
-        section
-          ? `min-h-fit relative flex flex-col justify-center ${layoutProperties.gap.large}`
-          : ""
-      } ${screenHeight ? "lg:h-[100vh]" : ""} ${
-        layoutProperties.body.padding
-      } ${className}`}
+      } ${section ? `min-h-fit relative flex flex-col justify-center` : ""} ${
+        screenHeight ? "lg:h-[100vh]" : ""
+      } ${layoutProperties.body.padding}`}
       {...props}
     >
-      <div className={"lg:w-6xl mx-auto"}>{children}</div>
+      <div className={`lg:w-6xl w-full mx-auto ${className}`}>{children}</div>
     </div>
   );
 };

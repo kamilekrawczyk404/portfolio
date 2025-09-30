@@ -1,6 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useTransform,
+  useVelocity,
+} from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import { useSelector } from "react-redux";
 import { colors } from "@/layout";
@@ -11,7 +18,7 @@ type ProgressBarProps = {
   shouldAnimate?: boolean;
 };
 const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme, selected } = useSelector((state: RootState) => state.theme);
 
   const percentageMotionValue = useMotionValue(0);
   const width = useTransform(
@@ -19,6 +26,10 @@ const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
     [0, percentage],
     [0, percentage],
   );
+  const percentageVelocity = useVelocity(percentageMotionValue);
+  const rotate = useTransform(percentageVelocity, [-100, 0, 100], [15, 0, -15]);
+
+  const barsBackground = selected === "dark" ? "255,255,255" : "0,0,0";
 
   const [asPercentage, setAsPercentage] = useState("");
 
@@ -27,7 +38,6 @@ const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
       const controls = animate(percentageMotionValue, percentage, {
         ...animationsTypes.default,
         duration: animationProperties.durations.long,
-        delay: 0.1,
       });
 
       width.on("change", (v) => setAsPercentage(`${v.toFixed()}%`));
@@ -48,17 +58,16 @@ const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
     <div className={"relative"}>
       <motion.div
         className={"absolute bottom-full w-fit -translate-x-1/2"}
-        style={{ left: asPercentage }}
+        style={{ left: asPercentage, rotate }}
         initial={{ opacity: 0 }}
         animate={shouldAnimate ? { opacity: 1 } : {}}
         exit={{ opacity: 0 }}
         transition={{
           ...animationsTypes.default,
-          delay: 0.1,
         }}
       >
         <div
-          className={`mb-[.25rem] text-sm bg-blue-500 px-2 py-0 rounded-xl border-1 ${colors.dark.border} ${colors.light.foreground} ${colors.light.background}`}
+          className={`mb-[.25rem] text-xs px-2 h-4 flex items-center rounded-full  border-1`}
         >
           <span>{asPercentage}</span>
         </div>
@@ -67,20 +76,18 @@ const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
         ></div>
       </motion.div>
 
-      <div className={"relative w-full h-[2rem] rounded-lg overflow-hidden"}>
+      <div className={"relative w-full h-4 rounded-lg overflow-hidden"}>
         <motion.div
-          className={
-            "absolute top-0 left-0 bg-purple h-full z-10 overflow-hidden"
-          }
+          className={`absolute top-0 left-0 ${theme.backgroundSecondary} h-full z-10 overflow-hidden`}
           style={{
             width: asPercentage,
             backgroundImage: `linear-gradient(
             45deg,
-            rgba(255, 255, 255, 0.15) 25%, /* First stripe color (light transparent white) */
+            rgba(${barsBackground}, 0.3) 25%, /* First stripe color (light transparent white) */
             transparent 25%,
             transparent 50%,
-            rgba(255, 255, 255, 0.15) 50%,
-            rgba(255, 255, 255, 0.15) 75%,
+            rgba(${barsBackground}, 0.3), 50%,
+            rgba(${barsBackground}, 0.3) 75%,
             transparent 75%,
             transparent
           )`,
@@ -100,7 +107,7 @@ const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
           }}
         ></motion.div>
         <div
-          className={`absolute left-0 top-0 w-full h-full z-0  brightness-100 ${theme.backgroundSecondary}`}
+          className={`absolute left-0 top-0 w-full h-full z-0 ${theme.backgroundSecondary}`}
         />
       </div>
     </div>

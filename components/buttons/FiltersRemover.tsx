@@ -11,7 +11,7 @@ type FiltersRemoverProps = {
 };
 
 const FiltersRemover = ({ callback }: FiltersRemoverProps) => {
-  const { opposite } = useSelector((state: RootState) => state.theme);
+  const { opposite, theme } = useSelector((state: RootState) => state.theme);
 
   return (
     <motion.div
@@ -24,9 +24,7 @@ const FiltersRemover = ({ callback }: FiltersRemoverProps) => {
       <div className={`w-[1px] h-full ${opposite.background}`} />
       <button
         onClick={(e) => callback(e)}
-        className={
-          "px-2 border-red-500 flex items-center gap-x-1 border-1 border-red-500 h-[1.75rem] rounded-xl text-red-500 hover:bg-red-500/10 transition-colors cursor-pointer"
-        }
+        className={`px-2 flex items-center gap-x-1 border-1 h-[1.75rem] rounded-xl text-red-600 hover:bg-red-700/10 transition-colors cursor-pointer ${theme.border}`}
       >
         <Icons.Trash className={"text-sm"} />
         <span>Remove filters</span>

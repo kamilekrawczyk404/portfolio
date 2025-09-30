@@ -20,6 +20,8 @@ import { FormattedProject } from "@/types/types";
 import StaggeredList from "@/components/lists/StaggeredList";
 import projects from "@/views/Projects";
 import List from "@/components/lists/List";
+import Aspect from "@/components/lists/Aspect";
+import Container from "@/components/containers/Container";
 
 const MARGIN = 50;
 
@@ -64,12 +66,12 @@ const ProjectPreview = ({
   });
 
   return (
-    <motion.div
+    <Container.Default
       data-testid={dataTestId}
       ref={containerRef}
-      className={`relative border-1 rounded-md h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${layoutProperties.padding} ${theme.border}`}
+      className={`relative border-1 rounded-md h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${theme.border}`}
     >
-      <Backdrop isActive={isExpanded} blur />
+      <Backdrop isActive={isExpanded || isVisible} blur />
 
       <AnimatePresence mode={"wait"}>
         {(isVisible || isExpanded) && (
@@ -141,7 +143,7 @@ const ProjectPreview = ({
 
       {/*List item body*/}
       <h3
-        className={`select-none ${theme.foreground} ${layoutProperties.text.medium}`}
+        className={`select-none ${theme.foreground} ${layoutProperties.text.large}`}
       >
         {t(`${project.githubRepoName}.Title`)}
       </h3>
@@ -159,24 +161,18 @@ const ProjectPreview = ({
                   ] as string[])
                 : projectTags
             }
-            render={(tag) => (
-              <span
-                className={`inline-block h-6 content-center px-2 rounded-xl border-1`}
-              >
-                {tag}
-              </span>
-            )}
+            render={(tag) => <Aspect name={tag} />}
           />
         </div>
       </div>
       <div
         className={
-          "absolute inset-0 content-center text-center text-gray-500/15 text-[500%]"
+          "absolute inset-0 content-center text-center text-gray-500/15 text-7xl"
         }
       >
         #{index + 1}
       </div>
-    </motion.div>
+    </Container.Default>
   );
 };
 

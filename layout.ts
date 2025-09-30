@@ -1,4 +1,5 @@
 type SizeProperties = {
+  extraLarge?: string;
   large: string;
   medium: string;
   small: string;
@@ -43,9 +44,10 @@ export const layoutProperties: LayoutSystem = {
     extraSmall: "gap-1",
   },
   text: {
-    large: "lg:text-5xl text-4xl",
-    medium: "lg:text-2xl text-2xl",
-    small: "lg:text-[1rem]",
+    extraLarge: "lg:text-5xl text-4xl",
+    large: "lg:text-2xl text-xl",
+    medium: "lg:text-lg text-md",
+    small: "lg:text-[1rem] text-normal",
     extraSmall: "text-sm",
   },
   body: {
@@ -57,8 +59,10 @@ export const layoutProperties: LayoutSystem = {
 type ColorSet = {
   background: string;
   backgroundSecondary?: string;
+  stroke?: string;
   foreground: string;
   border: string;
+  borderSecondary?: string;
   outline: string;
 };
 
@@ -89,10 +93,12 @@ export const colors: ColorPalette = {
     "C#": "#239120",
   },
   light: {
-    background: "bg-neutral-50",
-    backgroundSecondary: "bg-neutral-400",
+    background: "bg-white",
+    backgroundSecondary: "bg-neutral-200",
     foreground: "text-neutral-700",
+    stroke: "stroke-neutral-700",
     border: "border-neutral-300",
+    borderSecondary: "border-neutral-200",
     outline: "outline-neutral-300",
     hover: {
       background: "hover:bg-neutral-100",
@@ -105,7 +111,9 @@ export const colors: ColorPalette = {
     background: "bg-neutral-950",
     backgroundSecondary: "bg-neutral-800",
     foreground: "text-neutral-300",
+    stroke: "stroke-neutral-300",
     border: "border-neutral-700",
+    borderSecondary: "border-neutral-800",
     outline: "outline-neutral-700",
     hover: {
       background: "hover:bg-neutral-900",

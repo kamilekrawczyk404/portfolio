@@ -26,7 +26,7 @@ const GroupSection = ({
       className={`flex flex-col relative ${layoutProperties.gap.extraSmall} ${theme.foreground} ${className}`}
     >
       {title && (
-        <span className={"text-neutral-600 text-sm font-[500]"}>{title()}</span>
+        <span className={"text-neutral-500 text-sm font-[500]"}>{title()}</span>
       )}
       {children}
     </motion.div>

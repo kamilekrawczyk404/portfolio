@@ -80,9 +80,11 @@ const FormContext = createContext<FormContextType<any> | undefined>(undefined);
 
 const useFormContext = () => {
   const context = useContext(FormContext);
+
   if (!context) {
     throw new Error("useFormContext must be used within a Form");
   }
+
   return context;
 };
 

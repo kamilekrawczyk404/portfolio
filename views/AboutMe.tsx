@@ -1,19 +1,17 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import PageContainer from "@/components/containers/PageContainer";
 import SectionTitle from "@/components/containers/SectionTitle";
 
-const AboutMe = () => {
-  const [renderDelay, setRenderDelay] = useState<null | number>(null);
+import PersonalInfoCards from "@/views/PersonalInfoCards";
+import { useTranslations } from "next-intl";
 
+const AboutMe = () => {
+  const t = useTranslations("HomePage.AboutMe");
   return (
     <PageContainer section>
-      <SectionTitle
-        title={"About Me"}
-        onTitleAnimationComplete={(completeTime) =>
-          setRenderDelay(completeTime)
-        }
-      ></SectionTitle>
+      <SectionTitle title={t("Title")} description={t("Description")}>
+        <PersonalInfoCards />
+      </SectionTitle>
     </PageContainer>
   );
 };

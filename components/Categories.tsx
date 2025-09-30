@@ -39,7 +39,7 @@ const Categories = <T extends unknown>({
   whileInView = false,
   className = "",
 }: CategoriesProps<T>) => {
-  const { theme } = useSelector((state: RootState) => state.theme);
+  const { theme, opposite } = useSelector((state: RootState) => state.theme);
 
   const [selectedIds, setSelectedIds] = useState<boolean[]>([]);
   const [isRemoverVisible, setIsRemoverVisible] = useState(false);
@@ -97,8 +97,8 @@ const Categories = <T extends unknown>({
           key={index}
           className={`flex items-center relative border-1 rounded-xl h-[1.75rem] cursor-pointer transition-colors overflow-hidden ${
             selectedIds[index]
-              ? "border-purple text-purple bg-purple/25"
-              : `${theme.border}`
+              ? `${opposite.border} ${opposite.background} ${opposite.foreground}`
+              : `${theme.borderSecondary}`
           }`}
           onClick={() => onCategoryClicked(index)}
         >

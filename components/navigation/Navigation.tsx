@@ -106,7 +106,7 @@ const Navigation = () => {
         ...animationsTypes.default,
         delay: 0.1,
       }}
-      className={`fixed top-0 left-0 w-full flex h-[4rem] items-center justify-between gap-4 z-[100] border-b-1 backdrop-blur-sm shadow-sm ${layoutProperties.padding} ${theme.foreground} ${theme.background}`}
+      className={`fixed top-0 inset-x-0 flex h-[4rem] items-center justify-between gap-4 z-[100] border-b-1 backdrop-blur-sm shadow-sm ${layoutProperties.padding} ${theme.foreground} ${theme.background}`}
     >
       <AnimatePresence mode={"wait"}>
         {isMenuOpen && (

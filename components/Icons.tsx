@@ -18,6 +18,11 @@ import {
   faPhone,
   faEnvelope,
   faFilter,
+  faCode,
+  faPalette,
+  faGear,
+  faRocket,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
@@ -56,11 +61,26 @@ export const Icons = {
   Link: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faArrowUpRightFromSquare} className={className} />
   ),
+  Gear: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faGear} className={className} />
+  ),
+  Rocket: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faRocket} className={className} />
+  ),
+  Palette: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faPalette} className={className} />
+  ),
+  Code: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faCode} className={className} />
+  ),
   CodeBranch: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faCodeBranch} className={className} />
   ),
   GitHub: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faGithub} className={className} />
+  ),
+  Users: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faUsers} className={className} />
   ),
   Globe: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faGlobe} className={className} />

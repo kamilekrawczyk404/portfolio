@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Variants } from "motion-dom";
 import { RootState } from "@/redux/store";
 import ProgressBar from "@/components/project/ProgressBar";
+import { layoutProperties } from "@/layout";
 
 type ProgressBarAspectProps = {
   aspect: { name: string; knowledge: number };
@@ -23,10 +24,14 @@ const ProgressBarAspect = ({
   return (
     <motion.div
       variants={variants}
-      className={`flex flex-col gap-y-1 relative ${theme.foreground}`}
+      className={`flex flex-col relative ${theme.foreground}`}
       onAnimationComplete={onAnimationComplete}
     >
-      <span>{aspect.name}</span>
+      <h5
+        className={`font-[500] mb-[.125rem] ${layoutProperties.text.extraSmall}`}
+      >
+        {aspect.name}
+      </h5>
       <ProgressBar
         percentage={aspect.knowledge}
         shouldAnimate={shouldAnimate}

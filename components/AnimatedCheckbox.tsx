@@ -3,6 +3,8 @@ import React from "react";
 import { useMotionValue, useTransform, motion } from "framer-motion";
 import { colors } from "@/layout";
 import { Variants } from "motion-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type Cord = {
   x: number;
@@ -18,6 +20,8 @@ const AnimatedCheckbox = ({
   className = "",
   isChecked,
 }: AnimatesCheckboxProps) => {
+  const { opposite } = useSelector((state: RootState) => state.theme);
+
   const tickVariants: Variants = {
     pressed: (value: boolean) => ({ pathLength: value ? 0.85 : 0.2 }),
     checked: {
@@ -78,11 +82,11 @@ const AnimatedCheckbox = ({
           d={newPathD} // Use the newly scaled path data
           fill="transparent"
           strokeWidth={newStrokeWidth} // Use the new, smaller stroke width
-          stroke={colors.purple}
           strokeLinecap="round"
           strokeLinejoin="round"
           variants={tickVariants}
           style={{ pathLength, opacity, scale: 0.45 }}
+          className={opposite.stroke}
           custom={isChecked} // Pass custom prop if needed for variants
         />
       </svg>

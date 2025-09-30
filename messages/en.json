@@ -48,6 +48,28 @@
         }
       }
     },
+    "AboutMe": {
+      "Title": "About Me",
+      "Description": "Scroll down to explore my high-impact skills that I bring to every project.",
+      "Cards": {
+        "Performance": {
+          "Title": "Performance",
+          "Description": "Optimizing applications for speed, accessibility and excellent user experience across all devices"
+        },
+        "CleanCode": {
+          "Title": "Clean Code",
+          "Description": "Writing maintainable, scalable code with modern best practises and testing technologies"
+        },
+        "Design": {
+          "Title": "Design System",
+          "Description": "Creating cohesive visual experiences with attention to typography, color and user interface design"
+        },
+        "Collaboration": {
+          "Title": "Collaboration",
+          "Description": "Working effectively with cross-functional teams to deliver projects on time and exceed expectations"
+        }
+      }
+    },
     "ProjectsSection": {
       "Title": "Projects",
       "Filter": {

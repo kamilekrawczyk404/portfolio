@@ -14,9 +14,8 @@
   }
 }
 
-
 :root {
-  --light: oklch(0.985 0 0);
+  --light: white;
   --dark: oklch(0.145 0 0);
   --orange: #ff9e00;
   --purple: #6a00f4;
