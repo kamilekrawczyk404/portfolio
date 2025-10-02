@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  ComponentProps,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { HTMLMotionProps, motion } from "framer-motion";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
@@ -15,7 +9,9 @@ interface ContainerComponent extends React.FC {
   Default: React.FC<DefaultContainerProps>;
 }
 
-const Container: ContainerComponent = () => {};
+const Container: ContainerComponent = (): ReactNode => (
+  <div>Default container</div>
+);
 
 type AnimateChangeInHeightProps = HTMLMotionProps<"div">;
 
@@ -51,7 +47,7 @@ const AnimateChangeInHeight = ({
       transition={{ duration: 0.1 }}
       {...props}
     >
-      <div ref={containerRef}>{children}</div>
+      <motion.div ref={containerRef}>{children}</motion.div>
     </motion.div>
   );
 };
