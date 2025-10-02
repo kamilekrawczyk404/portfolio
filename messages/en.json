@@ -54,19 +54,91 @@
       "Cards": {
         "Performance": {
           "Title": "Performance",
-          "Description": "Optimizing applications for speed, accessibility and excellent user experience across all devices"
+          "Description": "Maximize application speed, efficiency, and resource utilization for an exceptional user experience, focusing on fast load times and smooth interactions.",
+          "Features": [
+            {
+              "Title": "Memoization and Pure Components",
+              "Description": "Leverage React's performance hooks (`useMemo`, `useCallback`) and `React.memo` to prevent unnecessary component re-renders. This is crucial for optimizing the performance of **complex lists and data-heavy components**."
+            },
+            {
+              "Title": "Optimal Asset Loading (Images/Fonts)",
+              "Description": "Implement lazy loading for off-screen images and use modern formats like **WebP** for reduced file size. Preload critical web fonts to minimize **Cumulative Layout Shift (CLS)** and improve perceived speed."
+            },
+            {
+              "Title": "Efficient Data Fetching and Caching",
+              "Description": "Utilize modern solutions like **TanStack Query (React Query)** to handle caching, background refetching, and synchronous state updates. This significantly reduces redundant network requests and keeps the global state lean."
+            },
+            {
+              "Title": "Bundle Size Minimization (Code Splitting)",
+              "Description": "Implement **dynamic imports** (`React.lazy` and `Suspense`) to ensure only the necessary code bundles are loaded for the initial view. This reduces the application's initial load time and improves the overall **First Contentful Paint (FCP)** score."
+            }
+          ]
         },
         "CleanCode": {
           "Title": "Clean Code",
-          "Description": "Writing maintainable, scalable code with modern best practises and testing technologies"
+          "Description": "Maintain highly readable, understandable, and easily modifiable source code that adheres to industry best practices and strict design principles.",
+          "Features": [
+            {
+              "Title": "Readability and Intentional Naming",
+              "Description": "Employ descriptive **React naming conventions** (e.g., PascalCase, `use` prefix for Hooks). Use explicit prop deconstruction and meaningful variable names to **minimize cognitive load** and enhance clarity for collaborators."
+            },
+            {
+              "Title": "Modularity and Separation of Concerns (SoC)",
+              "Description": "Structure components using the **Single Responsibility Principle (SRP)**. Abstract business logic into **Custom Hooks** and utilities to ensure strict **separation of concerns**, promoting high **reusability and testability**."
+            },
+            {
+              "Title": "Defensive Programming and Error Handling",
+              "Description": "Implement **defensive programming** via TypeScript **type guards** and runtime checks to safely manage external data inconsistencies (APIs, JSON). This ensures UI components receive **stable data** and maintains application resilience."
+            },
+            {
+              "Title": "Testability and Documentation",
+              "Description": "Ensure high coverage with targeted unit (Jest/Vitest) and UI interaction tests (**React Testing Library**). Leverage precise **TypeScript Interfaces and Types** to serve as mandatory, self-documenting APIs for all component props and state."
+            }
+          ]
         },
         "Design": {
           "Title": "Design System",
-          "Description": "Creating cohesive visual experiences with attention to typography, color and user interface design"
+          "Description": "Establish a consistent and reusable library of components, patterns, and guidelines to ensure UI harmony, scalability, and rapid front-end development.",
+          "Features": [
+            {
+              "Title": "Component-Centric Tokenization",
+              "Description": "Define core design variables (colors, spacing, typography) as **CSS Custom Properties** (tokens). This allows for dynamic theme switching (e.g., light/dark mode) and ensures a **single source of truth** across all components."
+            },
+            {
+              "Title": "Layout and Responsiveness Guidelines",
+              "Description": "Establish a consistent, grid-based layout structure using relative units (`rem`, `em`, `vw`). Implement **mobile-first responsiveness** using utility classes (like Tailwind's responsive prefixes) to guarantee optimal viewing on all device sizes."
+            },
+            {
+              "Title": "Reusable UI Library Documentation",
+              "Description": "Maintain a dedicated library of high-quality, pre-tested, and accessible UI components (buttons, inputs, cards). Document component usage, props, and variations to promote **rapid development** and prevent UI drift."
+            },
+            {
+              "Title": "Accessibility (A11y) Standards",
+              "Description": "Adhere to **WCAG guidelines** by ensuring sufficient color contrast, proper focus management, and semantic HTML structure. Use correct **ARIA attributes** for interactive elements to guarantee usability for assistive technologies."
+            }
+          ]
         },
         "Collaboration": {
           "Title": "Collaboration",
-          "Description": "Working effectively with cross-functional teams to deliver projects on time and exceed expectations"
+          "Description": "Streamline teamwork, standardize development workflows, and use clear documentation to foster a productive and cohesive engineering environment.",
+          "Features": [
+            {
+              "Title": "Standardized Code Formatting and Linting",
+              "Description": "Enforce universal code style across the entire codebase using tools like **ESLint and Prettier**. Integrating these into the CI/CD pipeline ensures that all code contributions adhere to the same non-negotiable standards."
+            },
+            {
+              "Title": "Structured Git Workflow and Reviews",
+              "Description": "Adopt a structured workflow, such as **GitFlow or Trunk-Based Development**, for feature implementation. Require thorough **Pull Request (PR) reviews** and use descriptive commit messages to maintain a clear and traceable history."
+            },
+            {
+              "Title": "Centralized Task Management and Documentation",
+              "Description": "Centralize project planning, task tracking, and defect reporting in a single tool (e.g., Jira, Trello). Maintain a **living document (Wiki/README)** detailing setup instructions, architecture decisions, and contribution guidelines."
+            },
+            {
+              "Title": "Cross-Browser/Device Consistency QA",
+              "Description": "Define a targeted list of supported browsers and devices for QA. Utilize tools like **Playwright or Cypress** for end-to-end testing across environments, ensuring a consistent and reliable user experience for everyone."
+            }
+          ]
         }
       }
     },

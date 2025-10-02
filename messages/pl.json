@@ -48,6 +48,100 @@
         }
       }
     },
+    "AboutMe": {
+      "Title": "O mnie",
+      "Description": "Przewiń w dół, aby poznać moje kluczowe umiejętności, które wnoszę do każdego projektu.",
+      "Cards": {
+        "Performance": {
+          "Title": "Wydajność",
+          "Description": "Maksymalizacja szybkości aplikacji, wydajności i wykorzystania zasobów dla wyjątkowego doświadczenia użytkownika, z naciskiem na szybkie ładowanie i płynne interakcje.",
+          "Features": [
+            {
+              "Title": "Memoizacja i czyste komponenty",
+              "Description": "Wykorzystanie hooków wydajności Reacta (`useMemo`, `useCallback`) i `React.memo` w celu zapobiegania niepotrzebnemu ponownemu renderowaniu komponentów. Jest to kluczowe dla optymalizacji wydajności **złożonych list i komponentów o dużej ilości danych**."
+            },
+            {
+              "Title": "Optymalne ładowanie zasobów (obrazy/czcionki)",
+              "Description": "Wdrożenie leniwego ładowania (lazy loading) dla obrazów poza ekranem i użycie nowoczesnych formatów, takich jak **WebP**, w celu zmniejszenia rozmiaru pliku. Wstępne ładowanie kluczowych czcionek internetowych minimalizuje **skumulowane przesunięcie układu (CLS)** i poprawia postrzeganą szybkość."
+            },
+            {
+              "Title": "Efektywne pobieranie i buforowanie danych",
+              "Description": "Wykorzystanie nowoczesnych rozwiązań, takich jak **TanStack Query (React Query)**, do obsługi buforowania, odświeżania w tle i synchronicznych aktualizacji stanu. Znacząco ogranicza to zbędne żądania sieciowe i utrzymuje globalny stan w czystości."
+            },
+            {
+              "Title": "Minimalizacja rozmiaru pakietu (Code Splitting)",
+              "Description": "Wdrożenie **dynamicznego importu** (`React.lazy` i `Suspense`), aby zapewnić ładowanie tylko niezbędnych pakietów kodu dla początkowego widoku. Zmniejsza to początkowy czas ładowania aplikacji i poprawia ogólny wynik **First Contentful Paint (FCP)**."
+            }
+          ]
+        },
+        "CleanCode": {
+          "Title": "Czysty Kod",
+          "Description": "Utrzymywanie wysoce czytelnego, zrozumiałego i łatwego do modyfikacji kodu źródłowego, który jest zgodny z najlepszymi praktykami branżowymi i ścisłymi zasadami projektowania.",
+          "Features": [
+            {
+              "Title": "Czytelność i celowe nazewnictwo",
+              "Description": "Stosowanie opisowych **konwencji nazewnictwa Reacta** (np. PascalCase, prefiks `use` dla Hooków). Użycie jawnej dekonstrukcji propsów i znaczących nazw zmiennych, aby **zminimalizować obciążenie poznawcze** i zwiększyć przejrzystość dla współpracowników."
+            },
+            {
+              "Title": "Modułowość i Separacja Obowiązków (SoC)",
+              "Description": "Strukturyzowanie komponentów zgodnie z **Zasadą Pojedynczej Odpowiedzialności (SRP)**. Abstrakcja logiki biznesowej do **Własnych Hooków** i narzędzi, aby zapewnić ścisłą **separację obowiązków**, promując wysoką **ponowną używalność i testowalność**."
+            },
+            {
+              "Title": "Programowanie defensywne i obsługa błędów",
+              "Description": "Wdrożenie **programowania defensywnego** za pomocą **strażników typów** TypeScript oraz kontroli w czasie wykonania, aby bezpiecznie zarządzać niespójnościami danych zewnętrznych (API, JSON). Zapewnia to, że komponenty UI otrzymują **stabilne dane** i utrzymuje odporność aplikacji."
+            },
+            {
+              "Title": "Testowalność i Dokumentacja",
+              "Description": "Zapewnienie wysokiego pokrycia za pomocą ukierunkowanych testów jednostkowych (Jest/Vitest) i testów interakcji UI (**React Testing Library**). Wykorzystanie precyzyjnych **Interfejsów i Typów TypeScript** jako obowiązkowych, samouzupełniających się interfejsów API dla wszystkich propsów i stanu komponentów."
+            }
+          ]
+        },
+        "Design": {
+          "Title": "Projektowanie",
+          "Description": "Ustanowienie spójnej i ponownej używalnej biblioteki komponentów, wzorców i wytycznych, aby zapewnić harmonię interfejsu, skalowalność i szybki rozwój front-endu.",
+          "Features": [
+            {
+              "Title": "Tokenizacja zorientowana na komponenty",
+              "Description": "Zdefiniowanie podstawowych zmiennych projektowych (kolory, odstępy, typografia) jako **właściwości niestandardowe CSS** (tokeny). Umożliwia to dynamiczne przełączanie motywów (np. tryb jasny/ciemny) i zapewnia **jedno źródło prawdy** we wszystkich komponentach."
+            },
+            {
+              "Title": "Wytyczne dotyczące układu i responsywności",
+              "Description": "Ustanowienie spójnej struktury układu opartej na siatce, wykorzystującej jednostki względne (`rem`, `em`, `vw`). Wdrożenie **responsywności w podejściu 'mobile-first'** przy użyciu klas narzędziowych (takich jak prefiksy responsywne Tailwind), aby zagwarantować optymalne wyświetlanie na wszystkich rozmiarach urządzeń."
+            },
+            {
+              "Title": "Dokumentacja biblioteki ponownej używalnych komponentów UI",
+              "Description": "Utrzymywanie dedykowanej biblioteki wysokiej jakości, wstępnie przetestowanych i dostępnych komponentów UI (przyciski, pola wejściowe, karty). Dokumentowanie użycia komponentów, ich propsów i wariantów w celu promowania **szybkiego rozwoju** i zapobiegania dryfowi interfejsu (UI drift)."
+            },
+            {
+              "Title": "Standardy Dostępności (A11y)",
+              "Description": "Przestrzeganie **wytycznych WCAG** poprzez zapewnienie odpowiedniego kontrastu kolorów, właściwego zarządzania fokusem i semantycznej struktury HTML. Użycie poprawnych **atrybutów ARIA** dla elementów interaktywnych, aby zagwarantować użyteczność dla technologii wspomagających."
+            }
+          ]
+        },
+        "Collaboration": {
+          "Title": "Współpraca",
+          "Description": "Usprawnienie pracy zespołowej, standaryzacja procesów rozwojowych i użycie przejrzystej dokumentacji w celu wspierania produktywnego i spójnego środowiska inżynierskiego.",
+          "Features": [
+            {
+              "Title": "Standaryzowane Formatowanie Kodu i Lintowanie",
+              "Description": "Egzekwowanie uniwersalnego stylu kodu w całej bazie kodu za pomocą narzędzi takich jak **ESLint i Prettier**. Integracja ich z potokiem CI/CD zapewnia, że wszystkie wkłady kodu są zgodne z tymi samymi, nienegocjowalnymi standardami."
+            },
+            {
+              "Title": "Ustrukturyzowany przepływ pracy Git i przeglądy kodu",
+              "Description": "Przyjęcie ustrukturyzowanego przepływu pracy, takiego jak **GitFlow lub Trunk-Based Development**, do implementacji funkcji. Wymaganie dokładnych **przeglądów Pull Request (PR)** i używanie opisowych komunikatów commitów w celu utrzymania jasnej i możliwej do śledzenia historii."
+            },
+            {
+              "Title": "Scentralizowane Zarządzanie Zadaniem i Dokumentacja",
+              "Description": "Centralizacja planowania projektu, śledzenia zadań i zgłaszania defektów w jednym narzędziu (np. Jira, Trello). Utrzymywanie **żywego dokumentu (Wiki/README)** zawierającego szczegółowe instrukcje konfiguracji, decyzje architektoniczne i wytyczne dotyczące wkładu."
+            },
+            {
+              "Title": "Zapewnienie spójności na różnych przeglądarkach/urządzeniach (QA)",
+              "Description": "Zdefiniowanie ukierunkowanej listy obsługiwanych przeglądarek i urządzeń dla QA. Wykorzystanie narzędzi takich jak **Playwright lub Cypress** do testów end-to-end w różnych środowiskach, zapewniając spójne i niezawodne doświadczenie użytkownika dla wszystkich."
+            }
+          ]
+        }
+      }
+    },
     "ProjectsSection": {
       "Title": "Projekty",
       "Filter": {

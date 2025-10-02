@@ -12,6 +12,7 @@ type SelectionTitleProps = {
   description?: string;
   children?: ReactNode;
   className?: string;
+  titleContainerClassName?: string;
   whileInView?: boolean;
   onTitleAnimationComplete?: (animationCompleteTime: number) => any;
 };
@@ -21,6 +22,7 @@ const SectionTitle = ({
   children,
   description,
   className = "",
+  titleContainerClassName = "",
   whileInView = true,
   onTitleAnimationComplete,
 }: SelectionTitleProps): ReactNode => {
@@ -30,9 +32,9 @@ const SectionTitle = ({
   });
 
   return (
-    <div className={`relative flex flex-col  ${theme.foreground} ${className}`}>
+    <div className={`relative flex flex-col ${theme.foreground} ${className}`}>
       <div
-        className={`flex flex-col items-center lg:mb-8 mb-6 ${layoutProperties.gap.small}`}
+        className={`flex flex-col items-center lg:mb-8 mb-6 ${layoutProperties.gap.small} ${titleContainerClassName}`}
       >
         <h2 data-testid={title}>
           <AnimatedSingleLetterText
@@ -46,7 +48,7 @@ const SectionTitle = ({
           <motion.p
             viewport={{ once: true }}
             variants={variants}
-            whileInView={variants.animate}
+            whileInView={whileInView ? { ...variants.animate } : {}}
             initial={"initial"}
             exit={"exit"}
             className={`${layoutProperties.text.large} text-neutral-500 lg:max-w-2/3 text-center`}

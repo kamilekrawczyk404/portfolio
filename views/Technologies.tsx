@@ -95,10 +95,10 @@ const technologies: Technology[] = [
       title: "Frameworks & Libraries",
       aspects: [
         { name: "Prisma", knowledge: 50 },
-        { name: "Express.js", knowledge: 30 },
+        { name: "Express.js", knowledge: 50 },
         { name: "Symfony", knowledge: 60 },
         { name: "Laravel", knowledge: 65 },
-        { name: "ASP.NET", knowledge: 30 },
+        { name: "ASP.NET", knowledge: 35 },
       ],
     },
     otherAspects: {
@@ -272,7 +272,7 @@ const Technologies = () => {
                     />
                   ) : (
                     <div
-                      className={`flex flex-col ${layoutProperties.gap.medium}`}
+                      className={`grid lg:grid-cols-2 grid-cols-1 ${layoutProperties.gap.medium}`}
                     >
                       {technologyAspect.aspects.map(
                         (aspect: Aspect & { knowledge: number }) => {

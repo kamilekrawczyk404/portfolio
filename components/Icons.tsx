@@ -23,6 +23,22 @@ import {
   faGear,
   faRocket,
   faUsers,
+  faBug,
+  faFileCode,
+  faCubes,
+  faListCheck,
+  faVialCircleCheck,
+  faAngleDown,
+  faMobileScreenButton,
+  faEye,
+  faUniversalAccess,
+  faGaugeHigh,
+  faHourglassHalf,
+  faCloudArrowDown,
+  faBarsProgress,
+  faFileLines,
+  faChartDiagram,
+  faPeopleRoof,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
@@ -43,6 +59,18 @@ export const Icons = {
   Arrow: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faArrowRight} className={className} />
   ),
+  File: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faFileCode} className={className} />
+  ),
+  ListCheck: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faListCheck} className={className} />
+  ),
+  Test: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faVialCircleCheck} className={className} />
+  ),
+  Cubes: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faCubes} className={className} />
+  ),
   CaretDown: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faCaretDown} className={className} />
   ),
@@ -52,6 +80,9 @@ export const Icons = {
   AngleLeft: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faAngleLeft} className={className} />
   ),
+  AngleDown: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faAngleDown} className={className} />
+  ),
   Sun: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faSun} className={className} />
   ),
@@ -60,6 +91,9 @@ export const Icons = {
   ),
   Link: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faArrowUpRightFromSquare} className={className} />
+  ),
+  Mobile: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faMobileScreenButton} className={className} />
   ),
   Gear: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faGear} className={className} />
@@ -94,6 +128,9 @@ export const Icons = {
   Trash: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faTrash} className={className} />
   ),
+  Bug: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faBug} className={className} />
+  ),
   Check: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faCheck} className={className} />
   ),
@@ -105,6 +142,33 @@ export const Icons = {
   ),
   Envelope: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faEnvelope} className={className} />
+  ),
+  Eye: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faEye} className={className} />
+  ),
+  UniversalAccess: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faUniversalAccess} className={className} />
+  ),
+  GaugeHigh: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faGaugeHigh} className={className} />
+  ),
+  HourGlass: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faHourglassHalf} className={className} />
+  ),
+  CloudArrowDown: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faCloudArrowDown} className={className} />
+  ),
+  BarsProgress: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faBarsProgress} className={className} />
+  ),
+  FileLines: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faFileLines} className={className} />
+  ),
+  ChartDiagram: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faChartDiagram} className={className} />
+  ),
+  PeopleRoof: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faPeopleRoof} className={className} />
   ),
 } as const;
 

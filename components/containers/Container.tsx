@@ -1,17 +1,69 @@
 "use client";
-import React from "react";
+import React, {
+  ComponentProps,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { HTMLMotionProps, motion } from "framer-motion";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 
-const Container = () => {};
+interface ContainerComponent extends React.FC {
+  AnimateChangeInHeight: React.FC<AnimateChangeInHeightProps>;
+  Default: React.FC<DefaultContainerProps>;
+}
+
+const Container: ContainerComponent = () => {};
+
+type AnimateChangeInHeightProps = HTMLMotionProps<"div">;
+
+const AnimateChangeInHeight = ({
+  children,
+  ...props
+}: AnimateChangeInHeightProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState<number | "auto">("auto");
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        // We only have one entry, so we can use entries[0].
+        const observedHeight = entries[0].contentRect.height;
+        setHeight(observedHeight);
+      });
+
+      resizeObserver.observe(containerRef.current);
+
+      return () => {
+        // Cleanup the observer when the component is unmounted
+        resizeObserver.disconnect();
+      };
+    }
+  }, []);
+
+  return (
+    <motion.div
+      className={`${props?.className}, "overflow-hidden"`}
+      style={{ height }}
+      animate={{ height }}
+      transition={{ duration: 0.1 }}
+      {...props}
+    >
+      <div ref={containerRef}>{children}</div>
+    </motion.div>
+  );
+};
+
+type DefaultContainerProps = HTMLMotionProps<"div"> & { dataTestId?: string };
 
 const Default = ({
   children,
   dataTestId,
   className = "",
   ...props
-}: HTMLMotionProps<"div"> & { dataTestId?: string }) => {
+}: DefaultContainerProps) => {
   const { theme } = useSelector((state: RootState) => state.theme);
 
   return (
@@ -25,6 +77,7 @@ const Default = ({
   );
 };
 
+Container.AnimateChangeInHeight = AnimateChangeInHeight;
 Container.Default = Default;
 
 export default Container;

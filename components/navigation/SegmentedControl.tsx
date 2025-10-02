@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { RootState } from "@/redux/store";
 import { animationProperties, animationsTypes } from "@/animations";
+import { Theme, ThemeTypes } from "@/redux/reducers/themeSlice";
 
 type SegmentedControlProps<T> = {
   items: T[];
@@ -56,11 +57,7 @@ const SegmentedControl = <T extends unknown>({
           )}
           <span
             className={`${
-              index === selectedItemIndex
-                ? selected === "dark"
-                  ? "mix-blend-multiply"
-                  : "mix-blend-exclusion"
-                : ""
+              index === selectedItemIndex ? getMixBlendClassName(selected) : ""
             }`}
           >
             {render(item)}
@@ -69,6 +66,16 @@ const SegmentedControl = <T extends unknown>({
       ))}
     </motion.div>
   );
+};
+
+export const getMixBlendClassName = (
+  selected: ThemeTypes,
+  invert: boolean = false,
+): string => {
+  if (selected === "dark") {
+    return invert ? "mix-blend-exclusion" : "mix-blend-multiply";
+  }
+  return invert ? "mix-blend-multiply" : "mix-blend-exclusion";
 };
 
 export default SegmentedControl;

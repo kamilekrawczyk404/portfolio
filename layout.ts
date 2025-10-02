@@ -63,6 +63,7 @@ type ColorSet = {
   foreground: string;
   border: string;
   borderSecondary?: string;
+  divideSecondary?: string;
   outline: string;
 };
 
@@ -100,6 +101,7 @@ export const colors: ColorPalette = {
     border: "border-neutral-300",
     borderSecondary: "border-neutral-200",
     outline: "outline-neutral-300",
+    divideSecondary: "divide-neutral-200",
     hover: {
       background: "hover:bg-neutral-100",
       foreground: "hover:text-neutral-600",
@@ -114,6 +116,7 @@ export const colors: ColorPalette = {
     stroke: "stroke-neutral-300",
     border: "border-neutral-700",
     borderSecondary: "border-neutral-800",
+    divideSecondary: "divide-neutral-800",
     outline: "outline-neutral-700",
     hover: {
       background: "hover:bg-neutral-900",

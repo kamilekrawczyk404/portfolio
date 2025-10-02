@@ -1,43 +1,106 @@
 "use client";
-import React, { ReactNode, useLayoutEffect, useRef, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Icons } from "@/components/Icons";
 import Container from "@/components/containers/Container";
 import { layoutProperties } from "@/layout";
-import AnimateOnViewCards from "@/components/containers/AnimateOnViewCards";
+import AnimateOnViewCards, {
+  CardIndexProps,
+  IndexRenderArguments,
+} from "@/components/containers/AnimateOnViewCards";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useTranslations } from "next-intl";
-import { AnimatePresence, motion } from "framer-motion";
-import { animationProperties, animationsTypes } from "@/animations";
+import {
+  AnimatePresence,
+  motion,
+  MotionValue,
+  useMotionValueEvent,
+  useTransform,
+} from "framer-motion";
+import { getMixBlendClassName } from "@/components/navigation/SegmentedControl";
+import { animationProperties, variantsPresets } from "@/animations";
+import TextWithCode from "@/components/text/TextWithCode";
 
-type Card = {
-  title: string;
-  description: string;
+type CardProps = {
+  translationsTitle: string;
   icon: ReactNode;
+  features: { icon: ReactNode }[];
 };
 
 const translationsPrefix = "AboutMe.Cards";
 
-const cards: Card[] = [
+const cards: CardProps[] = [
   {
-    title: `CleanCode.Title`,
-    description: `CleanCode.Description`,
+    translationsTitle: "CleanCode",
     icon: <Icons.Code />,
+    features: [
+      {
+        icon: <Icons.File />,
+      },
+      {
+        icon: <Icons.Cubes />,
+      },
+      {
+        icon: <Icons.Bug />,
+      },
+      {
+        icon: <Icons.Test />,
+      },
+    ],
   },
   {
-    title: `Design.Title`,
-    description: `Design.Description`,
+    translationsTitle: "Design",
     icon: <Icons.Palette />,
+    features: [
+      {
+        icon: <Icons.File />,
+      },
+      {
+        icon: <Icons.Mobile />,
+      },
+      {
+        icon: <Icons.Eye />,
+      },
+      {
+        icon: <Icons.UniversalAccess />,
+      },
+    ],
   },
   {
-    title: `Performance.Title`,
-    description: `Performance.Description`,
+    translationsTitle: "Performance",
     icon: <Icons.Rocket />,
+    features: [
+      {
+        icon: <Icons.GaugeHigh />,
+      },
+      {
+        icon: <Icons.HourGlass />,
+      },
+      {
+        icon: <Icons.CloudArrowDown />,
+      },
+      {
+        icon: <Icons.BarsProgress />,
+      },
+    ],
   },
   {
-    title: `Collaboration.Title`,
-    description: `Collaboration.Description`,
+    translationsTitle: "Collaboration",
     icon: <Icons.Users />,
+    features: [
+      {
+        icon: <Icons.FileLines />,
+      },
+      {
+        icon: <Icons.ChartDiagram />,
+      },
+      {
+        icon: <Icons.PeopleRoof />,
+      },
+      {
+        icon: <Icons.Test />,
+      },
+    ],
   },
 ];
 
@@ -47,85 +110,172 @@ const PersonalInfoCards = () => {
       style={{
         height: cards.length * 125 + "dvh",
       }}
-      offset={0.1}
       containerClassName={`w-full`}
+      offset={0.05}
       cardClassName={"w-full"}
       cards={cards}
-      cardExpandWhen={0.2}
-      render={(card, isExpanded) => (
-        <Card card={card} isExpanded={isExpanded} />
+      renderIndex={(props) => <CardIndex {...props} />}
+      renderCard={(card) => (
+        <Card
+          features={card.features}
+          translationsTitle={card.translationsTitle}
+        />
       )}
     />
   );
 };
 
-type CardProps = {
-  card: Card;
-  isExpanded: boolean;
+const CardIndex = ({
+  item,
+  scrollProgress,
+  startWhen,
+  endWhen,
+  isSelected,
+}: IndexRenderArguments<CardProps>) => {
+  const t = useTranslations("HomePage.AboutMe.Cards");
+  const { theme, opposite, selected } = useSelector(
+    (state: RootState) => state.theme,
+  );
+
+  const [isActivated, setIsActivated] = useState<boolean>(false);
+
+  const width = useTransform(
+    scrollProgress,
+    [startWhen, endWhen],
+    ["0%", "100%"],
+  );
+
+  useMotionValueEvent(scrollProgress, "change", (l) =>
+    setIsActivated(startWhen < l),
+  );
+
+  return (
+    <motion.div
+      initial={false}
+      animate={{ width: isSelected ? "10.5rem" : "3rem" }}
+      className={`relative rounded-sm overflow-hidden p-2 border-1`}
+    >
+      <motion.div
+        style={{ width }}
+        className={`absolute left-0 top-0 h-full ${opposite.background}`}
+      />
+
+      <div
+        className={`flex items-center justify-center gap-2 ${getMixBlendClassName(
+          selected,
+          true,
+        )} ${theme.foreground}`}
+      >
+        <div
+          className={`min-w-7 overflow-hidden flex items-center justify-center aspect-square`}
+        >
+          <motion.span
+            animate={{
+              scale: isSelected ? 1.25 : 1,
+            }}
+            className={`inline-block ${layoutProperties.text.medium}`}
+          >
+            {item.icon}
+          </motion.span>
+        </div>
+        {isSelected && (
+          <motion.h3
+            layoutId={"aspect"}
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{
+              opacity: isSelected ? "100%" : "0%",
+            }}
+            className={`${layoutProperties.text.small} font-[500] text-nowrap`}
+          >
+            {t(`${item.translationsTitle}.Title`)}
+          </motion.h3>
+        )}
+      </div>
+    </motion.div>
+  );
 };
-const Card = ({ card, isExpanded }: CardProps) => {
+
+const Card = ({
+  translationsTitle,
+  features,
+}: Pick<CardProps, "translationsTitle" | "features">) => {
+  const { theme } = useSelector((state: RootState) => state.theme);
+
+  return (
+    <ul
+      className={`flex flex-col lg:max-w-1/2 max-w-full mx-auto border-1 rounded-lg ${theme.borderSecondary} divide-y-1 ${theme.divideSecondary}`}
+    >
+      {features.map((feature, index) => (
+        <li key={index}>
+          <Feature
+            icon={feature.icon}
+            translationsTitle={translationsTitle}
+            index={index}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const Feature = ({
+  translationsTitle,
+  icon,
+  index,
+}: Pick<CardProps, "translationsTitle" | "icon"> & { index: number }) => {
   const { theme, opposite } = useSelector((state: RootState) => state.theme);
   const t = useTranslations(`HomePage.${translationsPrefix}`);
 
-  const listValues = [
-    "Breaking down complex challenges into manageable, actionable steps",
-    "Identifying patterns and potential bottlenecks before they become issues",
-    "Balancing immediate needs with long-term scalability and maintainability",
-    "Making data-driven decisions that align with business objectives",
-  ];
+  const [isDetailed, setIsDetailed] = useState<boolean>(false);
 
-  const ref = useRef(null);
-  const [height, setHeight] = useState<number>(0);
-
-  useLayoutEffect(() => {
-    if (ref.current) {
-      setHeight(ref.current.scrollHeight);
-    }
-  }, [card, isExpanded]);
-
-  console.log("expand to", height);
+  const variants = variantsPresets.appearing({
+    duration: animationProperties.durations.short,
+  });
 
   return (
-    <Container.Default
-      ref={ref}
-      animate={{ height }}
-      transition={{
-        ...animationsTypes.default,
-        duration: animationProperties.durations.long,
-      }}
-      className={`flex flex-col lg:max-w-2/3 max-w-full mx-auto ${layoutProperties.gap.large} `}
+    <Container.AnimateChangeInHeight
+      className={"content-center"}
+      onMouseEnter={() => setIsDetailed(true)}
+      onMouseLeave={() => setIsDetailed(false)}
     >
-      <div
-        className={`relative flex items-start ${layoutProperties.gap.small}`}
-      >
-        <div
-          className={`aspect-square w-14 rounded-md flex items-center justify-center ${layoutProperties.text.medium} ${opposite.background} ${opposite.foreground}`}
-        >
-          {card.icon}
-        </div>
-        <div className={"space-y-1"}>
-          <h2 className={`${layoutProperties.text.large} font-[500]`}>
-            {t(card.title)}
-          </h2>
-          <p className={`${layoutProperties.text.small} text-neutral-500`}>
-            {t(card.description)}
-          </p>
-        </div>
-      </div>
-      <AnimatePresence>
-        {isExpanded && (
-          <ul
-            className={
-              "space-y-3 list-disc list-inside lg:px-4 px-2 overflow-hidden"
-            }
+      <AnimatePresence mode={"wait"}>
+        {!isDetailed && (
+          <motion.div
+            key={"title"}
+            variants={variants}
+            initial={"initial"}
+            animate={"animate"}
+            exit={"exit"}
+            className={"flex items-center justify-between gap-2 p-4"}
           >
-            {listValues.map((value, index) => (
-              <li key={index}>{value}</li>
-            ))}
-          </ul>
+            <div className={`flex items-start gap-2`}>
+              <div
+                className={`min-w-6 content-center aspect-square flex items-center justify-center rounded-sm ${opposite.background} ${opposite.foreground}`}
+              >
+                {icon}
+              </div>
+              <h4>{t(`${translationsTitle}.Features.${index}.Title`)}</h4>
+            </div>
+            <Icons.AngleDown />
+          </motion.div>
+        )}
+
+        {isDetailed && (
+          <motion.p
+            key={"description"}
+            variants={variants}
+            initial={"initial"}
+            animate={"animate"}
+            exit={"exit"}
+            className={`${layoutProperties.text.extraSmall} p-4 text-justify !leading-[160%]`}
+          >
+            <TextWithCode
+              text={t(`${translationsTitle}.Features.${index}.Description`)}
+            />
+          </motion.p>
         )}
       </AnimatePresence>
-    </Container.Default>
+    </Container.AnimateChangeInHeight>
   );
 };
 
