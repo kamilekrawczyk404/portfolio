@@ -28,8 +28,11 @@ const LanguageUsageStats = ({ languages }: LanguagesUsageStatusProps) => {
         {Object.entries(languages).map(([key, value]) => (
           <div className={"flex items-center gap-x-2"} key={key}>
             <div
-              className={`w-3 aspect-square rounded-full border-1 ${theme.border}`}
-              style={{ backgroundColor: colors.languages[key] }}
+              className={`w-3 aspect-square rounded-full`}
+              style={{
+                backgroundColor: colors.languages[key],
+                boxShadow: `0 0 5px ${colors.languages[key]}`,
+              }}
             />
             <span
               className={`${layoutProperties.text.extraSmall} font-[500] ${theme.foreground}`}
