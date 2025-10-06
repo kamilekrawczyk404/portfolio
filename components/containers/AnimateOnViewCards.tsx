@@ -75,21 +75,22 @@ const AnimateOnViewCards = <T extends unknown>({
       className={`relative ${containerClassName}`}
       style={{ opacity, ...style }}
     >
+      <div
+        className={`w-fit mx-auto sticky top-[max(33%,13rem)] flex items-start ${layoutProperties.gap.small}`}
+      >
+        {cards.map((card, index) => (
+          <CardIndex
+            key={index}
+            item={card}
+            renderIndex={renderIndex}
+            scrollProgress={scrollYProgress}
+            startWhen={startOffsets[index]}
+            endWhen={endOffsets[index]}
+          />
+        ))}
+      </div>
+
       <motion.ul ref={listRef} className={`h-full ${cardsContainerClassName}`}>
-        <div
-          className={`w-fit mx-auto sticky top-[max(33%,13rem)] flex items-start ${layoutProperties.gap.small}`}
-        >
-          {cards.map((card, index) => (
-            <CardIndex
-              key={index}
-              item={card}
-              renderIndex={renderIndex}
-              scrollProgress={scrollYProgress}
-              startWhen={startOffsets[index]}
-              endWhen={endOffsets[index]}
-            />
-          ))}
-        </div>
         {cards.map((card, index) => (
           <Card
             key={index}

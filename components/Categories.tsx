@@ -95,11 +95,9 @@ const Categories = <T extends unknown>({
         <motion.button
           variants={children}
           key={index}
-          className={`flex items-center relative border-1 rounded-xl h-[1.75rem] cursor-pointer transition-colors overflow-hidden ${
-            selectedIds[index]
-              ? `${opposite.border} ${opposite.background} ${opposite.foreground}`
-              : `${theme.borderSecondary}`
-          }`}
+          className={`flex items-center relative rounded-xl h-[1.75rem] shadow-sm cursor-pointer transition-colors overflow-hidden ${
+            selectedIds[index] ? `` : `text-gray-500`
+          } ${theme.backgroundLight}`}
           onClick={() => onCategoryClicked(index)}
         >
           <AnimatePresence>

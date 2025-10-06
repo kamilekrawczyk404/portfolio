@@ -58,6 +58,9 @@ export const layoutProperties: LayoutSystem = {
 
 type ColorSet = {
   background: string;
+  backgroundDark: string;
+  backgroundLight: string;
+  backgroundTransparent?: string;
   backgroundSecondary?: string;
   stroke?: string;
   foreground: string;
@@ -94,7 +97,10 @@ export const colors: ColorPalette = {
     "C#": "#239120",
   },
   light: {
-    background: "bg-white",
+    background: "bg-neutral-100",
+    backgroundLight: "bg-white",
+    backgroundDark: "bg-neutral-200",
+    backgroundTransparent: `bg-white/10`,
     backgroundSecondary: "bg-neutral-200",
     foreground: "text-neutral-700",
     stroke: "stroke-neutral-700",
@@ -103,14 +109,19 @@ export const colors: ColorPalette = {
     outline: "outline-neutral-300",
     divideSecondary: "divide-neutral-200",
     hover: {
-      background: "hover:bg-neutral-100",
+      background: "hover:bg-neutral-200",
+      backgroundLight: "hover:bg-neutral-100",
+      backgroundDark: "hover:bg-neutral-300",
       foreground: "hover:text-neutral-600",
       border: "hover:border-neutral-400",
       outline: "hover:outline-neutral-400",
     },
   },
   dark: {
-    background: "bg-neutral-950",
+    background: "bg-neutral-900",
+    backgroundLight: "bg-neutral-800",
+    backgroundDark: "bg-neutral-950",
+    backgroundTransparent: `bg-neutral-950/10`,
     backgroundSecondary: "bg-neutral-800",
     foreground: "text-neutral-300",
     stroke: "stroke-neutral-300",
@@ -119,7 +130,9 @@ export const colors: ColorPalette = {
     divideSecondary: "divide-neutral-800",
     outline: "outline-neutral-700",
     hover: {
-      background: "hover:bg-neutral-900",
+      background: "hover:bg-neutral-800",
+      backgroundLight: "hover:bg-neutral-700",
+      backgroundDark: "hover:bg-neutral-900",
       foreground: "hover:text-neutral-400",
       border: "hover:border-neutral-600",
       outline: "hover:outline-neutral-600",

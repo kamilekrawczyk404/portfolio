@@ -21,6 +21,7 @@ import {
   ProjectDescription,
 } from "@/types/types";
 import ProjectsList from "@/components/project/ProjectsList";
+import Container from "@/components/containers/Container";
 
 type SortingType = {
   type: "CreatedDesc" | "CreatedAsc" | "UpdatedDesc" | "UpdatedAsc";
@@ -176,8 +177,10 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
           "A selection of my recent work showcasing modern web development and user experience design."
         }
       >
-        <div className={"flex justify-between items-end w-full"}>
-          <div className={"flex flex-col gap-2 w-full"}>
+        <AppearingContainer>
+          <Container.Default
+            className={`flex flex-col justify-between w-full ${layoutProperties.gap.small}`}
+          >
             <AnimatePresence mode={"popLayout"}>
               <GroupSection
                 title={() => (
@@ -253,8 +256,8 @@ const Projects = ({ projectsPhotos, apiKey }: ProjectProps) => {
                 </Button>
               </GroupSection>
             </div>
-          </div>
-        </div>
+          </Container.Default>
+        </AppearingContainer>
       </SectionTitle>
       <AppearingContainer
         className={`relative mt-4 basis-full relative ${layoutProperties.gap.horizontal.large}`}

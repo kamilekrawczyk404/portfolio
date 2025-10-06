@@ -2,8 +2,10 @@ import Hero from "@/views/Hero";
 import Technologies from "@/views/Technologies";
 import Projects from "@/views/Projects";
 import Contact from "@/views/Contact";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import AboutMe from "@/views/AboutMe";
+import React from "react";
+import Experience from "@/views/Experience";
 
 const fetcher = (url, params = {}) =>
   fetch(
@@ -103,6 +105,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function RootPage() {
+  const locale = await getLocale();
   const apiKey = process.env.INTERNAL_API_SECRET;
 
   const projectPhotos = await getProjectsPhotos();
@@ -112,6 +115,7 @@ export default async function RootPage() {
       <Hero />
       <AboutMe />
       <Technologies />
+      <Experience locale={locale} />
       <Projects apiKey={apiKey} projectsPhotos={projectPhotos} />
       <Contact />
     </div>

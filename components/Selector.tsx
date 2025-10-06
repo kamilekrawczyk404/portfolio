@@ -112,7 +112,7 @@ const Selector = <T extends unknown>({
         dispatch(changeSelectorState(!isOpen));
         setIsOpen(!isOpen);
       }}
-      className={`relative z-[10] flex items-center justify-between border-1 px-2 min-h-10 min-w-[6rem] rounded-lg cursor-pointer ${theme.border}`}
+      className={`relative z-[10] flex items-center justify-between px-2 min-h-10 min-w-[6rem] shadow-md rounded-lg cursor-pointer ${theme.backgroundLight}`}
     >
       <span className={`select-none flex-inline items-center`}>
         {items.length && render(items[selectedIndex])}
@@ -129,7 +129,7 @@ const Selector = <T extends unknown>({
             exit={"exit"}
             transition={animationsTypes.default}
             ref={dropdownRef}
-            className={`absolute border-1 left-0 min-w-full top-[calc(100%+.5rem)] overflow-hidden rounded-lg ${theme.background} ${theme.border}`}
+            className={`absolute left-0 min-w-full top-[calc(100%+.5rem)] shadow-md overflow-hidden rounded-lg ${theme.backgroundLight} ${theme.border}`}
           >
             <ul
               className={
@@ -140,7 +140,7 @@ const Selector = <T extends unknown>({
                 <motion.li
                   variants={dropdownItemVariants}
                   transition={animationsTypes.default}
-                  className={`h-[1.75rem] px-2 py-1   flex items-center bg-inherit hover:brightness-95 border-1 border-transparent rounded-md w-fit text-nowrap transition-colors text-xs`}
+                  className={`h-[1.75rem] px-2 py-1 flex items-center bg-inherit rounded-md w-fit text-nowrap transition-colors text-xs ${theme.hover.backgroundLight}`}
                   key={index}
                   onClick={() => setSelectedIndex(index)}
                 >

@@ -1,5 +1,5 @@
 "use client";
-import React, { ComponentProps, ReactNode, useCallback, useMemo } from "react";
+import React, { ComponentProps, ReactNode, useCallback } from "react";
 import { motion } from "framer-motion";
 import { animationProperties, animationsTypes } from "@/animations";
 import CloseButton from "@/components/buttons/CloseButton";
@@ -182,7 +182,6 @@ const Project = ({
                 title={() => (
                   <span>{t("NavigationViewsHeaders.description")}</span>
                 )}
-                headerSize={layoutProperties.text.medium}
                 className={"md:col-span-2 gap-2"}
               >
                 {t(`Projects.${project.githubRepoName}.Description`)}

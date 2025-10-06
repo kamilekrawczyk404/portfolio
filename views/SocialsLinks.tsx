@@ -40,7 +40,6 @@ const SocialLinks = () => {
     <GroupSection
       className={`basis-fit ${layoutProperties.gap.extraSmall}`}
       title={() => <span>{t("Socials")}</span>}
-      headerSize={layoutProperties.text.small}
     >
       <StaggeredList
         className={`flex gap-4`}

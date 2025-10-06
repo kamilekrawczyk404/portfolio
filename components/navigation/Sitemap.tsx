@@ -19,7 +19,6 @@ const Sitemap = () => {
   return (
     <GroupSection
       title={() => <span>{t("Title")}</span>}
-      headerSize={layoutProperties.text.small}
       className={"justify-between"}
     >
       <StaggeredList

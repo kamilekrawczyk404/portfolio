@@ -69,7 +69,7 @@ const ProjectPreview = ({
     <Container.Default
       data-testid={dataTestId}
       ref={containerRef}
-      className={`relative border-1 rounded-md h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large} ${theme.border}`}
+      className={`relative h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large}`}
     >
       <Backdrop isActive={isExpanded || isVisible} blur />
 

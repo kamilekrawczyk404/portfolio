@@ -14,7 +14,7 @@ const Aspect = ({ name, icon = null, ...props }: AspectProps) => {
 
   return (
     <motion.div
-      className={`min-h-[1.75rem] rounded-xl px-2 py-[.125rem] flex items-center gap-x-2 border-1 text-sm ${theme.border} ${theme.background} ${theme.foreground}`}
+      className={`min-h-[1.75rem] rounded-xl px-2 py-[.125rem] flex items-center gap-x-2 text-sm ${theme.backgroundLight} ${theme.foreground}`}
       {...props}
     >
       {icon && <span>{icon}</span>}

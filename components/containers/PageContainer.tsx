@@ -25,7 +25,7 @@ const PageContainer = ({
       className={`relative w-full ${
         includeNavigationHeight
           ? "!mt-[4rem] lg:h-[calc(100vh-4rem)] !min-h-[calc(100vh-4rem)]"
-          : `${theme.background}`
+          : `${theme.backgroundDark}`
       } ${section ? `min-h-fit relative flex flex-col justify-center` : ""} ${
         screenHeight ? "lg:h-[100vh]" : ""
       } ${layoutProperties.body.padding}`}

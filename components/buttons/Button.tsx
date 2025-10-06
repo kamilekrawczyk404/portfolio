@@ -30,12 +30,12 @@ const Button = ({
       data-testid={dataTestId}
       className={`${
         filled
-          ? `${opposite.background} ${opposite.foreground} ${theme.border}`
-          : `${theme.foreground} ${theme.hover.background} ${theme.hover.foreground} ${theme.hover.border} ${theme.border}`
-      } border-1 cursor-pointer relative transition-colors ${
+          ? `${opposite.backgroundLight} ${opposite.foreground} ${theme.border}`
+          : `${theme.backgroundLight} ${theme.foreground}`
+      } cursor-pointer relative transition-colors ${
         square ? "aspect-square rounded-full" : "rounded-lg"
       } ${navigation ? "px-2 h-[1.75rem] w-fit text-sm " : ""} ${
-        main ? "px-2 min-h-10" : ""
+        main ? "px-2 min-h-10 shadow-md" : ""
       } ${className}`}
       {...props}
     >

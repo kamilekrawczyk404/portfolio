@@ -48,7 +48,7 @@ const technologies: Technology[] = [
     languages: {
       title: "Languages",
       aspects: [
-        { name: "JavaScript", knowledge: 80 },
+        { name: "JavaScript", knowledge: 100 },
         { name: "TypeScript", knowledge: 75 },
         { name: "HTML", knowledge: 90 },
         { name: "CSS", knowledge: 85 },

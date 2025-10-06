@@ -20,7 +20,7 @@ const AnimatedCheckbox = ({
   className = "",
   isChecked,
 }: AnimatesCheckboxProps) => {
-  const { opposite } = useSelector((state: RootState) => state.theme);
+  const { theme, opposite } = useSelector((state: RootState) => state.theme);
 
   const tickVariants: Variants = {
     pressed: (value: boolean) => ({ pathLength: value ? 0.85 : 0.2 }),
@@ -86,7 +86,7 @@ const AnimatedCheckbox = ({
           strokeLinejoin="round"
           variants={tickVariants}
           style={{ pathLength, opacity, scale: 0.45 }}
-          className={opposite.stroke}
+          className={theme.stroke}
           custom={isChecked} // Pass custom prop if needed for variants
         />
       </svg>
