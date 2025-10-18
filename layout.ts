@@ -44,11 +44,11 @@ export const layoutProperties: LayoutSystem = {
     extraSmall: "gap-1",
   },
   text: {
-    extraLarge: "lg:text-5xl text-4xl",
-    large: "lg:text-2xl text-xl",
-    medium: "lg:text-lg text-md",
-    small: "lg:text-[1rem] text-normal",
-    extraSmall: "text-sm",
+    extraLarge: "text-4xl",
+    large: "text-xl",
+    medium: "text-md",
+    small: "text-sm",
+    extraSmall: "text-xs",
   },
   body: {
     padding: "lg:p-16 p-4",
@@ -64,6 +64,7 @@ type ColorSet = {
   backgroundSecondary?: string;
   stroke?: string;
   foreground: string;
+  foregroundSecondary?: string;
   border: string;
   borderSecondary?: string;
   divideSecondary?: string;
@@ -72,12 +73,47 @@ type ColorSet = {
 
 export type BasicColorSet = ColorSet & { hover: ColorSet };
 
+export type Color = `#${string}` | `rgba(${string})`;
+
 export type ColorPalette = {
   purple: string;
   orange: string;
-  languages: Record<string, string>;
+  languages: Record<string, Color>;
   light: BasicColorSet;
   dark: BasicColorSet;
+};
+
+export const hexToRgba = (hexValue: string, alpha: number = 1): string => {
+  const cleanHex = hexValue.startsWith("#") ? hexValue.slice(1) : hexValue;
+
+  const a = Math.min(1, Math.max(0, alpha));
+
+  let r, g, b;
+
+  // 3. Handle 3-digit shorthand format (e.g., 'f45' -> 'ff4455')
+  if (cleanHex.length === 3) {
+    r = parseInt(cleanHex[0] + cleanHex[0], 16);
+    g = parseInt(cleanHex[1] + cleanHex[1], 16);
+    b = parseInt(cleanHex[2] + cleanHex[2], 16);
+  }
+  // 4. Handle 6-digit standard format (e.g., 'ff4500')
+  else if (cleanHex.length === 6) {
+    r = parseInt(cleanHex.substring(0, 2), 16);
+    g = parseInt(cleanHex.substring(2, 4), 16);
+    b = parseInt(cleanHex.substring(4, 6), 16);
+  }
+  // 5. Handle invalid length
+  else {
+    console.error(`Invalid hexValue color length: ${hexValue}`);
+    return null;
+  }
+
+  if (isNaN(r) || isNaN(g) || isNaN(b)) {
+    console.error(`Invalid hexValue color characters: ${hexValue}`);
+    return null;
+  }
+
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
 };
 
 export const colors: ColorPalette = {
@@ -97,12 +133,13 @@ export const colors: ColorPalette = {
     "C#": "#239120",
   },
   light: {
-    background: "bg-neutral-100",
+    background: "bg-neutral-50",
     backgroundLight: "bg-white",
-    backgroundDark: "bg-neutral-200",
+    backgroundDark: "bg-neutral-100",
     backgroundTransparent: `bg-white/10`,
     backgroundSecondary: "bg-neutral-200",
     foreground: "text-neutral-700",
+    foregroundSecondary: "text-neutral-500",
     stroke: "stroke-neutral-700",
     border: "border-neutral-300",
     borderSecondary: "border-neutral-200",
@@ -124,6 +161,7 @@ export const colors: ColorPalette = {
     backgroundTransparent: `bg-neutral-950/10`,
     backgroundSecondary: "bg-neutral-800",
     foreground: "text-neutral-300",
+    foregroundSecondary: "text-neutral-500",
     stroke: "stroke-neutral-300",
     border: "border-neutral-700",
     borderSecondary: "border-neutral-800",

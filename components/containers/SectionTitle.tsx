@@ -34,7 +34,7 @@ const SectionTitle = ({
   return (
     <div className={`relative flex flex-col ${theme.foreground} ${className}`}>
       <div
-        className={`flex flex-col items-center lg:mb-8 mb-6 ${layoutProperties.gap.small} ${titleContainerClassName}`}
+        className={`flex flex-col items-center lg:mb-8 mb-6 ${layoutProperties.gap.extraSmall} ${titleContainerClassName}`}
       >
         <h2 data-testid={title}>
           <AnimatedSingleLetterText

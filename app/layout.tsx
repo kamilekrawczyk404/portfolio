@@ -13,7 +13,7 @@ export default async function RootLayout({ children }) {
     <html lang={locale}>
       <NextIntlClientProvider messages={messages}>
         <StoreProvider>
-          <body className={`antialiased w-full overflow-x-hidden`}>
+          <body className={`relative antialiased w-full overflow-x-hidden`}>
             <Navigation />
             {children}
             <Footer />

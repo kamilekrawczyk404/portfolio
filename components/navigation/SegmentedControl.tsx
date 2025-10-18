@@ -33,14 +33,13 @@ const SegmentedControl = <T extends unknown>({
 
   return (
     <motion.div
-      className={`flex items-center border-1 rounded-full overflow-hidden w-fit ${theme.border} ${className}`}
+      className={`flex items-center border-1 rounded-full overflow-x-scroll max-w-full no-scrollbar ${theme.borderSecondary} ${className}`}
     >
       {items.map((item, index) => (
         <button
-          tabIndex={-1}
           key={index}
-          className={`relative inline-block lg:px-6 px-4 px-1 lg:py-4 md:py-2 py-1 transition-colors ${
-            theme.border
+          className={`cursor-pointer relative inline-block lg:px-6 px-4 lg:py-4 py-2 py-1 transition-colors text-nowrap ${
+            theme.borderSecondary
           } ${
             index === selectedItemIndex
               ? `${opposite.foreground}`
@@ -55,13 +54,13 @@ const SegmentedControl = <T extends unknown>({
               transition={animationsTypes.default}
             />
           )}
-          <span
-            className={`${
+          <div
+            className={`flex items-center justify-center ${
               index === selectedItemIndex ? getMixBlendClassName(selected) : ""
             }`}
           >
             {render(item)}
-          </span>
+          </div>
         </button>
       ))}
     </motion.div>

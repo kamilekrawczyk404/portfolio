@@ -3,6 +3,7 @@ import React, { ComponentProps, ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { RootState } from "@/redux/store";
+import { layoutProperties } from "@/layout";
 
 type AspectProps = {
   name: string;
@@ -14,7 +15,7 @@ const Aspect = ({ name, icon = null, ...props }: AspectProps) => {
 
   return (
     <motion.div
-      className={`min-h-[1.75rem] rounded-xl px-2 py-[.125rem] flex items-center gap-x-2 text-sm ${theme.backgroundLight} ${theme.foreground}`}
+      className={`min-h-[1.75rem] rounded-xl px-2 py-[.125rem] flex items-center gap-x-2 border-1 shadow-xs ${theme.borderSecondary} ${theme.foreground} ${layoutProperties.text.extraSmall}`}
       {...props}
     >
       {icon && <span>{icon}</span>}

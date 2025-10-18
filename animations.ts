@@ -31,7 +31,11 @@ export type VariantsPresets = {
     props?: Transition;
     offset?: number | string;
   }) => HorizontalAppearing;
-  verticalAppearing: (direction?: Direction) => Variants;
+  verticalAppearing: (
+    direction?: Direction,
+    offset?: number | string,
+    duration?: number,
+  ) => Variants;
   appearing: ({
     duration,
     delay,
@@ -169,20 +173,24 @@ export const variantsPresets: VariantsPresets = {
       },
     },
   }),
-  verticalAppearing: (direction = "fromTop") => ({
+  verticalAppearing: (
+    direction = "fromTop",
+    offset = "100%",
+    duration = animationProperties.durations.long,
+  ) => ({
     initial: {
-      y: direction === "fromTop" ? "-100%" : "100%",
+      y: direction === "fromTop" ? -offset : offset,
       opacity: 0,
     },
     animate: {
       y: 0,
       opacity: 1,
-      transition: { opacity: { delay: 0.075 } },
+      transition: { opacity: { delay: duration / 8 }, duration },
     },
     exit: {
-      y: direction === "fromTop" ? "100%" : "-100%",
+      y: direction === "fromTop" ? offset : -offset,
       opacity: 0,
-      transition: { y: { delay: 0.075 } },
+      transition: { y: { delay: duration / 2 }, duration },
     },
   }),
   appearing: ({ duration = 0.5, delay = 0 }) => ({

@@ -150,7 +150,7 @@ const ProjectPreview = ({
       <div className={"space-y-2"}>
         <LanguageUsageStats languages={project.repository.languages} />
         <div
-          className={`w-full flex flex-wrap items-end gap-2 text-sm ${theme.border} ${theme.foreground}`}
+          className={`w-full flex flex-wrap items-end gap-x-2 text-sm ${theme.border} ${theme.foreground}`}
         >
           <List
             items={

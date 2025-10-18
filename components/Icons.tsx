@@ -39,6 +39,9 @@ import {
   faFileLines,
   faChartDiagram,
   faPeopleRoof,
+  faLaptopCode,
+  faCalendar,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
@@ -49,6 +52,15 @@ interface IconProps {
 export const Icons = {
   Filter: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faFilter} className={className} />
+  ),
+  Calendar: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faCalendar} className={className} />
+  ),
+  Location: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faLocationDot} className={className} />
+  ),
+  LaptopCode: ({ className = "" }: IconProps) => (
+    <FontAwesomeIcon icon={faLaptopCode} className={className} />
   ),
   Refresh: ({ className = "" }: IconProps) => (
     <FontAwesomeIcon icon={faArrowsRotate} className={className} />

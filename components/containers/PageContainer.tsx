@@ -8,6 +8,7 @@ type PageContainerProps = ComponentProps<"div"> & {
   section?: boolean;
   screenHeight?: boolean;
   includeNavigationHeight?: boolean;
+  centerItems?: boolean;
 };
 
 const PageContainer = ({
@@ -16,6 +17,7 @@ const PageContainer = ({
   includeNavigationHeight = false,
   section = false,
   screenHeight = true,
+  centerItems = false,
   ...props
 }: PageContainerProps) => {
   const { theme } = useSelector((state: RootState) => state.theme);
@@ -28,7 +30,9 @@ const PageContainer = ({
           : `${theme.backgroundDark}`
       } ${section ? `min-h-fit relative flex flex-col justify-center` : ""} ${
         screenHeight ? "lg:h-[100vh]" : ""
-      } ${layoutProperties.body.padding}`}
+      } ${centerItems ? "flex flex-col items-center justify-center" : ""} ${
+        layoutProperties.body.padding
+      }`}
       {...props}
     >
       <div className={`lg:w-6xl w-full mx-auto ${className}`}>{children}</div>

@@ -89,15 +89,15 @@ const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
       >
         <div className={"relative h-4 mx-1"}>
           <motion.div
-            className={`absolute left-0 top-1/2  -translate-y-1/2 z-10 overflow-hidden shadow-sm h-full rounded-sm ${theme.backgroundLight}`}
+            className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 overflow-hidden shadow-sm h-full rounded-sm ${theme.backgroundLight}`}
             style={{
               width,
               backgroundImage: `linear-gradient(
-            45deg,
+            -45deg,
             rgba(${barsBackground}, 0.3) 25%, /* First stripe color (light transparent white) */
             transparent 25%,
             transparent 50%,
-            rgba(${barsBackground}, 0.3), 50%,
+            rgba(${barsBackground}, 0.3) 50%,
             rgba(${barsBackground}, 0.3) 75%,
             transparent 75%,
             transparent

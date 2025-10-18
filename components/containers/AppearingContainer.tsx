@@ -13,7 +13,7 @@ const AppearingContainer = ({
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ delay: animationProperties.durations.long }}
+      transition={{ delay: animationProperties.durations.medium }}
     >
       {children}
     </motion.div>
