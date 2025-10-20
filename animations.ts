@@ -1,4 +1,4 @@
-import { Variants, Transition, stagger } from "framer-motion";
+import { Variants, Transition, stagger, DynamicOption } from "framer-motion";
 
 export type Direction = "fromTop" | "fromBottom";
 
@@ -35,6 +35,7 @@ export type VariantsPresets = {
     direction?: Direction,
     offset?: number | string,
     duration?: number,
+    staggerValue?: null | number,
   ) => Variants;
   appearing: ({
     duration,
@@ -177,6 +178,7 @@ export const variantsPresets: VariantsPresets = {
     direction = "fromTop",
     offset = "100%",
     duration = animationProperties.durations.long,
+    staggerValue = null,
   ) => ({
     initial: {
       y: direction === "fromTop" ? -offset : offset,
@@ -185,12 +187,22 @@ export const variantsPresets: VariantsPresets = {
     animate: {
       y: 0,
       opacity: 1,
-      transition: { opacity: { delay: duration / 8 }, duration },
+      transition: {
+        opacity: { delay: duration / 8 },
+        duration,
+        ...(staggerValue !== null
+          ? {
+              ...animationsTypes.default,
+              delayChildren: stagger(staggerValue),
+              when: "beforeChildren",
+            }
+          : {}),
+      },
     },
     exit: {
       y: direction === "fromTop" ? offset : -offset,
       opacity: 0,
-      transition: { y: { delay: duration / 2 }, duration },
+      transition: { y: { delay: duration / 4 }, duration },
     },
   }),
   appearing: ({ duration = 0.5, delay = 0 }) => ({

@@ -1,9 +1,13 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import PageContainer from "@/components/containers/PageContainer";
 import { layoutProperties } from "@/layout";
 import { AnimatePresence, motion, stagger } from "framer-motion";
-import { animationsTypes } from "@/animations";
+import {
+  animationProperties,
+  animationsTypes,
+  variantsPresets,
+} from "@/animations";
 import SectionTitle from "@/components/containers/SectionTitle";
 import GroupSection from "@/components/containers/GroupSection";
 import StaggeredList from "@/components/lists/StaggeredList";
@@ -71,7 +75,6 @@ const technologies: Technology[] = [
         { name: "SEO" },
         { name: "Playwright" },
         { name: "React Testing Library" },
-        { name: "Web sockets" },
         { name: "Web Performance Optimization" },
         { name: "Core Web Vitals" },
         { name: "Responsive designs" },
@@ -94,7 +97,7 @@ const technologies: Technology[] = [
     frameworks: {
       title: "Frameworks & Libraries",
       aspects: [
-        { name: "Prisma", knowledge: 50 },
+        { name: "Prisma", knowledge: 70 },
         { name: "Express.js", knowledge: 50 },
         { name: "Symfony", knowledge: 60 },
         { name: "Laravel", knowledge: 65 },
@@ -104,10 +107,12 @@ const technologies: Technology[] = [
     otherAspects: {
       title: "Additional aspects",
       aspects: [
-        { name: "PHPUnit" },
         { name: "Authorization & Authentication" },
+        { name: "PHPUnit" },
         { name: "REST API" },
         { name: "Graph QL" },
+        { name: "WebSockets" },
+        { name: "JWT" },
       ],
     },
   },
@@ -151,34 +156,13 @@ const technologies: Technology[] = [
   },
 ];
 
-const contentVariants: Variants = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      ...animationsTypes.default,
-      delayChildren: stagger(0.05),
-      when: "beforeChildren",
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: { ...animationsTypes.default, duration: 0.3 },
-  },
-};
-
 // Variants for "Languages", "Frameworks", "Other Aspects" groups
-const groupVariants: Variants = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      ...animationsTypes.default,
-      delayChildren: stagger(0.05),
-    },
-  },
-  exit: { opacity: 0 },
-};
+const groupVariants: Variants = variantsPresets.verticalAppearing(
+  "fromTop",
+  10,
+  animationProperties.durations.medium,
+  0.05,
+);
 
 // Variants for the individual aspect item (text + progress bar container)
 const aspectItemVariants: Variants = {
@@ -187,10 +171,13 @@ const aspectItemVariants: Variants = {
     opacity: 1,
     transition: {
       ...animationsTypes.default,
-      duration: 0.5,
+      duration: animationProperties.durations.medium,
     },
   },
-  exit: { opacity: 0, transition: { duration: 0.2 } }, // Added y for exit too
+  exit: {
+    opacity: 0,
+    transition: { duration: animationProperties.durations.short },
+  }, // Added y for exit too
 };
 
 const technologiesIcons = {
@@ -241,25 +228,26 @@ const Technologies = () => {
           onItemSelect={onCategoryChange}
         />
       </SectionTitle>
+
       <AppearingContainer
         className={`grid lg:grid-cols-2 grid-cols-1 ${layoutProperties.gap.small} ${theme.foreground}`}
       >
-        <AnimatePresence mode={"popLayout"}>
+        <AnimatePresence mode={"wait"}>
           {Object.entries(technologies[selectedIndex]).map(
-            ([key, technologyAspect]: [string, TechnologyAspect]) => {
+            ([key, technologyAspect]: [string, TechnologyAspect], index) => {
               if (key === "type") return null;
 
               return (
                 <Container.Default
-                  key={key}
+                  key={`${key}-${selectedIndex}`}
                   variants={groupVariants}
                   initial={"initial"}
                   animate={"animate"}
                   exit={"exit"}
-                  className={"basis-1/2 space-y-4"}
+                  className={`space-y-4`}
                 >
                   <h2
-                    className={`font-[500] border-b-1 pb-2 ${theme.borderSecondary} ${layoutProperties.text.medium} `}
+                    className={`font-[500] ${theme.borderSecondary} ${layoutProperties.text.large} `}
                   >
                     {technologyAspect.title}
                   </h2>
@@ -272,7 +260,7 @@ const Technologies = () => {
                     />
                   ) : (
                     <div
-                      className={`grid lg:grid-cols-2 grid-cols-1 ${layoutProperties.gap.medium}`}
+                      className={`grid lg:grid-cols-2 grid-cols-1 ${layoutProperties.gap.large}`}
                     >
                       {technologyAspect.aspects.map(
                         (aspect: Aspect & { knowledge: number }) => {

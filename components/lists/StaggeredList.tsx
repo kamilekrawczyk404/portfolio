@@ -42,6 +42,7 @@ const StaggeredList = <T extends unknown>({
     duration: 0.5,
     delay: 0,
   },
+  className,
   ...props
 }: StaggeredListProps<T>) => {
   const { parent, children } = variantsPresets[staggerFunctions[animationType]](
@@ -60,7 +61,7 @@ const StaggeredList = <T extends unknown>({
         initial={"initial"}
         animate={"animate"}
         exit={"exit"}
-        className={!props.className ? "flex flex-wrap gap-2" : props.className}
+        className={`flex flex-wrap gap-2 ${className}`}
       >
         {items.map((item, index) => (
           <motion.li

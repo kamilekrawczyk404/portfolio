@@ -6,6 +6,7 @@ import { Variants } from "motion-dom";
 import { RootState } from "@/redux/store";
 import ProgressBar from "@/components/project/ProgressBar";
 import { layoutProperties } from "@/layout";
+import TextWithCode from "@/components/text/TextWithCode";
 
 type ProgressBarAspectProps = {
   aspect: { name: string; knowledge: number };
@@ -27,9 +28,7 @@ const ProgressBarAspect = ({
       className={`flex flex-col relative ${theme.foreground}`}
       onAnimationComplete={onAnimationComplete}
     >
-      <h5
-        className={`font-[500] mb-[.125rem] ${layoutProperties.text.extraSmall}`}
-      >
+      <h5 className={`font-[500] mb-[.125rem] ${layoutProperties.text.small}`}>
         {aspect.name}
       </h5>
       <ProgressBar

@@ -150,7 +150,7 @@ const Card = ({
   const variants = variantsPresets.verticalAppearing(
     "fromTop",
     10,
-    animationProperties.durations.medium,
+    animationProperties.durations.short,
   );
 
   return (
@@ -187,9 +187,7 @@ const Feature = ({
   });
 
   return (
-    <div
-      className={`content-center space-y-2 p-4 rounded-md border-1 ${theme.borderSecondary} ${theme.background}`}
-    >
+    <Container.Default className={`content-center space-y-2`}>
       <AnimatePresence mode={"wait"}>
         <div className={`flex items-center gap-3`}>
           <div
@@ -213,7 +211,7 @@ const Feature = ({
           />
         </motion.p>
       </AnimatePresence>
-    </div>
+    </Container.Default>
   );
 };
 

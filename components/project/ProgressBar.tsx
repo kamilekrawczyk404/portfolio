@@ -11,7 +11,8 @@ import {
 import { animationProperties, animationsTypes } from "@/animations";
 import { useSelector } from "react-redux";
 import { colors } from "@/layout";
-import { RootState } from "@/redux/store"; // Ensure these paths are correct
+import { RootState } from "@/redux/store";
+import TextWithCode from "@/components/text/TextWithCode"; // Ensure these paths are correct
 
 type ProgressBarProps = {
   percentage: number;
@@ -73,21 +74,22 @@ const ProgressBar = ({ percentage, shouldAnimate }: ProgressBarProps) => {
             ...animationsTypes.default,
           }}
         >
-          <div
-            className={`mb-[.25rem] text-xs px-1 h-4 flex items-center rounded-sm border-1 ${opposite.foreground} ${opposite.backgroundLight}`}
-          >
-            <span>{currentWidthValue}%</span>
+          <div className={`mb-[.25rem] text-sm h-5 flex items-center`}>
+            <TextWithCode
+              text={currentWidthValue.toString() + "%"}
+              separator={""}
+            />
           </div>
           <div
-            className={`absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-0 border-[.25rem] border-b-0 border-l-transparent border-r-transparent`}
+            className={`absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-0 border-[.25rem] border-b-0 border-l-transparent border-r-transparent ${theme.border}`}
           ></div>
         </motion.div>
       </div>
 
       <div
-        className={`relative w-full h-6 rounded-md content-center overflow-hidden ${theme.backgroundLight}`}
+        className={`relative w-full h-5 rounded-md content-center overflow-hidden border-1  ${theme.borderSecondary}`}
       >
-        <div className={"relative h-4 mx-1"}>
+        <div className={"relative h-full"}>
           <motion.div
             className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 overflow-hidden shadow-sm h-full rounded-sm ${theme.backgroundLight}`}
             style={{

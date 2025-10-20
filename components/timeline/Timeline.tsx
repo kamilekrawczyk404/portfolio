@@ -250,8 +250,6 @@ const Event = <T extends object>({
     target: eventContainer,
   });
 
-  console.log(isEventInView);
-
   useEffect(() => {
     const handleClickOutsideTimelineEvent = (e: React.MouseEvent) => {
       if (

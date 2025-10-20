@@ -1,12 +1,13 @@
 "use client";
 import React, { ComponentProps, ReactNode } from "react";
-import { motion } from "framer-motion";
+import { HTMLMotionProps, motion, MotionProps } from "framer-motion";
 import { animationProperties } from "@/animations";
 
 const AppearingContainer = ({
   children,
   className,
-}: ComponentProps<"div">): ReactNode => {
+  ...props
+}: HTMLMotionProps<"div">): ReactNode => {
   return (
     <motion.div
       className={className}
@@ -14,6 +15,7 @@ const AppearingContainer = ({
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ delay: animationProperties.durations.medium }}
+      {...props}
     >
       {children}
     </motion.div>

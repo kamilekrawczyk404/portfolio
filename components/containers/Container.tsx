@@ -65,7 +65,7 @@ const Default = ({
   return (
     <motion.div
       data-testid={dataTestId}
-      className={`lg:p-6 p-4 shadow-lg rounded-lg ${theme.background} ${className}`}
+      className={`p-4 shadow-lg rounded-lg border-1 ${theme.borderSecondary} ${theme.background} ${className}`}
       {...props}
     >
       {children}
