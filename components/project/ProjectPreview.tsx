@@ -69,7 +69,7 @@ const ProjectPreview = ({
     <Container.Default
       data-testid={dataTestId}
       ref={containerRef}
-      className={`relative h-[20rem] min-h-[15rem] flex flex-col justify-between relative ${layoutProperties.gap.large}`}
+      className={`relative min-h-48 flex flex-col justify-between relative ${layoutProperties.gap.large}`}
     >
       <Backdrop isActive={isExpanded || isVisible} blur />
 
@@ -169,9 +169,7 @@ const ProjectPreview = ({
         className={
           "absolute inset-0 content-center text-center text-gray-500/15 text-7xl"
         }
-      >
-        #{index + 1}
-      </div>
+      ></div>
     </Container.Default>
   );
 };

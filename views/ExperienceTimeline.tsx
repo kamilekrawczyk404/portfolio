@@ -8,28 +8,32 @@ import Container from "@/components/containers/Container";
 import { animationProperties, variantsPresets } from "@/animations";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import Aspect from "@/components/lists/Aspect";
 import { useTranslations } from "next-intl";
 import ExpandingList from "@/components/lists/ExpandingList";
 import TextWithCode from "@/components/text/TextWithCode";
 
 type JobFeatures = {
   responsibilities: string[];
-  learnings: string[];
   achievements: string[];
+  learnings: string[];
 };
 
 type JobDescription = {
   id: number;
   role: string;
-  place: "remote" | "hybrid" | "onsite";
-  type: "full-time" | "part-time" | "temporary" | "freelance";
+  place: "Remote" | "Hybrid" | "OnSite";
+  type:
+    | "FullTime"
+    | "PartTime"
+    | "Temporary"
+    | "Freelance"
+    | "Internship"
+    | "Contract";
   company: {
     name: string;
     city: string;
   };
   features: JobFeatures;
-  technologiesUsed: string[];
 };
 
 type ExperienceTimeEvent = TimelineEvent<JobDescription>;
@@ -41,13 +45,57 @@ type ExperienceTimeLineProps = {
 const jobs: ExperienceTimeEvent[] = [
   {
     id: 1,
+    color: colors.languages.JavaScript,
+    start: new Date("2020/10/01"),
+    end: new Date("2020/11/01"),
+    type: "Internship",
+    role: "Intern Frontend Developer",
+    place: "OnSite",
+    company: { name: "Centrum Kształcenia Zawodowego", city: "Nowy Sącz, PL" },
+    features: {
+      responsibilities: ["Development", "Optimization", "Databases"],
+      learnings: ["PHP", "REST APIs", "MySQL", "MongoDB"],
+      achievements: ["BugFixes", "Testing"],
+    },
+  },
+  {
+    id: 2,
+    color: colors.languages.JavaScript,
+    start: new Date("2021/10/01"),
+    end: new Date("2021/11/01"),
+    type: "Internship",
+    role: "Intern Frontend Developer",
+    place: "OnSite",
+    company: { name: "Centrum Kształcenia Zawodowego", city: "Nowy Sącz, PL" },
+    features: {
+      responsibilities: ["Development", "Optimization", "Databases"],
+      learnings: ["PHP", "REST APIs", "MySQL", "MongoDB"],
+      achievements: ["BugFixes", "Testing"],
+    },
+  },
+  {
+    id: 3,
+    role: "Fullstack Developer",
     color: colors.languages.TypeScript,
-    // dates!!
+    start: new Date("2024/02/10"),
+    end: new Date("2025/02/23"),
+    type: "Contract",
+    place: "Remote",
+    company: { name: "And-Wiert Studnie Głębinowe", city: "Gromnik, PL" },
+    features: {
+      responsibilities: ["Web Design", "Development", "Blog", "Deployment"],
+      learnings: ["NextJS", "SEO", "AI Integration", "Docker"],
+      achievements: ["SuccessfulLaunch", "Performance", "SEOImprovement"],
+    },
+  },
+  {
+    id: 4,
+    color: "#1dd3b0",
     start: new Date("2024/09/15"),
-    end: "now",
+    end: "present",
     role: "Junior Frontend Developer",
-    type: "freelance",
-    place: "remote",
+    type: "Contract",
+    place: "Remote",
     company: {
       name: "Printworks sp. z o.o.",
       city: "Modlnica, Kraków, PL",
@@ -62,18 +110,6 @@ const jobs: ExperienceTimeEvent[] = [
         "Testing",
       ],
     },
-    technologiesUsed: [
-      "ReactJS",
-      "Redux",
-      "MongoDB",
-      "MySQL",
-      "Docker",
-      "jQuery",
-      "WebSockets",
-      "Bootstrap",
-      "SCSS",
-      "Webpack",
-    ],
   },
 ];
 
@@ -107,7 +143,7 @@ const ExperienceTimeline = ({ locale }: ExperienceTimeLineProps) => {
       setEndDate((prev) => {
         if (prev) return prev;
         const initialEnd = new Date(now);
-        return new Date(initialEnd.setMonth(initialEnd.getMonth() + 2));
+        return new Date(initialEnd.setMonth(initialEnd.getMonth()));
       });
     };
 
@@ -118,13 +154,13 @@ const ExperienceTimeline = ({ locale }: ExperienceTimeLineProps) => {
     return () => clearInterval(intervalId);
   }, []); // Only runs once on mount
 
-  const startDate = new Date("01-01-2024");
+  const startDate = new Date("2020/01/01");
 
   const renderJobEvent = useCallback(
     (event: TimelineEvent<JobDescription>, isActive: boolean) => (
       <Job job={event} isActive={isActive} locale={locale} time={time} />
     ),
-    [],
+    [locale],
   );
 
   if (!endDate || !time) return <></>;
@@ -135,7 +171,7 @@ const ExperienceTimeline = ({ locale }: ExperienceTimeLineProps) => {
       timelineEnd={endDate}
       locale={locale}
       events={events}
-      totalWidth={400}
+      totalWidth={4000}
       renderEvent={(event, isActive) => renderJobEvent(event, isActive)}
     />
   );
@@ -186,35 +222,40 @@ const Job = ({
   );
 
   return (
-    <Container.AnimateChangeInHeight>
-      <motion.div
+    <div className={"mb-4 relative"}>
+      <Container.Default
         variants={variants}
         initial={"initial"}
         animate={"animate"}
         exit={"exit"}
-        className={`flex flex-col gap-4 lg:p-4 p-2 md:w-xl rounded-md ${theme.background}`}
+        className={`flex flex-col gap-4 lg:p-4 p-2 w-xl max-w-[calc(100vw-2rem)] rounded-md overflow-hidden ${theme.background}`}
       >
-        <div className={"space-y-2"}>
-          <div>
-            <h3
-              className={`font-[500] space-x-2 ${layoutProperties.text.medium}`}
-            >
-              <Icons.LaptopCode />
-              <span>{t(`Jobs.${job.id}.Role`)}</span>
+        <div className={"relative flex flex-col gap-2"}>
+          <div className={"space-y-1"}>
+            <h3 className={`font-[500] space-x-2`}>
+              {/*<Icons.LaptopCode className={`${layoutProperties.text.medium}`} />*/}
+              <span className={`${layoutProperties.text.large}`}>
+                {t(`Jobs.${job.id}.Role`)}
+              </span>
             </h3>
-            <p className={`${layoutProperties.text.extraSmall}`}>
-              {job.company.name} • {job.type} • {job.place}
+            <p className={`${layoutProperties.text.small}`}>
+              {job.company.name} • {t(`JobType.${job.type}`)} •{" "}
+              {t(`JobPlace.${job.place}`)}
             </p>
           </div>
           <div
-            className={`flex justify-between gap-4 ${theme.foregroundSecondary} ${layoutProperties.text.extraSmall}`}
+            className={`flex gap-4 ${theme.foregroundSecondary} ${layoutProperties.text.extraSmall}`}
           >
-            <span>
-              <Icons.Calendar /> {formatDate(job.start)} {"- "}
-              {formatDate(job.end as Date)}
+            <span className={"space-x-1"}>
+              <Icons.Calendar className={"text-[.9rem] w-3"} />
+              <span>
+                {formatDate(job.start)} {"- "}
+                {formatDate(job.end as Date)}
+              </span>
             </span>
-            <span>
-              <Icons.Location /> {job.company.city}
+            <span className={"space-x-1"}>
+              <Icons.Location className={"text-[.9rem] w-3"} />
+              <span>{job.company.city}</span>
             </span>
           </div>
         </div>
@@ -230,12 +271,12 @@ const Job = ({
                 transition: { delay: animationProperties.durations.short },
               }}
               exit={"exit"}
-              className={"space-y-2"}
+              className={`divide-y-1 border-y-1 ${theme.borderSecondary} ${theme.divideSecondary}`}
             >
               {Object.entries(job.features).map(([feature, items]) => (
                 <ExpandingList
+                  className={"py-2"}
                   key={feature}
-                  className={`p-2 rounded-sm border-1 ${theme.borderSecondary}`}
                   id={feature}
                   isExpanded={listsExpandStatuses[feature]}
                   onExpand={(id) => {
@@ -264,20 +305,25 @@ const Job = ({
                   renderItem={(item) => <TextWithCode text={item} />}
                 />
               ))}
-              <div className={"flex flex-wrap gap-2"}>
-                {job.technologiesUsed.map((tech) => (
-                  <Aspect key={tech} name={tech} />
-                ))}
-              </div>
             </motion.div>
           ) : (
-            <span className={`mx-auto ${layoutProperties.text.extraSmall}`}>
-              Click the bar to see more details
-            </span>
+            <motion.span
+              initial={{ y: 5, opacity: 0 }}
+              animate={{ y: 0, opacity: "100%" }}
+              transition={{
+                duration: animationProperties.durations.long,
+              }}
+              className={`mx-auto ${layoutProperties.text.extraSmall}`}
+            >
+              {t("ClickToExpand")}
+            </motion.span>
           )}
         </AnimatePresence>
-      </motion.div>
-    </Container.AnimateChangeInHeight>
+      </Container.Default>
+      <div
+        className={`absolute top-full left-1/2 -translate-x-1/2 border-x-transparent border-b-0 border-[.3rem] w-0 h-0 ${theme.borderSecondary}`}
+      />
+    </div>
   );
 };
 

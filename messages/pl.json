@@ -23,29 +23,124 @@
       },
       "Summary": "Kierując się ciekawością, stale przekraczam granice w tworzeniu stron internetowych, aby dostarczać wyjątkowe rezultaty."
     },
+    "Experience": {
+      "Title": "Oś czasu doświadczenia",
+      "Description": "Przewiń niżej, aby poznać moją szczegółową historię zatrudnienia, obejmującą obowiązki techniczne, najważniejsze osiągnięcia projektowe oraz wpływ moich rozwiązań.",
+      "ClickToExpand": "Kliknij pasek, aby rozwinąć szczegóły",
+      "JobsFeatures": {
+        "Responsibilities": "Obowiązki",
+        "Learnings": "Nabyte umiejętności",
+        "Achievements": "Osiągnięcia"
+      },
+      "JobPlace": {
+        "Remote": "Zdalnie",
+        "OnSite": "Stacjonarnie",
+        "Hybrid": "Hybrydowo"
+      },
+      "JobType": {
+        "Temporary": "Tymczasowa",
+        "Internship": "Staż",
+        "FullTime": "Pełny etat",
+        "PartTime": "Część etatu",
+        "Freelance": "Freelance",
+        "Contract": "Kontrakt"
+      },
+      "Jobs": {
+        "1": {
+          "Role": "Stażysta Frontend Developer",
+          "Responsibilities": {
+            "Development": "Stworzenie prostej aplikacji internetowej w **PHP** w ramach programu stażowego.",
+            "Optimization": "Optymalizacja zapytań do bazy danych w celu poprawy wydajności aplikacji.",
+            "Databases": "Zaprojektowanie i wdrożenie schematu bazy danych **MySQL** od podstaw."
+          },
+          "Learnings": {
+            "PHP": "Zdobycie praktycznego doświadczenia w skryptach po stronie serwera przy użyciu **PHP**.",
+            "REST APIs": "Nauka zasad budowania i konsumowania prostych **REST API**.",
+            "MySQL": "Opanowanie zarządzania bazami danych i ich strukturą w **MySQL**.",
+            "MongoDB": "Zdobycie wstępnej wiedzy na temat **MongoDB** jako alternatywy dla baz danych NoSQL."
+          },
+          "Achievements": {
+            "BugFixes": "Identyfikacja i rozwiązywanie błędów w kodzie aplikacji podczas jej tworzenia.",
+            "Testing": "Pomyślne przetestowanie funkcjonalności **CRUD** (Create, Read, Update, Delete) aplikacji."
+          }
+        },
+        "2": {
+          "Role": "Stażysta Frontend Developer",
+          "Responsibilities": {
+            "Development": "Stworzenie prostej aplikacji internetowej w **PHP** w ramach programu stażowego.",
+            "Optimization": "Optymalizacja zapytań do bazy danych w celu poprawy wydajności aplikacji.",
+            "Databases": "Zaprojektowanie i wdrożenie schematu bazy danych **MySQL** od podstaw."
+          },
+          "Learnings": {
+            "PHP": "Zdobycie praktycznego doświadczenia w skryptach po stronie serwera przy użyciu **PHP**.",
+            "REST APIs": "Nauka zasad budowania i konsumowania prostych **REST API**.",
+            "MySQL": "Opanowanie zarządzania bazami danych i ich strukturą w **MySQL**.",
+            "MongoDB": "Zdobycie wstępnej wiedzy na temat **MongoDB** jako alternatywy dla baz danych NoSQL."
+          },
+          "Achievements": {
+            "BugFixes": "Identyfikacja i rozwiązywanie błędów w kodzie aplikacji podczas jej tworzenia.",
+            "Testing": "Pomyślne przetestowanie funkcjonalności **CRUD** (Create, Read, Update, Delete) aplikacji."
+          }
+        },
+        "3": {
+          "Role": "Fullstack Developer",
+          "Responsibilities": {
+            "Web Design": "Zaprojektowanie kompletnego interfejsu UI/UX strony internetowej od podstaw, z naciskiem na zaangażowanie użytkownika.",
+            "Development": "Prowadzenie pełnego procesu rozwoju strony firmowej (end-to-end) przy użyciu nowoczesnego stosu technologicznego.",
+            "Blog": "Zbudowanie w pełni zarządzalnego systemu blogowego ze zintegrowanym asystentem **AI** w celu wspierania content marketingu.",
+            "Deployment": "Zarządzanie pełnym wdrożeniem i bieżącym utrzymaniem aplikacji."
+          },
+          "Learnings": {
+            "NextJS": "Wykorzystanie **Next.js** do renderowania po stronie serwera (SSR) w celu zbudowania wysoce wydajnej strony internetowej.",
+            "SEO": "Opanowanie zaawansowanych technik **SEO** w zakresie treści, optymalizacji technicznej i on-page.",
+            "AI Integration": "Integracja **Gemini API** w celu wsparcia tworzenia i optymalizacji treści wpisów na blogu.",
+            "Docker": "Nauka używania **Dockera** do konteneryzacji aplikacji, zapewniając spójne wdrożenia."
+          },
+          "Achievements": {
+            "SuccessfulLaunch": "Pomyślne uruchomienie nowej strony firmowej, od koncepcji po produkcję.",
+            "Performance": "Osiągnięcie wysokiej wydajności i szybkich czasów ładowania dzięki optymalizacji **Next.js**.",
+            "SEOImprovement": "Znacząca poprawa widoczności w wyszukiwarkach dzięki strategicznemu **SEO** i blogowi wspieranemu przez AI."
+          }
+        },
+        "4": {
+          "Role": "Junior Frontend Developer",
+          "Responsibilities": {
+            "Leading": "Prowadzenie rozwoju kluczowych funkcji widocznych dla użytkownika.",
+            "Moving": "Migracja starszej aplikacji **jQuery** do nowoczesnej architektury opartej na **React** i **Redux**.",
+            "Reviews": "Uczestnictwo w przeglądach kodu (code reviews) w celu zapewnienia wysokiej jakości kodu.",
+            "Scrum": "Dostarczanie funkcjonalności w środowisku pracy Agile/Scrum."
+          },
+          "Learnings": {
+            "React": "Opanowanie budowania złożonych, stanowych aplikacji przy użyciu **React** i **Redux**.",
+            "MongoDB": "Integracja aplikacji frontendowych z **MongoDB** w celu przechowywania danych.",
+            "WebSockets": "Implementacja dwukierunkowych funkcji czasu rzeczywistego przy użyciu **WebSockets**."
+          },
+          "Achievements": {
+            "SuccessfulMoving": "Pomyślna migracja głównej aplikacji do **React**, co poprawiło jej łatwość utrzymania.",
+            "CodeReadability": "Poprawa czytelności i modułowości kodu poprzez refaktoryzację.",
+            "Performance": "Zwiększenie wydajności aplikacji poprzez optymalizację renderowania i zarządzania stanem.",
+            "Testing": "Zwiększenie stabilności aplikacji poprzez tworzenie testów jednostkowych i integracyjnych."
+          }
+        }
+      }
+    },
     "Technologies": {
       "Title": "Technologie",
-      "SelectorTitle": "Wybierz kategorię",
+      "Description": "Prezentacja moich kompetencji w ramach pełnego stosu technologicznego, z podziałem na języki, frameworki i narzędzia.",
       "Frontend": {
-        "Sections": {
-          "Languages": "Języki",
-          "Frameworks & Libraries": "Frameworki i biblioteki",
-          "Additional aspects": "Dodatkowe aspekty"
-        }
+        "Languages": "Języki",
+        "Frameworks & Libraries": "Frameworki i biblioteki",
+        "Additional aspects": "Dodatkowe aspekty"
       },
       "Backend": {
-        "Sections": {
-          "Languages": "Języki",
-          "Frameworks & Libraries": "Frameworki i biblioteki",
-          "Additional aspects": "Dodatkowe aspekty"
-        }
+        "Languages": "Języki",
+        "Frameworks & Libraries": "Frameworki i biblioteki",
+        "Additional aspects": "Dodatkowe aspekty"
       },
       "DevTools": {
-        "Sections": {
-          "Tools": "Narzędzia",
-          "Project management": "Zarządzanie projektami",
-          "Additional aspects": "Dodatkowe aspekty"
-        }
+        "Tools": "Narzędzia",
+        "Project management": "Zarządzanie projektami",
+        "Additional aspects": "Dodatkowe aspekty"
       }
     },
     "AboutMe": {
@@ -54,89 +149,85 @@
       "Cards": {
         "Performance": {
           "Title": "Wydajność",
-          "Description": "Maksymalizacja szybkości aplikacji, wydajności i wykorzystania zasobów dla wyjątkowego doświadczenia użytkownika, z naciskiem na szybkie ładowanie i płynne interakcje.",
           "Features": [
             {
               "Title": "Memoizacja i czyste komponenty",
-              "Description": "Wykorzystanie hooków wydajności Reacta (`useMemo`, `useCallback`) i `React.memo` w celu zapobiegania niepotrzebnemu ponownemu renderowaniu komponentów. Jest to kluczowe dla optymalizacji wydajności **złożonych list i komponentów o dużej ilości danych**."
+              "Description": "Świadomie **wykorzystuję hooki** takie jak useMemo, useCallback, aby zapobiegać niepotrzebnym re-renderom. To kluczowe, gdy pracuję ze **złożonymi listami lub komponentami** o dużej ilości danych."
             },
             {
               "Title": "Optymalne ładowanie zasobów (obrazy/czcionki)",
-              "Description": "Wdrożenie leniwego ładowania (lazy loading) dla obrazów poza ekranem i użycie nowoczesnych formatów, takich jak **WebP**, w celu zmniejszenia rozmiaru pliku. Wstępne ładowanie kluczowych czcionek internetowych minimalizuje **skumulowane przesunięcie układu (CLS)** i poprawia postrzeganą szybkość."
+              "Description": "**Implementuję 'lazy loading'** dla obrazów i używam formatów **WebP**, by redukować rozmiar strony. Zawsze dbam o wstępne ładowanie czcionek, co minimalizuje **CLS** i sprawia, że strona ładuje się widocznie szybciej."
             },
             {
               "Title": "Efektywne pobieranie i buforowanie danych",
-              "Description": "Wykorzystanie nowoczesnych rozwiązań, takich jak **TanStack Query (React Query)**, do obsługi buforowania, odświeżania w tle i synchronicznych aktualizacji stanu. Znacząco ogranicza to zbędne żądania sieciowe i utrzymuje globalny stan w czystości."
+              "Description": "Używam **TanStack Query** do inteligentnego buforowania danych i odświeżania ich w tle. Dzięki temu **ograniczam liczbę zapytań** do API i zapewniam, że dane w UI są zawsze aktualne bez zbędnego wysiłku."
             },
             {
               "Title": "Minimalizacja rozmiaru pakietu (Code Splitting)",
-              "Description": "Wdrożenie **dynamicznego importu** (`React.lazy` i `Suspense`), aby zapewnić ładowanie tylko niezbędnych pakietów kodu dla początkowego widoku. Zmniejsza to początkowy czas ładowania aplikacji i poprawia ogólny wynik **First Contentful Paint (FCP)**."
+              "Description": "**Wdrażam dynamiczne importy**, aby użytkownik pobierał tylko ten kod, którego w danym momencie potrzebuje. To bezpośrednio **skraca czas ładowania** aplikacji i poprawia wynik **First Contentful Paint (FCP)**."
             }
           ]
         },
         "CleanCode": {
           "Title": "Czysty Kod",
-          "Description": "Utrzymywanie wysoce czytelnego, zrozumiałego i łatwego do modyfikacji kodu źródłowego, który jest zgodny z najlepszymi praktykami branżowymi i ścisłymi zasadami projektowania.",
           "Features": [
             {
               "Title": "Czytelność i celowe nazewnictwo",
-              "Description": "Stosowanie opisowych **konwencji nazewnictwa Reacta** (np. PascalCase, prefiks `use` dla Hooków). Użycie jawnej dekonstrukcji propsów i znaczących nazw zmiennych, aby **zminimalizować obciążenie poznawcze** i zwiększyć przejrzystość dla współpracowników."
+              "Description": "Zawsze **stosuję opisowe nazwy** zgodne z konwencjami Reacta (np. PascalCase dla komponentów, `use` dla Hooków). Używam dekonstrukcji propsów, aby kod był przejrzysty, a **obciążenie poznawcze** dla innych deweloperów jak najmniejsze."
             },
             {
               "Title": "Modułowość i Separacja Obowiązków (SoC)",
-              "Description": "Strukturyzowanie komponentów zgodnie z **Zasadą Pojedynczej Odpowiedzialności (SRP)**. Abstrakcja logiki biznesowej do **Własnych Hooków** i narzędzi, aby zapewnić ścisłą **separację obowiązków**, promując wysoką **ponowną używalność i testowalność**."
+              "Description": "Strukturuję komponenty zgodnie z **Zasadą Pojedynczej Odpowiedzialności (SRP)**. Logikę biznesową wydzielam do **własnych Hooków**, co zapewnia **separację obowiązków (SoC)** oraz sprawia, że kod jest łatwiejszy w testowaniu i ponownym użyciu."
             },
             {
               "Title": "Programowanie defensywne i obsługa błędów",
-              "Description": "Wdrożenie **programowania defensywnego** za pomocą **strażników typów** TypeScript oraz kontroli w czasie wykonania, aby bezpiecznie zarządzać niespójnościami danych zewnętrznych (API, JSON). Zapewnia to, że komponenty UI otrzymują **stabilne dane** i utrzymuje odporność aplikacji."
+              "Description": "**Implementuję programowanie defensywne**, używając **type guardów** w TypeScript. Zabezpieczam komponenty przed niespójnymi danymi z API, co gwarantuje, że otrzymują one **stabilne dane** i aplikacja pozostaje odporna na błędy."
             },
             {
               "Title": "Testowalność i Dokumentacja",
-              "Description": "Zapewnienie wysokiego pokrycia za pomocą ukierunkowanych testów jednostkowych (Jest/Vitest) i testów interakcji UI (**React Testing Library**). Wykorzystanie precyzyjnych **Interfejsów i Typów TypeScript** jako obowiązkowych, samouzupełniających się interfejsów API dla wszystkich propsów i stanu komponentów."
+              "Description": "Zapewniam wysokie pokrycie kodu testami jednostkowymi **Vitest** i integracyjnymi **React Testing Library**. Używam precyzyjDnych **typów i interfejsów TypeScript**, które traktuję jako żywą, samouzupełniającą się dokumentację API moich komponentów."
             }
           ]
         },
         "Design": {
           "Title": "Projektowanie",
-          "Description": "Ustanowienie spójnej i ponownej używalnej biblioteki komponentów, wzorców i wytycznych, aby zapewnić harmonię interfejsu, skalowalność i szybki rozwój front-endu.",
           "Features": [
             {
               "Title": "Tokenizacja zorientowana na komponenty",
-              "Description": "Zdefiniowanie podstawowych zmiennych projektowych (kolory, odstępy, typografia) jako **właściwości niestandardowe CSS** (tokeny). Umożliwia to dynamiczne przełączanie motywów (np. tryb jasny/ciemny) i zapewnia **jedno źródło prawdy** we wszystkich komponentach."
+              "Description": "Definiuję zmienne projektowe jako **zmienne w CSS**. Takie podejście pozwala mi łatwo implementować dynamiczne motywy (np. tryb ciemny) i zapewniać **jedno źródło prawdy (SSOT)** dla całego systemu."
             },
             {
               "Title": "Wytyczne dotyczące układu i responsywności",
-              "Description": "Ustanowienie spójnej struktury układu opartej na siatce, wykorzystującej jednostki względne (`rem`, `em`, `vw`). Wdrożenie **responsywności w podejściu 'mobile-first'** przy użyciu klas narzędziowych (takich jak prefiksy responsywne Tailwind), aby zagwarantować optymalne wyświetlanie na wszystkich rozmiarach urządzeń."
+              "Description": "Implementuję spójne układy oparte na siatce i jednostkach względnych, zawsze stosując podejście **mobile-first**. Używając klas narzędziowych (np. Tailwind), gwarantuję **pełną responsywność** i świetny wygląd na każdym urządzeniu."
             },
             {
               "Title": "Dokumentacja biblioteki ponownej używalnych komponentów UI",
-              "Description": "Utrzymywanie dedykowanej biblioteki wysokiej jakości, wstępnie przetestowanych i dostępnych komponentów UI (przyciski, pola wejściowe, karty). Dokumentowanie użycia komponentów, ich propsów i wariantów w celu promowania **szybkiego rozwoju** i zapobiegania dryfowi interfejsu (UI drift)."
+              "Description": "Tworzę i utrzymuję bibliotekę przetestowanych i dostępnych komponentów UI. Zawsze **dokumentuję ich propsy** i warianty, co **promuje ponowne użycie** w zespole, przyspiesza rozwój i zapobiega wizualnym niespójnościom."
             },
             {
               "Title": "Standardy Dostępności (A11y)",
-              "Description": "Przestrzeganie **wytycznych WCAG** poprzez zapewnienie odpowiedniego kontrastu kolorów, właściwego zarządzania fokusem i semantycznej struktury HTML. Użycie poprawnych **atrybutów ARIA** dla elementów interaktywnych, aby zagwarantować użyteczność dla technologii wspomagających."
+              "Description": "Ściśle przestrzegam **wytycznych WCAG**. Dbam o odpowiedni kontrast, zarządzanie fokusem i semantyczny HTML. Zawsze implementuję **atrybuty ARIA** dla interaktywnych elementów, aby zapewnić pełną **dostępność (A11y)**."
             }
           ]
         },
         "Collaboration": {
           "Title": "Współpraca",
-          "Description": "Usprawnienie pracy zespołowej, standaryzacja procesów rozwojowych i użycie przejrzystej dokumentacji w celu wspierania produktywnego i spójnego środowiska inżynierskiego.",
           "Features": [
             {
               "Title": "Standaryzowane Formatowanie Kodu i Lintowanie",
-              "Description": "Egzekwowanie uniwersalnego stylu kodu w całej bazie kodu za pomocą narzędzi takich jak **ESLint i Prettier**. Integracja ich z potokiem CI/CD zapewnia, że wszystkie wkłady kodu są zgodne z tymi samymi, nienegocjowalnymi standardami."
+              "Description": "Egzekwuję w zespole uniwersalny styl kodu, używając **ESLint i Prettier**. Integruję te narzędzia z CI/CD, co gwarantuje, że każdy commit jest zgodny z naszymi **wspólnymi standardami jakości**."
             },
             {
               "Title": "Ustrukturyzowany przepływ pracy Git i przeglądy kodu",
-              "Description": "Przyjęcie ustrukturyzowanego przepływu pracy, takiego jak **GitFlow lub Trunk-Based Development**, do implementacji funkcji. Wymaganie dokładnych **przeglądów Pull Request (PR)** i używanie opisowych komunikatów commitów w celu utrzymania jasnej i możliwej do śledzenia historii."
+              "Description": "Stosuję ustrukturyzowany przepływ pracy, taki jak **GitFlow**, do wdrażania nowych funkcji. Wymagam dokładnych **przeglądów Pull Request (PR)** i używam opisowych commitów, aby zachować **czytelną historię zmian** w projekcie."
             },
             {
               "Title": "Scentralizowane Zarządzanie Zadaniem i Dokumentacja",
-              "Description": "Centralizacja planowania projektu, śledzenia zadań i zgłaszania defektów w jednym narzędziu (np. Jira, Trello). Utrzymywanie **żywego dokumentu (Wiki/README)** zawierającego szczegółowe instrukcje konfiguracji, decyzje architektoniczne i wytyczne dotyczące wkładu."
+              "Description": "Planowanie projektu, zadania i błędy centralizuję w narzędziach takich jak Jira czy Trello. Dbale **utrzymuję aktualną dokumentację (Wiki/README)**, która zawiera instrukcje konfiguracji, decyzje architektoniczne i wytyczne dla zespołu."
             },
             {
               "Title": "Zapewnienie spójności na różnych przeglądarkach/urządzeniach (QA)",
-              "Description": "Zdefiniowanie ukierunkowanej listy obsługiwanych przeglądarek i urządzeń dla QA. Wykorzystanie narzędzi takich jak **Playwright lub Cypress** do testów end-to-end w różnych środowiskach, zapewniając spójne i niezawodne doświadczenie użytkownika dla wszystkich."
+              "Description": "Definiuję listę wspieranych przeglądarek, na których przeprowadzamy QA. Używam narzędzi E2E, takich jak **Playwright lub Cypress**, aby **zagwarantować spójne działanie** aplikacji na wszystkich kluczowych platformach."
             }
           ]
         }

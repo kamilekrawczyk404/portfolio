@@ -26,13 +26,83 @@
     "Experience": {
       "Title": "Experience timeline",
       "Description": "Scroll down to explore my detailed work history, covering technical responsibilities, major project achievements, and the impact of my solutions.",
+      "ClickToExpand": "Click the bar to expand details",
       "JobsFeatures": {
         "Responsibilities": "Responsibilities",
         "Learnings": "Learnings",
         "Achievements": "Achievements"
       },
+      "JobPlace": {
+        "Remote": "Remote",
+        "OnSite": "On-site",
+        "Hybrid": "Hybrid"
+      },
+      "JobType": {
+        "Temporary": "Temporary",
+        "Internship": "Internship",
+        "FullTime": "Full-time",
+        "PartTime": "Part-time",
+        "Freelance": "Freelance",
+        "Contract": "Contract"
+      },
       "Jobs": {
         "1": {
+          "Role": "Intern Frontend Developer",
+          "Responsibilities": {
+            "Development": "Developed a simple web application using **PHP** as part of an internship program.",
+            "Optimization": "Optimized database queries for improved application performance.",
+            "Databases": "Designed and implemented a **MySQL** database schema from scratch."
+          },
+          "Learnings": {
+            "PHP": "Gained practical experience in server-side scripting with **PHP**.",
+            "REST APIs": "Learned the principles of building and consuming simple **REST APIs**.",
+            "MySQL": "Mastered database management and structure with **MySQL**.",
+            "MongoDB": "Gained introductory exposure to **MongoDB** as a NoSQL database alternative."
+          },
+          "Achievements": {
+            "BugFixes": "Identified and resolved bugs in the application code during development.",
+            "Testing": "Successfully tested the application's **CRUD** (Create, Read, Update, Delete) functionalities."
+          }
+        },
+        "2": {
+          "Role": "Intern Frontend Developer",
+          "Responsibilities": {
+            "Development": "Developed a simple web application using **PHP** as part of an internship program.",
+            "Optimization": "Optimized database queries for improved application performance.",
+            "Databases": "Designed and implemented a **MySQL** database schema from scratch."
+          },
+          "Learnings": {
+            "PHP": "Gained practical experience in server-side scripting with **PHP**.",
+            "REST APIs": "Learned the principles of building and consuming simple **REST APIs**.",
+            "MySQL": "Mastered database management and structure with **MySQL**.",
+            "MongoDB": "Gained introductory exposure to **MongoDB** as a NoSQL database alternative."
+          },
+          "Achievements": {
+            "BugFixes": "Identified and resolved bugs in the application code during development.",
+            "Testing": "Successfully tested the application's **CRUD** (Create, Read, Update, Delete) functionalities."
+          }
+        },
+        "3": {
+          "Role": "Fullstack Developer",
+          "Responsibilities": {
+            "Web Design": "Designed the complete website UI/UX from scratch, focusing on user engagement.",
+            "Development": "Led the end-to-end development of the company website using a modern stack.",
+            "Blog": "Engineered a fully manageable blog system with an integrated **AI** assistant to drive content marketing.",
+            "Deployment": "Managed the full deployment and ongoing maintenance of the live application."
+          },
+          "Learnings": {
+            "NextJS": "Utilized **Next.js** for server-side rendering (SSR) to build a high-performance website.",
+            "SEO": "Mastered advanced **SEO** techniques for content, technical, and on-page optimization.",
+            "AI Integration": "Integrated the **Gemini API** to assist in the creation and optimization of blog post content.",
+            "Docker": "Learned to use **Docker** for containerizing the application, ensuring consistent deployment."
+          },
+          "Achievements": {
+            "SuccessfulLaunch": "Successfully launched the new company website from concept to production.",
+            "Performance": "Achieved high performance and fast load times through **Next.js** optimization.",
+            "SEOImprovement": "Significantly improved search engine visibility through strategic **SEO** and the AI-powered blog."
+          }
+        },
+        "4": {
           "Role": "Junior Frontend Developer",
           "Responsibilities": {
             "Leading": "Led development of key user-facing features.",
@@ -56,27 +126,21 @@
     },
     "Technologies": {
       "Title": "Technologies",
-      "SelectorTitle": "Select a category",
+      "Description": "A showcase of my expertise across the full web development stack, organized by language, framework, and tool.",
       "Frontend": {
-        "Sections": {
-          "Languages": "Languages",
-          "Frameworks & Libraries": "Frameworks & libraries",
-          "Additional aspects": "Additional aspects"
-        }
+        "Languages": "Languages",
+        "Frameworks & Libraries": "Frameworks & libraries",
+        "Additional aspects": "Additional aspects"
       },
       "Backend": {
-        "Sections": {
-          "Languages": "Languages",
-          "Frameworks & Libraries": "Frameworks & libraries",
-          "Additional aspects": "Additional aspects"
-        }
+        "Languages": "Languages",
+        "Frameworks & Libraries": "Frameworks & libraries",
+        "Additional aspects": "Additional aspects"
       },
       "DevTools": {
-        "Sections": {
-          "Tools": "Tools",
-          "Project management": "Project management",
-          "Additional aspects": "Additional aspects"
-        }
+        "Tools": "Tools",
+        "Project management": "Project management",
+        "Additional aspects": "Additional aspects"
       }
     },
     "AboutMe": {
@@ -85,89 +149,85 @@
       "Cards": {
         "Performance": {
           "Title": "Performance",
-          "Description": "Maximize application speed, efficiency, and resource utilization for an exceptional user experience, focusing on fast load times and smooth interactions.",
           "Features": [
             {
               "Title": "Memoization and Pure Components",
-              "Description": "Leverage React's performance hooks (`useMemo`, `useCallback`) and `React.memo` to prevent unnecessary component re-renders. This is crucial for optimizing the performance of **complex lists and data-heavy components**."
+              "Description": "I actively **leverage React's performance hooks** (`useMemo`, `useCallback`) and `React.memo` to prevent unnecessary re-renders. This is crucial when I'm working with **complex lists or data-heavy components**."
             },
             {
               "Title": "Optimal Asset Loading (Images/Fonts)",
-              "Description": "Implement lazy loading for off-screen images and use modern formats like **WebP** for reduced file size. Preload critical web fonts to minimize **Cumulative Layout Shift (CLS)** and improve perceived speed."
+              "Description": "I **implement lazy loading** for off-screen images and use modern formats like **WebP** to cut down on file size. I always preload critical web fonts, which minimizes **CLS** and makes the page feel faster."
             },
             {
               "Title": "Efficient Data Fetching and Caching",
-              "Description": "Utilize modern solutions like **TanStack Query (React Query)** to handle caching, background refetching, and synchronous state updates. This significantly reduces redundant network requests and keeps the global state lean."
+              "Description": "I use **TanStack Query (React Query)** to handle smart caching, background refetching, and state updates. This approach **drastically cuts down on redundant network requests** and keeps the global state clean and simple."
             },
             {
               "Title": "Bundle Size Minimization (Code Splitting)",
-              "Description": "Implement **dynamic imports** to ensure only the necessary code bundles are loaded for the initial view. This reduces the application's initial load time and improves the overall **First Contentful Paint (FCP)** score."
+              "Description": "I **implement dynamic imports** (`React.lazy`) so the user only downloads the code they need for the initial view. This directly **slashes the initial load time** and improves the app's **First Contentful Paint (FCP)** score."
             }
           ]
         },
         "CleanCode": {
           "Title": "Clean Code",
-          "Description": "Maintain highly readable, understandable, and easily modifiable source code that adheres to industry best practices and strict design principles.",
           "Features": [
             {
               "Title": "Readability and Intentional Naming",
-              "Description": "Employ descriptive **React naming conventions** (e.g., PascalCase, `use` prefix for Hooks). Use explicit prop deconstruction and meaningful variable names to **minimize cognitive load** and enhance clarity for collaborators."
+              "Description": "I always **use descriptive naming conventions** (PascalCase for components, `use` for Hooks). I use explicit prop deconstruction and meaningful variable names to **minimize cognitive load** and make the code clearer for my teammates."
             },
             {
               "Title": "Modularity and Separation of Concerns (SoC)",
-              "Description": "Structure components using the **Single Responsibility Principle (SRP)**. Abstract business logic into **Custom Hooks** and utilities to ensure strict **separation of concerns**, promoting high **reusability and testability**."
+              "Description": "I structure my components using the **Single Responsibility Principle (SRP)**. I abstract complex logic into **Custom Hooks**, which enforces a strict **separation of concerns (SoC)** and makes my code highly **reusable and testable**."
             },
             {
               "Title": "Defensive Programming and Error Handling",
-              "Description": "Implement **defensive programming** via TypeScript **type guards** and runtime checks to safely manage external data inconsistencies (APIs, JSON). This ensures UI components receive **stable data** and maintains application resilience."
+              "Description": "I **practice defensive programming** using TypeScript **type guards** and runtime checks. This shields components from inconsistent API data, ensuring they always receive **stable data** and the application remains resilient."
             },
             {
               "Title": "Testability and Documentation",
-              "Description": "Ensure high coverage with targeted unit (Jest/Vitest) and UI interaction tests (**React Testing Library**). Leverage precise **TypeScript Interfaces and Types** to serve as mandatory, self-documenting APIs for all component props and state."
+              "Description": "I ensure high test coverage with unit tests (Vitest) and integration tests (**React Testing Library**). I leverage precise **TypeScript Interfaces**, treating them as a form of **self-documenting API** for all my components."
             }
           ]
         },
         "Design": {
           "Title": "Design System",
-          "Description": "Establish a consistent and reusable library of components, patterns, and guidelines to ensure UI harmony, scalability, and rapid front-end development.",
           "Features": [
             {
               "Title": "Component-Centric Tokenization",
-              "Description": "Define core design variables (colors, spacing, typography) as **CSS Custom Properties** (tokens). This allows for dynamic theme switching (e.g., light/dark mode) and ensures a **single source of truth** across all components."
+              "Description": "I define core design variables as **CSS Custom Properties** (tokens). This approach allows me to easily **implement dynamic themes** (like light/dark mode) and maintains a **single source of truth (SSOT)** for all components."
             },
             {
               "Title": "Layout and Responsiveness Guidelines",
-              "Description": "Establish a consistent, grid-based layout structure using relative units (`rem`, `em`, `vw`). Implement **mobile-first responsiveness** using utility classes (like Tailwind's responsive prefixes) to guarantee optimal viewing on all device sizes."
+              "Description": "I establish consistent layouts using relative units and a **mobile-first strategy**. By using utility classes (like Tailwind's), I **guarantee a fully responsive** experience that looks great on all devices."
             },
             {
               "Title": "Reusable UI Library Documentation",
-              "Description": "Maintain a dedicated library of high-quality, pre-tested, and accessible UI components (buttons, inputs, cards). Document component usage, props, and variations to promote **rapid development** and prevent UI drift."
+              "Description": "I build and maintain a library of high-quality, tested, and accessible UI components. I **document component props** and variations to **promote reuse** within the team, which speeds up development and prevents UI inconsistencies."
             },
             {
               "Title": "Accessibility (A11y) Standards",
-              "Description": "Adhere to **WCAG guidelines** by ensuring sufficient color contrast, proper focus management, and semantic HTML structure. Use correct **ARIA attributes** for interactive elements to guarantee usability for assistive technologies."
+              "Description": "I strictly **adhere to WCAG guidelines**. This means I'm always checking color contrast, managing focus, and using semantic HTML. I implement proper **ARIA attributes** to ensure the site is fully **usable for assistive technologies**."
             }
           ]
         },
         "Collaboration": {
           "Title": "Collaboration",
-          "Description": "Streamline teamwork, standardize development workflows, and use clear documentation to foster a productive and cohesive engineering environment.",
           "Features": [
             {
               "Title": "Standardized Code Formatting and Linting",
-              "Description": "Enforce universal code style across the entire codebase using tools like **ESLint and Prettier**. Integrating these into the CI/CD pipeline ensures that all code contributions adhere to the same non-negotiable standards."
+              "Description": "I enforce a universal code style across the team using **ESLint and Prettier**. By integrating these into the CI/CD pipeline, I ensure that **every code contribution** meets our non-negotiable quality standards."
             },
             {
               "Title": "Structured Git Workflow and Reviews",
-              "Description": "Adopt a structured workflow, such as **GitFlow or Trunk-Based Development**, for feature implementation. Require thorough **Pull Request (PR) reviews** and use descriptive commit messages to maintain a clear and traceable history."
+              "Description": "I adopt a structured workflow like **GitFlow** for feature implementation. I require thorough **Pull Request (PR) reviews** and use descriptive commit messages to maintain a **clear and traceable project history**."
             },
             {
               "Title": "Centralized Task Management and Documentation",
-              "Description": "Centralize project planning, task tracking, and defect reporting in a single tool (e.g., Jira, Trello). Maintain a **living document (Wiki/README)** detailing setup instructions, architecture decisions, and contribution guidelines."
+              "Description": "I centralize all project planning, tasks, and bugs in one tool (like Jira or Trello). I also maintain a **living document (Wiki/README)** with setup instructions, architecture decisions, and contribution guidelines."
             },
             {
               "Title": "Cross-Browser/Device Consistency QA",
-              "Description": "Define a targeted list of supported browsers and devices for QA. Utilize tools like **Playwright or Cypress** for end-to-end testing across environments, ensuring a consistent and reliable user experience for everyone."
+              "Description": "I define a clear list of supported browsers for QA. I use E2E tools like **Playwright or Cypress** to test across environments, **guaranteeing a consistent experience** for all users, no matter their device."
             }
           ]
         }

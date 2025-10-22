@@ -5,6 +5,8 @@ import { RootState } from "@/redux/store";
 import { layoutProperties } from "@/layout";
 import { Icons } from "@/components/Icons";
 import Container from "@/components/containers/Container";
+import { motion } from "framer-motion";
+import { animationProperties, animationsTypes } from "@/animations";
 
 type ExpandingListProps<T> = {
   id?: string;
@@ -27,7 +29,7 @@ const ExpandingList = <T extends unknown>({
   const { theme } = useSelector((state: RootState) => state.theme);
 
   const handleListClicked = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    e: React.MouseEvent<HTMLUListElement, MouseEvent>,
   ) => {
     e.stopPropagation();
     onExpand(id || "list-id");
@@ -35,13 +37,22 @@ const ExpandingList = <T extends unknown>({
 
   return (
     <Container.AnimateChangeInHeight>
-      <ul className={`space-y-2 shadow-xs ${className}`}>
-        <div
-          onClick={(e) => handleListClicked(e)}
-          className={"flex gap-2 justify-between items-center"}
-        >
-          <h4 className={"uppercase font-[400] tracking-wide"}>{title}</h4>
-          <Icons.AngleDown />
+      <ul
+        onClick={(e) => handleListClicked(e)}
+        className={`relative space-y-2 shadow-xs ${className}`}
+      >
+        <div className={`flex gap-2 justify-between items-center`}>
+          <h4 className={"font-[400] tracking-wide"}>{title}</h4>
+          <motion.span
+            animate={{ rotate: isExpanded ? "180deg" : "0deg" }}
+            transition={{
+              ...animationsTypes.default,
+              duration: animationProperties.durations.medium,
+            }}
+            className={"inline-block"}
+          >
+            <Icons.AngleDown />
+          </motion.span>
         </div>
 
         {isExpanded &&

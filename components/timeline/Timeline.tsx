@@ -1,8 +1,7 @@
 "use client";
 import React, {
-  MouseEvent,
+  CSSProperties,
   ReactNode,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -26,7 +25,7 @@ import {
   variantsPresets,
 } from "@/animations";
 import useAttachedObjectToCursor from "@/hooks/useAttachedObjectToCursor";
-import { Icons } from "@/components/Icons";
+import useScreenType from "@/hooks/useScreenType";
 
 export type TimelineEvent<T extends object> = {
   start: Date;
@@ -47,78 +46,111 @@ type TimelineProps<T extends object> = {
   ) => ReactNode;
 };
 
+const countDays = (start: Date, end: Date): number => {
+  const msInDay = 24 * 60 * 60 * 1000;
+  return Math.round((end.getTime() - start.getTime()) / msInDay);
+};
+
+const countDaysBetweenMonths = (start: Date, end: Date): number => {
+  let totalDays = 0;
+  const currentDate = new Date(start);
+
+  while (currentDate < end) {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    totalDays += daysInMonth;
+    currentDate.setMonth(currentDate.getMonth() + 1);
+  }
+
+  return totalDays;
+};
+
 const Timeline = <T extends object>({
   locale,
   timelineStart,
   timelineEnd,
   events,
   renderEvent,
-  totalWidth = 400,
+  totalWidth = 1000,
   mainIndicatorFrequency = 6,
 }: TimelineProps<T>) => {
+  const { theme } = useSelector((state: RootState) => state.theme);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const targetRef = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end 25%"],
+    offset: ["start center", "end end"],
   });
 
   const years = Math.max(
-    timelineEnd.getFullYear() - timelineStart.getFullYear(),
     1,
+    timelineEnd.getFullYear() - timelineStart.getFullYear(),
   );
-  const months = timelineEnd.getMonth() - timelineStart.getMonth() + 12 * years;
+  const months =
+    timelineEnd.getMonth() - timelineStart.getMonth() + 12 * years + 1;
 
-  const yearWidth = totalWidth / years;
-  const monthWidth = yearWidth / 12;
+  // add width on the end (to cover the last month properly)
+  const dayWidth = totalWidth / countDays(timelineStart, timelineEnd);
+  const lastMonthDays = timelineEnd.getDate();
+  const totalWidthForMonths = totalWidth - lastMonthDays * dayWidth;
 
-  const motionWidth = useMotionValue(`${totalWidth}vw`);
+  const monthWidth = totalWidthForMonths / months;
 
-  const x = useTransform(
+  const motionWidth = useMotionValue(totalWidth);
+
+  const x = useTransform(scrollYProgress, [0, 1], ["0px", `${-totalWidth}px`]);
+  const opacity = useTransform(
     scrollYProgress,
-    [0, 1],
-    ["0%", `-${Math.max(years * yearWidth, totalWidth)}vw`],
+    [0, 0.075, 0.975, 1],
+    ["0%", "100%", "100%", "0%"],
   );
 
   return (
     <motion.div
       ref={containerRef}
-      className={`relative`}
-      style={{ height: `${totalWidth}vh` }}
+      className={`relative w-full overflow-x-hidden`}
+      style={{ height: totalWidth }}
     >
       <motion.div
         ref={targetRef}
-        style={{ x, width: motionWidth }}
-        className={`sticky top-[calc(100%-5rem)] flex`}
+        style={{ x, opacity }}
+        className={`fixed bottom-20 flex my-10`}
       >
-        {Array.from({ length: months }, (_, index) => {
-          const copyDate = new Date(timelineStart);
-          copyDate.setMonth(copyDate.getMonth() + index);
+        <motion.div
+          style={{ width: motionWidth }}
+          className={`absolute bottom-0 flex border-t-1 ${theme.borderSecondary}`}
+        >
+          {Array.from({ length: months }, (_, index) => {
+            const copyDate = new Date(timelineStart);
+            copyDate.setMonth(copyDate.getMonth() + index);
 
-          return copyDate;
-        }).map((date, index) => (
-          <MonthIndicator
-            key={index}
-            isMain={index % mainIndicatorFrequency === 0}
-            withGradient={index === months - 1}
-            monthWidth={monthWidth}
-            date={date}
-            locale={locale}
-          />
-        ))}
+            return copyDate;
+          }).map((date, index) => (
+            <MonthIndicator
+              key={index}
+              isMain={index % mainIndicatorFrequency === 0}
+              withGradient={index === months - 1}
+              monthWidth={monthWidth}
+              date={date}
+              locale={locale}
+              style={{ paddingLeft: `${monthWidth * (index / months)}px` }}
+            />
+          ))}
 
-        {events.map((event, index) => (
-          <Event
-            key={index}
-            timelineStart={timelineStart}
-            timelineEnd={timelineEnd}
-            totalWidth={totalWidth}
-            locale={locale}
-            event={event}
-            renderEvent={renderEvent}
-          />
-        ))}
+          {events.map((event, index) => (
+            <Event
+              key={index}
+              timelineStart={timelineStart}
+              timelineEnd={timelineEnd}
+              totalWidth={totalWidth}
+              locale={locale}
+              event={event}
+              renderEvent={renderEvent}
+            />
+          ))}
+        </motion.div>
       </motion.div>
     </motion.div>
   );
@@ -149,11 +181,13 @@ type MonthIndicatorProps = {
   className?: string;
   isMain?: boolean;
   withGradient?: boolean;
+  style?: CSSProperties;
 };
 const MonthIndicator = ({
   date,
   locale,
   monthWidth,
+  style,
   className = "",
   isMain = false,
   withGradient = false,
@@ -171,8 +205,8 @@ const MonthIndicator = ({
 
   return (
     <div
+      style={{ width: monthWidth, ...style }}
       className={`sticky top-2/3 flex ${layoutProperties.text.extraSmall} ${theme.foreground} ${className}`}
-      style={{ width: `${monthWidth}vw` }}
     >
       {withGradient && (
         <div
@@ -180,7 +214,7 @@ const MonthIndicator = ({
         />
       )}
 
-      <div className={`absolute inset-0 border-t-1 ${theme.borderSecondary}`} />
+      <div className={`absolute inset-0`} />
 
       <div
         style={{ height: isMain ? "2rem" : "1rem" }}
@@ -219,6 +253,7 @@ const Event = <T extends object>({
   event,
   renderEvent,
 }: EventProps<T>) => {
+  const { theme } = useSelector((state: RootState) => state.theme);
   const { end, start, color } = event;
 
   const effectiveEnd = end instanceof Date ? end : timelineEnd;
@@ -231,9 +266,8 @@ const Event = <T extends object>({
     return null;
   }
 
-  const leftPositionVW = (startOffsetMs / totalDifferenceMs) * totalWidth;
-
-  const widthVW = (eventDurationMs / totalDifferenceMs) * totalWidth;
+  const left = (startOffsetMs / totalDifferenceMs) * totalWidth;
+  const width = (eventDurationMs / totalDifferenceMs) * totalWidth;
 
   const barsColor = color.startsWith("#") ? hexToRgba(color, 0.3) : color;
 
@@ -245,7 +279,8 @@ const Event = <T extends object>({
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  const { isVisible, leftOffset } = useAttachedObjectToCursor({
+  const currentScreenType = useScreenType();
+  const { leftOffset } = useAttachedObjectToCursor({
     parent: containerRef,
     target: eventContainer,
   });
@@ -275,23 +310,30 @@ const Event = <T extends object>({
     }
   }, [isEventInView]);
 
+  useEffect(() => {
+    if (!isHover) setIsActive(false);
+  }, [isHover]);
+
   return (
     <motion.div
       ref={containerRef}
-      className={`border-1 border-b-0 rounded-t-md absolute bottom-0 cursor-pointer h-8`}
+      className={`border-1 border-b-0 rounded-t-md bottom-0 absolute cursor-pointer h-8 ${
+        isHover ? `${theme.backgroundDark} z-[30]` : ""
+      }`}
       style={{
         borderColor: color,
-        left: `${leftPositionVW}vw`,
-        width: `${widthVW}vw`,
-        minWidth: "5vw", // Ensure event is visible even if duration is short
+        left,
+        width,
+        minWidth: 20, // Ensure event is visible even if duration is short
       }}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      onHoverStart={() => setIsHover(true)}
+      onHoverEnd={() => setIsHover(false)}
       onClick={() => setIsActive(true)}
       animate={
         isHover || isActive
           ? {
               boxShadow: `0 -1px 15px ${color}`,
+              height: "3rem",
             }
           : {}
       }
@@ -299,9 +341,8 @@ const Event = <T extends object>({
         duration: animationProperties.durations.medium,
       }}
     >
-      {/*bars*/}
       <motion.div
-        className={"absolute inset-0 rounded-t-md"}
+        className={"absolute inset-0 rounded-t-md mb-[1px] z-[20]"}
         style={{
           backgroundSize: "2rem 2rem",
           backgroundImage: `linear-gradient(
@@ -329,11 +370,14 @@ const Event = <T extends object>({
         }}
       />
       <AnimatePresence>
-        {(isVisible || isActive) && (
+        {(isHover || isActive) && (
           <AttachedEventContainer
             ref={eventContainer}
-            style={{ left: leftOffset }}
-            className={"absolute bottom-[calc(100%+1rem)] -translate-x-1/2"}
+            // for mobile devices, we want to center the attached container
+            style={{
+              left: currentScreenType === "mobile" ? "50%" : leftOffset,
+            }}
+            className={"absolute bottom-full -translate-x-1/2"}
           >
             {renderEvent(event, isActive)}
           </AttachedEventContainer>

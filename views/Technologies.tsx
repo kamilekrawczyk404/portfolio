@@ -187,7 +187,7 @@ const technologiesIcons = {
 };
 
 const Technologies = () => {
-  const t = useTranslations("HomePage");
+  const t = useTranslations("HomePage.Technologies");
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const { theme } = useSelector((state: RootState) => state.theme);
@@ -201,18 +201,15 @@ const Technologies = () => {
     setAnimatedProgressBars({});
   }, []);
 
+  const selectedTechnology = technologies[selectedIndex];
+
   return (
     <PageContainer
       section
       id={"technologies"}
       className={`flex flex-col ${layoutProperties.gap.large}`}
     >
-      <SectionTitle
-        title={t("Technologies.Title")}
-        description={
-          "A showcase of my expertise across the full web development stack, organized by language, framework, and tool."
-        }
-      >
+      <SectionTitle title={t("Title")} description={t("Description")}>
         <SegmentedControl
           className={"mx-auto"}
           layoutId={"technologies-segmented-control"}
@@ -233,8 +230,8 @@ const Technologies = () => {
         className={`grid lg:grid-cols-2 grid-cols-1 ${layoutProperties.gap.small} ${theme.foreground}`}
       >
         <AnimatePresence mode={"wait"}>
-          {Object.entries(technologies[selectedIndex]).map(
-            ([key, technologyAspect]: [string, TechnologyAspect], index) => {
+          {Object.entries(selectedTechnology).map(
+            ([key, technologyAspect]: [string, TechnologyAspect]) => {
               if (key === "type") return null;
 
               return (
@@ -244,12 +241,12 @@ const Technologies = () => {
                   initial={"initial"}
                   animate={"animate"}
                   exit={"exit"}
-                  className={`space-y-4`}
+                  className={`space-y-4 divide-y-1 ${theme.divideSecondary}`}
                 >
                   <h2
-                    className={`font-[500] ${theme.borderSecondary} ${layoutProperties.text.large} `}
+                    className={`font-[500] pb-2 ${theme.borderSecondary} ${layoutProperties.text.large} `}
                   >
-                    {technologyAspect.title}
+                    {t(`${selectedTechnology.type}.${technologyAspect.title}`)}
                   </h2>
                   {["otheraspects", "projectmanagement"].includes(
                     key.toLowerCase(),

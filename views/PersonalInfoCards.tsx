@@ -108,7 +108,6 @@ const PersonalInfoCards = () => {
   const t = useTranslations("HomePage.AboutMe.Cards");
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const selectedCard = cards[selectedIndex];
 
   return (
     <div className={`flex flex-col ${layoutProperties.gap.large}`}>
@@ -116,7 +115,7 @@ const PersonalInfoCards = () => {
         items={cards}
         render={(card) => (
           <span
-            className={`inline-flex items-center lg:gap-3 gap-2  ${layoutProperties.text.medium}`}
+            className={`inline-flex items-center lg:gap-3 gap-2 ${layoutProperties.text.medium}`}
           >
             {card.icon}
             <span>{t(`${card.translationsTitle}.Title`)}</span>
@@ -124,7 +123,7 @@ const PersonalInfoCards = () => {
         )}
         onItemSelect={(index) => setSelectedIndex(index)}
         layoutId={"about-me-key-features"}
-        className={"mx-auto"}
+        className={"mx-auto !max-w-[calc(100vw-2rem)]"}
       />
 
       <AnimatePresence mode={"wait"}>
@@ -159,7 +158,7 @@ const Card = ({
       initial={"initial"}
       animate={"animate"}
       exit={"exit"}
-      className={`grid lg:grid-cols-2 grid-cols-1 mx-auto ${theme.borderSecondary} ${layoutProperties.gap.small}`}
+      className={`grid lg:grid-cols-2 grid-cols-1 mx-auto w-full ${theme.borderSecondary} ${layoutProperties.gap.small}`}
     >
       {features.map((feature, index) => (
         <li key={index}>
@@ -187,11 +186,13 @@ const Feature = ({
   });
 
   return (
-    <Container.Default className={`content-center space-y-2`}>
+    <Container.Default
+      className={`relative content-center space-y-2 divide-y-1 ${theme.divideSecondary}`}
+    >
       <AnimatePresence mode={"wait"}>
-        <div className={`flex items-center gap-3`}>
+        <div className={`flex items-end gap-2 pb-3`}>
           <div
-            className={`min-w-12 text-lg content-center aspect-square flex items-center justify-center rounded-sm ${opposite.background} ${opposite.foreground}`}
+            className={`min-w-8 aspect-square content-center flex items-center justify-center rounded-sm ${opposite.backgroundDark} ${opposite.foreground} ${layoutProperties.text.medium}`}
           >
             {icon}
           </div>
